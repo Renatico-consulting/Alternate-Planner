@@ -193,6 +193,7 @@
     <button class="nav-tab" onclick="showPage('reference')">Reference</button>
   </div>
   <div class="nav-right">
+    <div id="clock-display" style="font-family:var(--mono);font-size:11px;color:var(--text2);text-align:right;line-height:1.4;cursor:pointer" title="Click to toggle EDT/Z" onclick="toggleClockTZ()"></div>
     <span id="persist-status" style="font-family:var(--mono);font-size:11px;color:var(--text3)"></span>
     <div class="nav-rule-badge badge-none" id="nav-rule-badge">— Rule —</div>
   </div>
@@ -489,9 +490,17 @@
         <button class="rule-btn" id="rb-135" onclick="setRule('135')">Part 135</button>
       </div>
     </div>
-    <div class="field" style="flex:1;max-width:360px">
+    <div class="field" style="flex:1;max-width:260px">
       <label>Flight ID / Leg</label>
       <input type="text" id="f-flightid" placeholder="e.g. SSA 101 / KDAL–KBOS">
+    </div>
+    <div class="field" style="max-width:130px">
+      <label>EDT (Z) — Departure</label>
+      <input type="text" id="f-edt" placeholder="e.g. 1430Z" style="font-family:var(--mono)" oninput="this.value=this.value.toUpperCase()">
+    </div>
+    <div class="field" style="max-width:130px">
+      <label>ETA (Z) — Destination</label>
+      <input type="text" id="f-eta" placeholder="e.g. 1730Z" style="font-family:var(--mono)" oninput="this.value=this.value.toUpperCase()">
     </div>
     <button class="btn btn-secondary" style="margin-top:18px" onclick="clearWeatherOnly()">Clear Weather Only</button>
     <button class="btn btn-danger btn-sm" style="margin-top:18px" onclick="clearFlight()">Clear All</button>
@@ -534,12 +543,19 @@
         <div class="field"><label>Ceiling (ft AGL)</label><input type="number" id="f-dep-ceil" placeholder="—"></div>
         <div class="field"><label>Coverage</label>
           <select id="f-dep-cov">
-            <option value="">—</option><option>CLR</option><option>FEW</option><option>SCT</option><option>BKN</option><option>OVC</option>
+            <option value="">—</option><option>CLR</option><option>FEW</option><option>SCT</option><option>BKN</option><option>OVC</option><option>VV</option>
           </select>
         </div>
         <div class="field"><label>Visibility</label>
-          <input type="text" id="f-dep-vis" placeholder="e.g. 1/2 or 1.5" oninput="liveParseVis(this,'f-dep-vis-out')">
-          <div class="vis-parsed" id="f-dep-vis-out"></div>
+          <div style="display:flex;gap:4px;align-items:flex-start">
+            <div style="flex:1">
+              <input type="text" id="f-dep-vis" placeholder="e.g. 1/2 or 1.5" oninput="liveParseVis(this,'f-dep-vis-out','f-dep-vis-unit')">
+              <div class="vis-parsed" id="f-dep-vis-out"></div>
+            </div>
+            <select id="f-dep-vis-unit" style="width:60px;margin-top:0;flex-shrink:0" onchange="liveParseVis(document.getElementById('f-dep-vis'),'f-dep-vis-out','f-dep-vis-unit')">
+              <option value="sm">SM</option><option value="rvr">RVR</option>
+            </select>
+          </div>
         </div>
         <div class="field"><label>TDZ RVR (ft)</label><input type="number" id="f-dep-rvr" placeholder="—" step="100"></div>
       </div>
@@ -623,12 +639,19 @@
         <div class="field"><label>Ceiling (ft AGL)</label><input type="number" id="f-dalt-ceil" placeholder="—"></div>
         <div class="field"><label>Coverage</label>
           <select id="f-dalt-cov">
-            <option value="">—</option><option>CLR</option><option>FEW</option><option>SCT</option><option>BKN</option><option>OVC</option>
+            <option value="">—</option><option>CLR</option><option>FEW</option><option>SCT</option><option>BKN</option><option>OVC</option><option>VV</option>
           </select>
         </div>
         <div class="field"><label>Visibility</label>
-          <input type="text" id="f-dalt-vis" placeholder="e.g. 3 or 1 1/2" oninput="liveParseVis(this,'f-dalt-vis-out')">
-          <div class="vis-parsed" id="f-dalt-vis-out"></div>
+          <div style="display:flex;gap:4px;align-items:flex-start">
+            <div style="flex:1">
+              <input type="text" id="f-dalt-vis" placeholder="e.g. 3 or 1 1/2" oninput="liveParseVis(this,'f-dalt-vis-out','f-dalt-vis-unit')">
+              <div class="vis-parsed" id="f-dalt-vis-out"></div>
+            </div>
+            <select id="f-dalt-vis-unit" style="width:60px;flex-shrink:0" onchange="liveParseVis(document.getElementById('f-dalt-vis'),'f-dalt-vis-out','f-dalt-vis-unit')">
+              <option value="sm">SM</option><option value="rvr">RVR</option>
+            </select>
+          </div>
         </div>
         <div class="field"><label>RVR (ft)</label><input type="number" id="f-dalt-rvr" placeholder="—" step="100"></div>
         <div class="field"><label>Approach DA/MDA (ft MSL)</label><input type="number" id="f-dalt-da" placeholder="—"></div>
@@ -669,18 +692,26 @@
         </div>
       </div>
 
-      <div class="col-header">ETA Forecast Weather</div>
+      <div class="col-header">Worst Forecast Weather ±1hr ETA</div>
+      <div class="infobox" style="margin-top:6px;font-size:11px">Enter the <strong>worst values across the ±1 hr ETA window</strong>. Check all forecast groups (FM, TEMPO, BECMG, PROB) and enter the most restrictive ceiling and visibility. Only <strong>BKN, OVC, or VV</strong> layers constitute a ceiling for alternate evaluation purposes.</div>
       <div class="wx-row" style="margin-top:8px">
         <div class="wx-label">Sky</div>
         <div class="field"><label>Ceiling (ft AGL)</label><input type="number" id="f-dest-ceil" placeholder="—"></div>
         <div class="field"><label>Coverage</label>
           <select id="f-dest-cov">
-            <option value="">—</option><option>CLR</option><option>FEW</option><option>SCT</option><option>BKN</option><option>OVC</option>
+            <option value="">—</option><option>CLR</option><option>FEW</option><option>SCT</option><option>BKN</option><option>OVC</option><option>VV</option>
           </select>
         </div>
         <div class="field"><label>Visibility</label>
-          <input type="text" id="f-dest-vis" placeholder="e.g. 2 1/4 or 2.25" oninput="liveParseVis(this,'f-dest-vis-out')">
-          <div class="vis-parsed" id="f-dest-vis-out"></div>
+          <div style="display:flex;gap:4px;align-items:flex-start">
+            <div style="flex:1">
+              <input type="text" id="f-dest-vis" placeholder="e.g. 2 1/4 or RVR 3000" oninput="liveParseVis(this,'f-dest-vis-out','f-dest-vis-unit')">
+              <div class="vis-parsed" id="f-dest-vis-out"></div>
+            </div>
+            <select id="f-dest-vis-unit" style="width:60px;flex-shrink:0" onchange="liveParseVis(document.getElementById('f-dest-vis'),'f-dest-vis-out','f-dest-vis-unit')">
+              <option value="sm">SM</option><option value="rvr">RVR</option>
+            </select>
+          </div>
         </div>
         <div class="field"><label>TDZ RVR (ft)</label><input type="number" id="f-dest-rvr" placeholder="—" step="100"></div>
       </div>
@@ -699,8 +730,6 @@
         <strong>§135.223(b)(2):</strong> If no circling authorized: ceiling ≥ 1,500 ft above lowest published minimum <em>or</em> 2,000 ft above airport elevation, whichever is <strong>higher</strong>.<br>
         <strong>§135.223(b)(3):</strong> Visibility ≥ 3 sm <em>or</em> 2 sm more than lowest applicable vis minimum for the planned approach, whichever is <strong>greater</strong>.
       </div>
-
-      <!-- Approach-relative ceiling inputs -->
       <div class="grid-3" style="margin-top:10px">
         <div class="field">
           <label>Circling Approach Authorized at Destination?</label>
@@ -718,21 +747,6 @@
           <label>Lowest Published Minimum (ft MSL) <span style="color:var(--accent)">§(b)(2)</span></label>
           <input type="number" id="f-dest-lowest-min" placeholder="— if NO circling">
           <div class="field-hint">Used when circling is NOT authorized (with airport elev)</div>
-        </div>
-      </div>
-
-      <!-- ±1 hr window -->
-      <div class="col-header" style="margin-top:14px">±1 Hour ETA Forecast Window</div>
-      <div class="grid-4" style="margin-top:8px">
-        <div class="field"><label>Ceiling ETA−1hr (ft AGL)</label><input type="number" id="f-dest-ceil-1hb" placeholder="—"></div>
-        <div class="field"><label>Vis ETA−1hr</label>
-          <input type="text" id="f-dest-vis-1hb" placeholder="—" oninput="liveParseVis(this,'f-dest-vis-1hb-out')">
-          <div class="vis-parsed" id="f-dest-vis-1hb-out"></div>
-        </div>
-        <div class="field"><label>Ceiling ETA+1hr (ft AGL)</label><input type="number" id="f-dest-ceil-1ha" placeholder="—"></div>
-        <div class="field"><label>Vis ETA+1hr</label>
-          <input type="text" id="f-dest-vis-1ha" placeholder="—" oninput="liveParseVis(this,'f-dest-vis-1ha-out')">
-          <div class="vis-parsed" id="f-dest-vis-1ha-out"></div>
         </div>
       </div>
 
@@ -793,6 +807,13 @@
             <div class="radio-btn" onclick="radioSelect('rg-dest-iap',this)">No</div>
           </div>
         </div>
+        <div class="field"><label>Planning GPS Approach at Destination? <span style="color:var(--accent)">(C055 b(8))</span></label>
+          <div class="radio-group" id="rg-dest-gps-apch">
+            <div class="radio-btn active" onclick="radioSelect('rg-dest-gps-apch',this)">No</div>
+            <div class="radio-btn" onclick="radioSelect('rg-dest-gps-apch',this)">Yes</div>
+          </div>
+          <div class="field-hint">If Yes + RAIM/FDE only: GPS cannot also be used at alternate</div>
+        </div>
       </div>
     </div>
   </div>
@@ -837,12 +858,19 @@
         <div class="field"><label>Ceiling (ft AGL)</label><input type="number" id="f-alt-ceil" placeholder="—"></div>
         <div class="field"><label>Coverage</label>
           <select id="f-alt-cov">
-            <option value="">—</option><option>CLR</option><option>FEW</option><option>SCT</option><option>BKN</option><option>OVC</option>
+            <option value="">—</option><option>CLR</option><option>FEW</option><option>SCT</option><option>BKN</option><option>OVC</option><option>VV</option>
           </select>
         </div>
         <div class="field"><label>Visibility</label>
-          <input type="text" id="f-alt-vis" placeholder="e.g. 3 or 2 1/2" oninput="liveParseVis(this,'f-alt-vis-out')">
-          <div class="vis-parsed" id="f-alt-vis-out"></div>
+          <div style="display:flex;gap:4px;align-items:flex-start">
+            <div style="flex:1">
+              <input type="text" id="f-alt-vis" placeholder="e.g. 3 or 2 1/2" oninput="liveParseVis(this,'f-alt-vis-out','f-alt-vis-unit')">
+              <div class="vis-parsed" id="f-alt-vis-out"></div>
+            </div>
+            <select id="f-alt-vis-unit" style="width:60px;flex-shrink:0" onchange="liveParseVis(document.getElementById('f-alt-vis'),'f-alt-vis-out','f-alt-vis-unit')">
+              <option value="sm">SM</option><option value="rvr">RVR</option>
+            </select>
+          </div>
         </div>
         <div class="field"><label>RVR (ft)</label><input type="number" id="f-alt-rvr" placeholder="—" step="100"></div>
       </div>
@@ -1059,13 +1087,25 @@
 <script>
 // ─────────────────────────────────────────
 //  VISIBILITY PARSER
-//  Accepts: "1/2", "1 1/2", "3/4", "0.5", "1.5", "2 1/4", "10", "1/4"
+//  Accepts: "1/2","1 1/2","3/4","0.5",".5","1.5","2 1/4","10","1/4"
 // ─────────────────────────────────────────
-function parseVis(raw) {
+// parseVis — always returns statute miles (or null / NaN)
+// unitOverride: 'rvr' means the raw value is already RVR feet → convert to sm
+function parseVis(raw, unitOverride) {
   if (!raw || raw.trim() === '' || raw.trim() === '—') return null;
-  const s = raw.trim();
+  let s = raw.trim();
 
-  // Pure decimal or integer: "0.5", "1.5", "10"
+  // Unit toggle says RVR and value is a plain integer → RVR ft to sm
+  if (unitOverride === 'rvr' && /^\d+$/.test(s)) return parseInt(s) / 6076;
+
+  // Strip leading dot: ".5" → "0.5",  ".25" → "0.25"
+  if (/^\.\d+$/.test(s)) s = '0' + s;
+
+  // Explicit RVR text prefix: "RVR 1600", "R1600", "rvr1600"
+  const rvrMatch = s.match(/^[Rr][Vv]?[Rr]?\s*(\d+)$/);
+  if (rvrMatch) return parseInt(rvrMatch[1]) / 6076;
+
+  // Pure decimal or integer: "0.5", "1.5", "10", "0.25"
   if (/^\d+(\.\d+)?$/.test(s)) return parseFloat(s);
 
   // Simple fraction: "1/2", "3/4", "1/4"
@@ -1084,33 +1124,52 @@ function parseVis(raw) {
     return whole + n / d;
   }
 
-  return NaN; // unparseable
+  return NaN;
 }
 
-function visLabel(val) {
-  if (val === null) return '';
-  if (isNaN(val)) return 'Cannot parse';
-  // Format nicely: if it's a common fraction show fraction label
+// ─────────────────────────────────────────
+//  CEILING LAYER CHECK (Item 8)
+//  Only BKN, OVC, VV count as a ceiling layer
+// ─────────────────────────────────────────
+function isCeilingLayer(coverage) {
+  return ['BKN','OVC','VV'].includes((coverage||'').toUpperCase());
+}
+
+// Returns the effective ceiling value only if the coverage is a ceiling layer;
+// otherwise returns null (FEW/SCT/CLR do not constitute a ceiling)
+function effectiveCeil(ceilFt, coverage) {
+  if (ceilFt === null) return null;
+  return isCeilingLayer(coverage) ? ceilFt : null;
+}
+
+
+function liveParseVis(el, outId, unitSelId) {
+  const unitSel = unitSelId ? document.getElementById(unitSelId) : null;
+  const unit = unitSel ? unitSel.value : 'sm';
+  const val = parseVis(el.value, unit);
+  const out = document.getElementById(outId);
+  if (!out) return;
+  if (val === null) { out.textContent = ''; out.classList.remove('vis-error'); return; }
+  if (isNaN(val)) { out.textContent = 'Cannot parse — use: 1/2  1 1/4  .5  0.5  or RVR ft'; out.classList.add('vis-error'); return; }
+  out.classList.remove('vis-error');
+  // Show converted value with both units
+  const smVal = val;
+  const rvrVal = Math.round(val * 6076);
+  if (unit === 'rvr') {
+    out.textContent = `= ${rvrVal} RVR ≈ ${smLabel(smVal)}`;
+  } else {
+    out.textContent = `= ${smLabel(smVal)} ≈ RVR ${rvrVal}`;
+  }
+  scheduleSave();
+}
+
+function smLabel(val) {
   const fracs = [[0.125,'⅛'],[0.25,'¼'],[0.375,'⅜'],[0.5,'½'],[0.625,'⅝'],[0.75,'¾'],[0.875,'⅞']];
   const whole = Math.floor(val);
   const frac = val - whole;
   const fr = fracs.find(f => Math.abs(f[0] - frac) < 0.001);
-  let label = fr ? (whole > 0 ? whole + ' ' + fr[1] : fr[1]) + ' sm' : val.toFixed(2) + ' sm';
-  return label + ' ≈ RVR ' + Math.round(val * 6076);
-}
-
-function liveParseVis(el, outId) {
-  const val = parseVis(el.value);
-  const out = document.getElementById(outId);
-  if (!out) return;
-  if (val === null) { out.textContent = ''; out.classList.remove('vis-error'); return; }
-  if (isNaN(val)) { out.textContent = 'Cannot parse — use decimal or fraction (e.g. 1/2, 1 1/4)'; out.classList.add('vis-error'); return; }
-  out.classList.remove('vis-error');
-  out.textContent = '= ' + visLabel(val);
-  scheduleSave();
-}
-
-// ─────────────────────────────────────────
+  return fr ? (whole > 0 ? whole + ' ' + fr[1] : fr[1]) + ' sm' : val.toFixed(2) + ' sm';
+}// ─────────────────────────────────────────
 //  WIND COMPONENT MATH
 // ─────────────────────────────────────────
 function windComponents(windDir, windSpd, runwayHdg) {
@@ -1331,26 +1390,25 @@ function resetSetup() {
 // ─────────────────────────────────────────
 // All text/number inputs and selects in the flight plan
 const FLIGHT_IDS = [
-  'f-flightid',
+  'f-flightid','f-edt','f-eta',
   'f-dep-icao','f-dep-elev','f-dep-rwy-len','f-dep-rwy-id','f-dep-rwy-hdg',
-  'f-dep-ceil','f-dep-cov','f-dep-vis','f-dep-rvr',
+  'f-dep-ceil','f-dep-cov','f-dep-vis','f-dep-vis-unit','f-dep-rvr',
   'f-dep-wdir','f-dep-wspd','f-dep-gust','f-dep-to-vis','f-dep-to-type',
   'f-dalt-icao','f-dalt-dist','f-dalt-apch','f-dalt-rwy-id','f-dalt-rwy-hdg',
-  'f-dalt-ceil','f-dalt-cov','f-dalt-vis','f-dalt-rvr','f-dalt-da',
+  'f-dalt-ceil','f-dalt-cov','f-dalt-vis','f-dalt-vis-unit','f-dalt-rvr','f-dalt-da',
   'f-dalt-wdir','f-dalt-wspd','f-dalt-gust',
   'f-dest-icao','f-dest-elev','f-dest-rwy-len','f-dest-rwy-id','f-dest-rwy-hdg',
-  'f-dest-ceil','f-dest-cov','f-dest-vis','f-dest-rvr',
+  'f-dest-ceil','f-dest-cov','f-dest-vis','f-dest-vis-unit','f-dest-rvr',
   'f-dest-wdir','f-dest-wspd','f-dest-gust',
   'f-dest-circ-mda','f-dest-lowest-min',
-  'f-dest-ceil-1hb','f-dest-vis-1hb','f-dest-ceil-1ha','f-dest-vis-1ha',
   'f-dest-apch','f-dest-da','f-dest-apch-vis','f-dest-apch-rvr',
   'f-alt-icao','f-alt-rwy-id','f-alt-rwy-hdg',
-  'f-alt-ceil','f-alt-cov','f-alt-vis','f-alt-rvr',
+  'f-alt-ceil','f-alt-cov','f-alt-vis','f-alt-vis-unit','f-alt-rvr',
   'f-alt-wdir','f-alt-wspd','f-alt-gust',
   'f-alt-apch','f-alt-da','f-alt-apch-vis','f-alt-apch-rvr',
 ];
 const FLIGHT_RADIOS = [
-  'rg-dep-tdz','rg-dest-iap','rg-dest-circling','rg-alt-navfac','rg-alt-prohibit','rg-alt-gps','rg-alt-table2'
+  'rg-dep-tdz','rg-dest-iap','rg-dest-circling','rg-dest-gps-apch','rg-alt-navfac','rg-alt-prohibit','rg-alt-gps','rg-alt-table2'
 ];
 // Weather-only fields (cleared by "Clear Weather Only")
 const WEATHER_IDS = [
@@ -1442,7 +1500,13 @@ function clearWeatherOnly() {
 // ─────────────────────────────────────────
 function fv(id) { const el = document.getElementById(id); return el ? el.value : ''; }
 function fn(id) { const v = parseFloat(fv(id)); return isNaN(v) ? null : v; }
-function fvis(id) { const v = parseVis(fv(id)); return (v === null || isNaN(v)) ? null : v; }
+// fvis with optional unit select element id
+function fvis(id, unitSelId) {
+  const unitSel = unitSelId ? document.getElementById(unitSelId) : null;
+  const unit = unitSel ? unitSel.value : 'sm';
+  const v = parseVis(fv(id), unit);
+  return (v === null || isNaN(v)) ? null : v;
+}
 
 function collectFlight() {
   const rule = document.getElementById('rb-135').classList.contains('active-135') ? '135' :
@@ -1450,6 +1514,8 @@ function collectFlight() {
   return {
     rule,
     flightId: fv('f-flightid'),
+    edt: fv('f-edt'),
+    eta: fv('f-eta'),
     dep: {
       icao:    fv('f-dep-icao'),
       elev:    fn('f-dep-elev'),
@@ -1458,7 +1524,7 @@ function collectFlight() {
       rwyHdg:  fn('f-dep-rwy-hdg'),
       ceil:    fn('f-dep-ceil'),
       cov:     fv('f-dep-cov'),
-      vis:     fvis('f-dep-vis'),
+      vis:     fvis('f-dep-vis','f-dep-vis-unit'),
       rvr:     fn('f-dep-rvr'),
       wdir:    fn('f-dep-wdir'),
       wspd:    fn('f-dep-wspd'),
@@ -1475,7 +1541,7 @@ function collectFlight() {
       rwyHdg: fn('f-dalt-rwy-hdg'),
       ceil:   fn('f-dalt-ceil'),
       cov:    fv('f-dalt-cov'),
-      vis:    fvis('f-dalt-vis'),
+      vis:    fvis('f-dalt-vis','f-dalt-vis-unit'),
       rvr:    fn('f-dalt-rvr'),
       da:     fn('f-dalt-da'),
       wdir:   fn('f-dalt-wdir'),
@@ -1483,30 +1549,27 @@ function collectFlight() {
       gust:   fn('f-dalt-gust'),
     },
     dest: {
-      icao:       fv('f-dest-icao'),
-      elev:       fn('f-dest-elev'),
-      rwyLen:     fn('f-dest-rwy-len'),
-      rwyId:      fv('f-dest-rwy-id'),
-      rwyHdg:     fn('f-dest-rwy-hdg'),
-      ceil:       fn('f-dest-ceil'),
-      cov:        fv('f-dest-cov'),
-      vis:        fvis('f-dest-vis'),
-      rvr:        fn('f-dest-rvr'),
-      wdir:       fn('f-dest-wdir'),
-      wspd:       fn('f-dest-wspd'),
-      gust:       fn('f-dest-gust'),
-      ceil1hb:    fn('f-dest-ceil-1hb'),
-      vis1hb:     fvis('f-dest-vis-1hb'),
-      ceil1ha:    fn('f-dest-ceil-1ha'),
-      vis1ha:     fvis('f-dest-vis-1ha'),
-      circlingAuth: getRadio('rg-dest-circling') !== 'No',  // true = circling authorized
-      circMda:    fn('f-dest-circ-mda'),    // lowest circling MDA (ft MSL) §135.223(b)(1)
-      lowestMin:  fn('f-dest-lowest-min'),  // lowest published min (ft MSL) §135.223(b)(2)
-      apch:       fv('f-dest-apch'),
-      da:         fn('f-dest-da'),
-      apchVis:    fvis('f-dest-apch-vis'),
-      apchRvr:    fn('f-dest-apch-rvr'),
-      hasIap:     getRadio('rg-dest-iap') === 'Yes',
+      icao:         fv('f-dest-icao'),
+      elev:         fn('f-dest-elev'),
+      rwyLen:       fn('f-dest-rwy-len'),
+      rwyId:        fv('f-dest-rwy-id'),
+      rwyHdg:       fn('f-dest-rwy-hdg'),
+      ceil:         fn('f-dest-ceil'),
+      cov:          fv('f-dest-cov'),
+      vis:          fvis('f-dest-vis','f-dest-vis-unit'),
+      rvr:          fn('f-dest-rvr'),
+      wdir:         fn('f-dest-wdir'),
+      wspd:         fn('f-dest-wspd'),
+      gust:         fn('f-dest-gust'),
+      circlingAuth: getRadio('rg-dest-circling') !== 'No',
+      circMda:      fn('f-dest-circ-mda'),
+      lowestMin:    fn('f-dest-lowest-min'),
+      destGpsApch:  getRadio('rg-dest-gps-apch') === 'Yes', // Item 9
+      apch:         fv('f-dest-apch'),
+      da:           fn('f-dest-da'),
+      apchVis:      fvis('f-dest-apch-vis'),
+      apchRvr:      fn('f-dest-apch-rvr'),
+      hasIap:       getRadio('rg-dest-iap') === 'Yes',
     },
     alt: {
       icao:     fv('f-alt-icao'),
@@ -1516,7 +1579,7 @@ function collectFlight() {
       rwyHdg:   fn('f-alt-rwy-hdg'),
       ceil:     fn('f-alt-ceil'),
       cov:      fv('f-alt-cov'),
-      vis:      fvis('f-alt-vis'),
+      vis:      fvis('f-alt-vis','f-alt-vis-unit'),
       rvr:      fn('f-alt-rvr'),
       wdir:     fn('f-alt-wdir'),
       wspd:     fn('f-alt-wspd'),
@@ -1640,8 +1703,10 @@ function analyzeDepartureAlt(f, setup) {
     return results;
   }
 
-  // Below CAT I landing minimums = below 200 ft / RVR 1800 (standard CAT I reference)
-  const belowCat1 = wxRvr < 1800 || (dep.ceil !== null && dep.ceil < 200);
+  // Below CAT I landing minimums = below 200 ft ceiling / RVR 1800
+  // Item 8: only use ceiling if it's a real ceiling layer
+  const depEffCeil = effectiveCeil(dep.ceil, dep.cov);
+  const belowCat1 = wxRvr < 1800 || (depEffCeil !== null && depEffCeil < 200);
   if (belowCat1) {
     results.push({ type:'caution', title:`Departure Alternate Required — §135.217`,
       body:`Departure weather (${dep.ceil !== null ? dep.ceil + ' ft ceiling / ' : ''}RVR ≈ ${Math.round(wxRvr)} ft) is below CAT I landing minimums (200 ft / RVR 1800). A departure alternate within 1 hour OEI flight time must be filed. <span class="ref">[§135.217]</span>` });
@@ -1669,16 +1734,24 @@ function analyzeAltRequired(f, setup) {
   if (!dest.hasIap) return [{ type:'caution', title:'Alternate Required — No IAP at Destination',
     body:`${dest.icao} has no published instrument approach. An alternate with an IAP must always be filed. <span class="ref">[§91.169(a)(2) / §135.223]</span>` }];
 
-  // ── Gather worst-case values across ETA, ETA−1hr, ETA+1hr ──
-  const ceils = [dest.ceil, dest.ceil1hb, dest.ceil1ha].filter(v => v !== null);
-  const viss  = [dest.vis,  dest.vis1hb,  dest.vis1ha ].filter(v => v !== null);
+  // ── Item 8: Gather worst-case ceiling — only BKN, OVC, VV constitute a ceiling ──
+  // Worst-case ceiling: use effectiveCeil which returns null for FEW/SCT/CLR
+  // For the ±1hr window we only have the single worst-case entry (Item 10 simplification)
+  const effCeilDest = effectiveCeil(dest.ceil, dest.cov);
+  const ceils = [effCeilDest].filter(v => v !== null);
+  const viss  = [dest.vis].filter(v => v !== null);
 
   if (!ceils.length && !viss.length) return [{ type:'neutral',
     title:'No destination weather entered',
-    body:'Enter ETA forecast weather (and optionally the ±1 hr window) to determine alternate requirement.' }];
+    body:'Enter worst-case ETA forecast weather to determine alternate requirement.' }];
 
   const worstCeil = ceils.length ? Math.min(...ceils) : null;
   const worstVis  = viss.length  ? Math.min(...viss)  : null;
+
+  // Note if the entered layer is not a ceiling layer
+  const nonCeilingNote = (dest.ceil !== null && effCeilDest === null)
+    ? `<br><span class="ref">Note: ${dest.cov} layer at ${dest.ceil} ft is not a ceiling (only BKN/OVC/VV count). Ceiling treated as unlimited for this evaluation.</span>`
+    : '';
 
   // ── PART 91 — §91.169: flat 2,000 ft AGL / 3 sm ──
   if (f.rule === '91') {
@@ -1689,16 +1762,16 @@ function analyzeAltRequired(f, setup) {
 
     if (ceilOk && visOk) {
       return [{ type:'go', title:`No Alternate Required — Part 91 (§91.169)`,
-        body:`Worst-case ceiling: <strong>${worstCeil !== null ? worstCeil + ' ft AGL' : 'not entered'}</strong> ≥ 2,000 ft AGL ✓<br>
-              Worst-case visibility: <strong>${worstVis !== null ? worstVis + ' sm' : 'not entered'}</strong> ≥ 3 sm ✓<br>
-              <span class="ref">Part 91 uses flat thresholds: 2,000 ft AGL / 3 sm [§91.169(b)]</span>` }];
+        body:`Worst-case ceiling: <strong>${worstCeil !== null ? worstCeil + ' ft AGL' : 'unlimited (no BKN/OVC/VV)'}</strong> ≥ 2,000 ft AGL ✓<br>
+              Worst-case visibility: <strong>${worstVis !== null ? smLabel(worstVis) : 'not entered'}</strong> ≥ 3 sm ✓<br>
+              <span class="ref">Part 91 uses flat thresholds: 2,000 ft AGL / 3 sm [§91.169(b)]</span>${nonCeilingNote}` }];
     }
     const fails = [];
     if (!ceilOk) fails.push(`Ceiling <strong>${worstCeil} ft AGL</strong> &lt; 2,000 ft AGL`);
-    if (!visOk)  fails.push(`Visibility <strong>${worstVis} sm</strong> &lt; 3 sm`);
+    if (!visOk)  fails.push(`Visibility <strong>${smLabel(worstVis)}</strong> &lt; 3 sm`);
     return [{ type:'caution', title:`Alternate Required — Part 91 (§91.169)`,
       body:`Failing: ${fails.join(' &nbsp;/&nbsp; ')}<br>
-            <span class="ref">Part 91 uses flat thresholds: 2,000 ft AGL / 3 sm [§91.169(b)]</span>` }];
+            <span class="ref">Part 91 uses flat thresholds: 2,000 ft AGL / 3 sm [§91.169(b)]</span>${nonCeilingNote}` }];
   }
 
   // ── PART 135 — §135.223: approach-relative thresholds ──
@@ -1775,18 +1848,18 @@ function analyzeAltRequired(f, setup) {
   // Ceiling
   if (ceilInputMissing) {
     results.push({ type:'caution', title:`${dest.icao} — Cannot Compute Ceiling Threshold (§135.223)`,
-      body: ceilBasis });
+      body: ceilBasis + nonCeilingNote });
   } else {
     const ceilOk = worstCeil === null ? null : worstCeil >= ceilThresh;
     if (ceilOk === null) {
-      results.push({ type:'neutral', title:`${dest.icao} — Ceiling Not Entered`,
-        body:`Required ceiling threshold: <strong>${ceilThresh} ft AGL</strong><br>${ceilBasis}` });
+      results.push({ type:'neutral', title:`${dest.icao} — No Effective Ceiling Reported`,
+        body:`Required ceiling threshold: <strong>${ceilThresh} ft AGL</strong><br>${ceilBasis}${nonCeilingNote}` });
     } else if (ceilOk) {
       results.push({ type:'go', title:`${dest.icao} — Ceiling Above §135.223 Threshold`,
-        body:`Worst-case forecast ceiling: <strong>${worstCeil} ft AGL</strong> ≥ required <strong>${ceilThresh} ft AGL</strong> ✓<br>${ceilBasis}` });
+        body:`Worst-case forecast ceiling: <strong>${worstCeil} ft AGL</strong> (${dest.cov}) ≥ required <strong>${ceilThresh} ft AGL</strong> ✓<br>${ceilBasis}${nonCeilingNote}` });
     } else {
       results.push({ type:'caution', title:`Alternate Required — Ceiling Below §135.223 Threshold at ${dest.icao}`,
-        body:`Worst-case forecast ceiling: <strong>${worstCeil} ft AGL</strong> &lt; required <strong>${ceilThresh} ft AGL</strong><br>${ceilBasis}` });
+        body:`Worst-case forecast ceiling: <strong>${worstCeil} ft AGL</strong> (${dest.cov}) &lt; required <strong>${ceilThresh} ft AGL</strong><br>${ceilBasis}${nonCeilingNote}` });
     }
   }
 
@@ -1794,25 +1867,25 @@ function analyzeAltRequired(f, setup) {
   const visOk = worstVis === null ? null : worstVis >= visThresh;
   if (visOk === null) {
     results.push({ type:'neutral', title:`${dest.icao} — Visibility Not Entered`,
-      body:`Required visibility threshold: <strong>${visThresh} sm</strong><br>${visBasis}` });
+      body:`Required visibility threshold: <strong>${smLabel(visThresh)}</strong><br>${visBasis}` });
   } else if (visOk) {
     results.push({ type:'go', title:`${dest.icao} — Visibility Above §135.223 Threshold`,
-      body:`Worst-case forecast visibility: <strong>${worstVis} sm</strong> ≥ required <strong>${visThresh} sm</strong> ✓<br>${visBasis}` });
+      body:`Worst-case forecast visibility: <strong>${smLabel(worstVis)}</strong> ≥ required <strong>${smLabel(visThresh)}</strong> ✓<br>${visBasis}` });
   } else {
     results.push({ type:'caution', title:`Alternate Required — Visibility Below §135.223 Threshold at ${dest.icao}`,
-      body:`Worst-case forecast visibility: <strong>${worstVis} sm</strong> &lt; required <strong>${visThresh} sm</strong><br>${visBasis}` });
+      body:`Worst-case forecast visibility: <strong>${smLabel(worstVis)}</strong> &lt; required <strong>${smLabel(visThresh)}</strong><br>${visBasis}` });
   }
 
-  // Overall go/no-go summary if both are evaluated
+  // Overall summary
   const anyAltRequired = results.some(r => r.type === 'caution' && r.title.includes('Alternate Required'));
   const allGo = results.every(r => r.type === 'go');
 
   if (allGo) {
     results.unshift({ type:'go', title:`No Alternate Required — Part 135 (§135.223)`,
-      body:`Both ceiling and visibility are forecast at or above the §135.223 approach-relative thresholds for the full ±1 hr ETA window.` });
+      body:`Both ceiling and visibility are forecast at or above the §135.223 approach-relative thresholds for the ±1 hr ETA window.` });
   } else if (anyAltRequired) {
     results.unshift({ type:'caution', title:`Destination Alternate Required — Part 135 (§135.223)`,
-      body:`One or more §135.223 thresholds are not met within the ±1 hr ETA window. A destination alternate must be filed meeting C055 Table 1 minimums at the alternate ETA.` });
+      body:`One or more §135.223 thresholds are not met. A destination alternate must be filed meeting C055 Table 1 minimums at the alternate ETA.` });
   }
 
   return results;
@@ -1893,17 +1966,26 @@ function checkAltWeather(alt, setup, label) {
   const margin  = (setup.buffer === 'Yes' && parseFloat(setup.visMargin)) ? parseFloat(setup.visMargin) : 0;
   const reqVisBuffered = reqVis + margin;
 
-  const issues = [];
-  if (alt.ceil !== null && alt.ceil < reqCeil)
-    issues.push(`Ceiling <strong>${alt.ceil} ft AGL</strong> &lt; required <strong>${reqCeil} ft</strong> (${alt.da} ft DA/MDA + ${ceilAdd} ft additive)`);
-  if (alt.vis !== null && alt.vis < reqVis)
-    issues.push(`Visibility <strong>${alt.vis} sm</strong> &lt; required <strong>${reqVis.toFixed(2)} sm</strong> (published ${pubVis} sm + ${visAdd} sm additive)`);
-  if (margin > 0 && alt.vis !== null && alt.vis >= reqVis && alt.vis < reqVisBuffered)
-    issues.push(`Company SOP buffer: visibility <strong>${alt.vis} sm</strong> &lt; buffered requirement <strong>${reqVisBuffered.toFixed(2)} sm</strong> (+${margin} sm margin)`);
+  // Item 8: only BKN/OVC/VV count as ceiling at alternate
+  const altEffCeil = effectiveCeil(alt.ceil, alt.cov);
+  const altNonCeil = alt.ceil !== null && altEffCeil === null;
 
-  const status = issues.length === 0 ? 'go' : 'no-go';
-  const body = issues.length === 0
-    ? `Ceiling: <strong>${alt.ceil !== null ? alt.ceil + ' ft AGL' : 'not entered'}</strong> ≥ ${reqCeil} ft ✓ &nbsp;|&nbsp; Visibility: <strong>${alt.vis !== null ? alt.vis + ' sm' : 'not entered'}</strong> ≥ ${reqVis.toFixed(2)} sm ✓<br><span class="ref">${navNote}</span>`
+  const issues = [];
+  if (altNonCeil) {
+    issues.push(`Coverage <strong>${alt.cov}</strong> at ${alt.ceil} ft is not a ceiling layer (only BKN/OVC/VV count) — ceiling treated as unlimited`);
+  } else if (altEffCeil !== null && altEffCeil < reqCeil) {
+    issues.push(`Ceiling <strong>${altEffCeil} ft AGL</strong> (${alt.cov}) &lt; required <strong>${reqCeil} ft</strong> (${alt.da} ft DA/MDA + ${ceilAdd} ft additive)`);
+  }
+  if (alt.vis !== null && alt.vis < reqVis)
+    issues.push(`Visibility <strong>${smLabel(alt.vis)}</strong> &lt; required <strong>${smLabel(reqVis)}</strong> (published ${smLabel(pubVis)} + ${visAdd} sm additive)`);
+  if (margin > 0 && alt.vis !== null && alt.vis >= reqVis && alt.vis < reqVisBuffered)
+    issues.push(`Company SOP buffer: visibility <strong>${smLabel(alt.vis)}</strong> &lt; buffered requirement <strong>${smLabel(reqVisBuffered)}</strong> (+${margin} sm margin)`);
+
+  const hasHardIssue = issues.some(i => !i.includes('treated as unlimited'));
+  const status = hasHardIssue ? 'no-go' : altNonCeil ? 'caution' : 'go';
+  const ceilDisplay = altEffCeil !== null ? `${altEffCeil} ft AGL (${alt.cov})` : altNonCeil ? `${alt.cov} ${alt.ceil} ft — not a ceiling` : 'not entered';
+  const body = status === 'go'
+    ? `Ceiling: <strong>${ceilDisplay}</strong> ≥ ${reqCeil} ft ✓ &nbsp;|&nbsp; Visibility: <strong>${alt.vis !== null ? smLabel(alt.vis) : 'not entered'}</strong> ≥ ${smLabel(reqVis)} ✓<br><span class="ref">${navNote}</span>`
     : issues.map(i => '• ' + i).join('<br>') + `<br><span class="ref">${navNote}</span>`;
 
   results.push({ type: status, title: `${label} — Alternate Minimums ${status === 'go' ? 'Met ✓' : 'NOT Met ✗'}`, body });
@@ -1916,12 +1998,30 @@ function checkAltWeather(alt, setup, label) {
 function analyzeDestination(f, setup) {
   const results = [];
   const dest = f.dest;
-  if (!dest.icao || !dest.apch || !dest.da) return results;
+  if (!dest.icao) return results;
+
+  // ── Item 8: Only BKN/OVC/VV constitute a ceiling ──
+  const effectiveCeilDest = effectiveCeil(dest.ceil, dest.cov);
+  const noEffectiveCeiling = dest.ceil !== null && effectiveCeilDest === null;
+  if (noEffectiveCeiling) {
+    results.push({ type:'neutral', title:`${dest.icao} — ${dest.cov} Layer Is Not a Ceiling`,
+      body:`Coverage <strong>${dest.cov}</strong> does not constitute a ceiling. Only BKN, OVC, or VV layers are used for ceiling evaluation. Visibility still applies.` });
+  }
+
+  if (!dest.apch || !dest.da) return results;
 
   let effVis = dest.apchVis || 1.0;
   const notes = [];
 
-  // High-min PIC (C054)
+  // ── Item 9: GPS conflict check (C055 b(8)) ──
+  // RAIM/FDE only (no WAAS) → can plan GPS at dest OR alt, not both
+  const isRaimOnly = setup.eq.gpsC129 && setup.eq.fde && !setup.eq.waas;
+  if (dest.destGpsApch && f.alt.gpsIap && isRaimOnly) {
+    results.push({ type:'no-go', title:`GPS Conflict — RAIM/FDE Only Aircraft (C055 b(8))`,
+      body:`GPS approach planned at both <strong>${dest.icao}</strong> (destination) and <strong>${f.alt.icao || 'alternate'}</strong>. RAIM/FDE-only aircraft may plan GPS at destination <strong>OR</strong> alternate — not both. Either change the destination approach or remove the GPS approach at the alternate. <span class="ref">[C055 b(8)(e)(i)/(ii)]</span>` });
+  }
+
+  // ── High-min PIC (C054) ──
   if (setup.picStatus === 'High Minimum' && setup.ops.c054 && dest.apchRvr) {
     const hmMap = [[1800,4500],[2000,4500],[2400,5000],[3000,5000],[4000,6000],[5000,6000]];
     const entry = hmMap.find(e => dest.apchRvr <= e[0]);
@@ -1931,24 +2031,31 @@ function analyzeDestination(f, setup) {
     }
   }
 
-  // Turbojet LLM restriction
+  // ── Turbojet LLM restriction ──
   const destRvr = dest.rvr || (dest.vis !== null ? dest.vis * 6076 : null);
   if (setup.ops.c054 && setup.llm !== 'Yes' && destRvr !== null && destRvr < 4000) {
-    results.push({ type:'caution', title:`Destination ${dest.icao} — LLM Restriction (C054 b)`,
+    results.push({ type:'caution', title:`${dest.icao} — LLM Restriction (C054 b)`,
       body:'Destination visibility below ¾ sm / RVR 4000 and PIC is NOT LLM qualified. Runway field length must be ≥ 115% of required. Precision instrument markings or RCL lights must be operative. <span class="ref">[C054 b(1)-(3)]</span>' });
   }
 
-  // Company buffer
+  // ── Company buffer ──
   const margin = (setup.buffer === 'Yes' && parseFloat(setup.visMargin)) ? parseFloat(setup.visMargin) : 0;
   if (margin > 0) { effVis += margin; notes.push(`Company buffer +${margin} sm applied`); }
 
   if (dest.vis !== null) {
-    if (dest.vis < effVis) {
-      results.push({ type:'no-go', title:`Destination ${dest.icao} — Below Effective Minimums`,
-        body:`Forecast visibility <strong>${dest.vis} sm</strong> &lt; effective minimum <strong>${effVis.toFixed(2)} sm</strong><br>${notes.map(n=>'• '+n).join('<br>')}` });
+    const belowMins = dest.vis < effVis;
+    if (belowMins) {
+      results.push({ type:'no-go', title:`Destination ${dest.icao} — Below Approach Minimums`,
+        body:`Forecast visibility <strong>${smLabel(dest.vis)}</strong> &lt; effective minimum <strong>${smLabel(effVis)}</strong><br>${notes.map(n=>'• '+n).join('<br>')}` });
+
+      // ── Item 2: P135 no-dispatch when destination below minimums ──
+      if (f.rule === '135') {
+        results.push({ type:'no-go', title:`PART 135 — Departure Not Authorized (§135.219)`,
+          body:`Destination forecast visibility is below the lowest compatible approach minimum. Dispatch to <strong>${dest.icao}</strong> is not authorized under Part 135. Weather must be forecast at or above published minimums at ETA. <span class="ref">[§135.219, Order 8900.1 Vol.3-2051]</span>` });
+      }
     } else {
       results.push({ type:'go', title:`Destination ${dest.icao} — Above Minimums`,
-        body:`Forecast visibility <strong>${dest.vis} sm</strong> ≥ effective minimum <strong>${effVis.toFixed(2)} sm</strong><br>Approach: ${dest.apch} | DA/MDA: ${dest.da} ft${notes.length ? '<br>' + notes.map(n=>'• '+n).join('<br>') : ''}` });
+        body:`Forecast visibility <strong>${smLabel(dest.vis)}</strong> ≥ effective minimum <strong>${smLabel(effVis)}</strong><br>Approach: ${dest.apch} | DA/MDA: ${dest.da} ft MSL${notes.length ? '<br>' + notes.map(n=>'• '+n).join('<br>') : ''}` });
     }
   }
   return results;
@@ -1976,6 +2083,9 @@ function runAnalysis() {
   const altWnd = f.alt.icao ? analyzeWind(f.alt, 'Dest. Alternate ' + f.alt.icao, setup) : [];
   const destWnd = analyzeWind(f.dest, 'Destination ' + (f.dest.icao||''), setup);
 
+  // Dispatch status: no-go if destination is below minimums (P135 §135.219)
+  const dispatchR = destR.filter(r => r.title && r.title.includes('Departure Not Authorized'));
+
   function worst(arr) {
     if (arr.some(r=>r.type==='no-go'))   return 'nogo';
     if (arr.some(r=>r.type==='caution')) return 'caution';
@@ -1984,12 +2094,15 @@ function runAnalysis() {
   }
   const pillLabel = s => ({go:'GO',nogo:'NO-GO',caution:'CAUTION',na:'N/A'}[s]||s);
 
+  const dispatchStatus = dispatchR.length > 0 ? 'nogo' : (destR.some(r=>r.type==='go') ? 'go' : 'na');
+
   const pills = `<div class="summary-bar">
+    <div class="summary-pill pill-${dispatchStatus}"><div class="pill-label">Dispatch Auth.</div><div class="pill-value">${pillLabel(dispatchStatus)}</div></div>
     <div class="summary-pill pill-${worst(toR)}"><div class="pill-label">Takeoff Mins</div><div class="pill-value">${pillLabel(worst(toR))}</div></div>
     <div class="summary-pill pill-${worst(depAR)}"><div class="pill-label">Dep. Alternate</div><div class="pill-value">${pillLabel(worst(depAR))}</div></div>
-    <div class="summary-pill pill-${worst(altReq)}"><div class="pill-label">Dest. Alt Required</div><div class="pill-value">${pillLabel(worst(altReq))}</div></div>
+    <div class="summary-pill pill-${worst(altReq)}"><div class="pill-label">Dest. Alt Req'd</div><div class="pill-value">${pillLabel(worst(altReq))}</div></div>
     <div class="summary-pill pill-${worst([...altLeg,...altWnd])}"><div class="pill-label">Dest. Alt Legal</div><div class="pill-value">${pillLabel(worst([...altLeg,...altWnd]))}</div></div>
-    <div class="summary-pill pill-${worst(destWnd)}"><div class="pill-label">Dest. Wind</div><div class="pill-value">${pillLabel(worst(destWnd))}</div></div>
+    <div class="summary-pill pill-${worst([...destWnd])}"><div class="pill-label">Dest. Wind</div><div class="pill-value">${pillLabel(worst(destWnd))}</div></div>
   </div>`;
 
   const icons = {go:'✓',caution:'⚠','no-go':'✗',info:'ℹ',neutral:'—'};
@@ -2012,7 +2125,8 @@ function runAnalysis() {
     section('Destination — ' + (f.dest.icao||'DEST'), 'tag-dest', [...destR, ...destWnd, ...altReq]) +
     section('Destination Alternate — ' + (f.alt.icao||'ALT'), 'tag-alt', [...altLeg, ...altWnd]);
 
-  const hdr = `Part ${f.rule} · ${f.flightId || (f.dep.icao+'–'+f.dest.icao)} · ${new Date().toLocaleTimeString()} · ${setup.aircraft||'—'} ${setup.tail||''}`;
+  const timeStr = [f.edt ? 'EDT ' + f.edt : '', f.eta ? 'ETA ' + f.eta : ''].filter(Boolean).join(' / ');
+  const hdr = `Part ${f.rule} · ${f.flightId || (f.dep.icao+'–'+f.dest.icao)} · ${timeStr || new Date().toLocaleTimeString()} · ${setup.aircraft||'—'} ${setup.tail||''}`;
   document.getElementById('results-sub').textContent = hdr;
   showPage('results');
   showToast('Analysis complete');
