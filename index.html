@@ -6,488 +6,179 @@
 <title>Alternate Planning — Sunset Aviation</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
-
   :root {
-    --bg: #0d0f14;
-    --bg2: #13161e;
-    --bg3: #1a1e28;
-    --bg4: #222736;
-    --border: #2a3040;
-    --border2: #3a4560;
-    --text: #e8eaf0;
-    --text2: #9aa0b8;
-    --text3: #5a6080;
-    --accent: #4a90d9;
-    --accent2: #2d6bb0;
-    --green: #2ecc71;
-    --green-bg: #0d2e1a;
-    --green-border: #1a5e35;
-    --red: #e74c3c;
-    --red-bg: #2e0d0d;
-    --red-border: #5e1a1a;
-    --amber: #f39c12;
-    --amber-bg: #2e1e0d;
-    --amber-border: #5e3d1a;
-    --blue-bg: #0d1a2e;
-    --blue-border: #1a3a5e;
-    --mono: 'IBM Plex Mono', monospace;
-    --sans: 'IBM Plex Sans', sans-serif;
-    --radius: 6px;
+    --bg:#0d0f14;--bg2:#13161e;--bg3:#1a1e28;--bg4:#222736;
+    --border:#2a3040;--border2:#3a4560;
+    --text:#e8eaf0;--text2:#9aa0b8;--text3:#5a6080;
+    --accent:#4a90d9;--accent2:#2d6bb0;
+    --green:#2ecc71;--green-bg:#0d2e1a;--green-border:#1a5e35;
+    --red:#e74c3c;--red-bg:#2e0d0d;--red-border:#5e1a1a;
+    --amber:#f39c12;--amber-bg:#2e1e0d;--amber-border:#5e3d1a;
+    --blue-bg:#0d1a2e;--blue-border:#1a3a5e;
+    --mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;
+    --radius:6px;
   }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.6;}
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  /* NAV */
+  .nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;position:sticky;top:0;z-index:100;}
+  .nav-logo{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--accent);letter-spacing:.08em;padding:14px 24px 14px 0;border-right:1px solid var(--border);margin-right:8px;white-space:nowrap;}
+  .nav-tabs{display:flex;}
+  .nav-tab{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.05em;padding:14px 20px;cursor:pointer;color:var(--text3);border-bottom:2px solid transparent;transition:all .15s;background:none;border-top:none;border-left:none;border-right:none;text-transform:uppercase;}
+  .nav-tab:hover{color:var(--text2);}
+  .nav-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+  .nav-right{margin-left:auto;display:flex;align-items:center;gap:10px;}
+  .nav-rule-badge{font-family:var(--mono);font-size:11px;font-weight:600;padding:4px 10px;border-radius:3px;letter-spacing:.08em;}
+  .badge-91{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border);}
+  .badge-135{background:var(--blue-bg);color:var(--accent);border:1px solid var(--blue-border);}
+  .badge-none{background:var(--bg3);color:var(--text3);border:1px solid var(--border);}
 
-  body {
-    font-family: var(--sans);
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    font-size: 14px;
-    line-height: 1.6;
-  }
+  /* LAYOUT */
+  .page{display:none;padding:24px;max-width:1100px;margin:0 auto;}
+  .page.active{display:block;}
 
-  /* ── NAV ── */
-  .nav {
-    background: var(--bg2);
-    border-bottom: 1px solid var(--border);
-    padding: 0 24px;
-    display: flex;
-    align-items: center;
-    gap: 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  .nav-logo {
-    font-family: var(--mono);
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--accent);
-    letter-spacing: .08em;
-    padding: 14px 24px 14px 0;
-    border-right: 1px solid var(--border);
-    margin-right: 8px;
-    white-space: nowrap;
-  }
-  .nav-tabs { display: flex; gap: 0; }
-  .nav-tab {
-    font-family: var(--mono);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: .05em;
-    padding: 14px 20px;
-    cursor: pointer;
-    color: var(--text3);
-    border-bottom: 2px solid transparent;
-    transition: all .15s;
-    background: none;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    text-transform: uppercase;
-  }
-  .nav-tab:hover { color: var(--text2); }
-  .nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
-  .nav-right { margin-left: auto; display: flex; align-items: center; gap: 12px; }
-  .nav-rule-badge {
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 600;
-    padding: 4px 10px;
-    border-radius: 3px;
-    letter-spacing: .08em;
-  }
-  .badge-91 { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
-  .badge-135 { background: var(--blue-bg); color: var(--accent); border: 1px solid var(--blue-border); }
+  /* SECTION */
+  .section{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:16px;overflow:hidden;}
+  .section-header{padding:12px 16px;background:var(--bg3);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;}
+  .section-header h3{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text2);flex:1;}
+  .section-header .chevron{color:var(--text3);font-size:10px;transition:transform .2s;}
+  .section-header.open .chevron{transform:rotate(90deg);}
+  .section-body{padding:16px;}
+  .section-body.collapsed{display:none;}
 
-  /* ── LAYOUT ── */
-  .page { display: none; padding: 24px; max-width: 1100px; margin: 0 auto; }
-  .page.active { display: block; }
+  /* GRID */
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+  .grid-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;}
+  @media(max-width:700px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr;}}
 
-  /* ── SECTION ── */
-  .section {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    margin-bottom: 16px;
-    overflow: hidden;
-  }
-  .section-header {
-    padding: 12px 16px;
-    background: var(--bg3);
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    user-select: none;
-  }
-  .section-header h3 {
-    font-family: var(--mono);
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: var(--text2);
-    flex: 1;
-  }
-  .section-header .chevron { color: var(--text3); font-size: 10px; transition: transform .2s; }
-  .section-header.open .chevron { transform: rotate(90deg); }
-  .section-body { padding: 16px; }
-  .section-body.collapsed { display: none; }
+  /* FORM */
+  .field{display:flex;flex-direction:column;gap:5px;}
+  .field label{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--text3);letter-spacing:.06em;text-transform:uppercase;}
+  .field input,.field select,.field textarea{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);padding:8px 10px;font-family:var(--mono);font-size:13px;outline:none;transition:border-color .15s;width:100%;}
+  .field input:focus,.field select:focus{border-color:var(--accent);}
+  .field input::placeholder{color:var(--text3);}
+  .field select option{background:var(--bg3);}
+  .field-hint{font-size:11px;color:var(--text3);}
+  /* Vis parse feedback */
+  .vis-parsed{font-family:var(--mono);font-size:11px;color:var(--green);margin-top:2px;min-height:14px;}
+  .vis-error{color:var(--red);}
 
-  /* ── GRID ── */
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; }
-  @media(max-width:700px) { .grid-2,.grid-3,.grid-4 { grid-template-columns: 1fr; } }
+  /* CHECKBOX */
+  .check-group{display:flex;flex-direction:column;gap:8px;}
+  .check-row{display:flex;align-items:center;gap:8px;cursor:pointer;}
+  .check-row input[type=checkbox]{accent-color:var(--accent);width:14px;height:14px;cursor:pointer;}
+  .check-row span{font-size:13px;color:var(--text);}
+  .check-row small{font-size:11px;color:var(--text3);margin-left:4px;}
 
-  /* ── FORM ELEMENTS ── */
-  .field { display: flex; flex-direction: column; gap: 5px; }
-  .field label {
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--text3);
-    letter-spacing: .06em;
-    text-transform: uppercase;
-  }
-  .field input, .field select, .field textarea {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    color: var(--text);
-    padding: 8px 10px;
-    font-family: var(--mono);
-    font-size: 13px;
-    outline: none;
-    transition: border-color .15s;
-    width: 100%;
-  }
-  .field input:focus, .field select:focus, .field textarea:focus {
-    border-color: var(--accent);
-  }
-  .field input::placeholder { color: var(--text3); }
-  .field select option { background: var(--bg3); }
-  .field-hint { font-size: 11px; color: var(--text3); }
+  /* RADIO */
+  .radio-group{display:flex;gap:8px;flex-wrap:wrap;}
+  .radio-btn{padding:7px 14px;border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;font-family:var(--mono);font-size:12px;color:var(--text2);background:var(--bg3);transition:all .15s;user-select:none;}
+  .radio-btn:hover{border-color:var(--border2);color:var(--text);}
+  .radio-btn.active{background:var(--accent2);border-color:var(--accent);color:#fff;}
 
-  /* ── CHECKBOX GROUP ── */
-  .check-group { display: flex; flex-direction: column; gap: 8px; }
-  .check-row { display: flex; align-items: center; gap: 8px; cursor: pointer; }
-  .check-row input[type=checkbox] { accent-color: var(--accent); width: 14px; height: 14px; cursor: pointer; }
-  .check-row span { font-size: 13px; color: var(--text); }
-  .check-row small { font-size: 11px; color: var(--text3); margin-left: 4px; }
+  /* BUTTONS */
+  .btn{padding:9px 18px;border-radius:var(--radius);border:none;cursor:pointer;font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;transition:all .15s;}
+  .btn-primary{background:var(--accent);color:#fff;}
+  .btn-primary:hover{background:#5aa0e9;}
+  .btn-secondary{background:var(--bg4);color:var(--text2);border:1px solid var(--border);}
+  .btn-secondary:hover{border-color:var(--border2);color:var(--text);}
+  .btn-danger{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border);}
+  .btn-sm{padding:5px 12px;font-size:11px;}
 
-  /* ── RADIO GROUP ── */
-  .radio-group { display: flex; gap: 8px; flex-wrap: wrap; }
-  .radio-btn {
-    padding: 7px 14px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    cursor: pointer;
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--text2);
-    background: var(--bg3);
-    transition: all .15s;
-    user-select: none;
-  }
-  .radio-btn:hover { border-color: var(--border2); color: var(--text); }
-  .radio-btn.active { background: var(--accent2); border-color: var(--accent); color: #fff; }
+  /* RULE TOGGLE */
+  .rule-toggle{display:flex;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;width:fit-content;}
+  .rule-btn{padding:10px 28px;font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:.08em;cursor:pointer;border:none;background:none;color:var(--text3);transition:all .15s;}
+  .rule-btn.active-91{background:var(--amber-bg);color:var(--amber);}
+  .rule-btn.active-135{background:var(--blue-bg);color:var(--accent);}
 
-  /* ── BUTTONS ── */
-  .btn {
-    padding: 9px 18px;
-    border-radius: var(--radius);
-    border: none;
-    cursor: pointer;
-    font-family: var(--mono);
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-    transition: all .15s;
-  }
-  .btn-primary { background: var(--accent); color: #fff; }
-  .btn-primary:hover { background: #5aa0e9; }
-  .btn-secondary { background: var(--bg4); color: var(--text2); border: 1px solid var(--border); }
-  .btn-secondary:hover { border-color: var(--border2); color: var(--text); }
-  .btn-danger { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
-  .btn-success { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
-  .btn-sm { padding: 5px 12px; font-size: 11px; }
+  /* AIRPORT CARDS */
+  .airport-card-header{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+  .airport-tag{font-family:var(--mono);font-size:11px;font-weight:600;padding:3px 8px;border-radius:3px;letter-spacing:.06em;text-transform:uppercase;}
+  .tag-dep{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border);}
+  .tag-dest{background:var(--blue-bg);color:var(--accent);border:1px solid var(--blue-border);}
+  .tag-alt{background:#1a2e1a;color:var(--green);border:1px solid var(--green-border);}
+  .tag-dalt{background:#2e1a2e;color:#b085d4;border:1px solid #5e356e;}
 
-  /* ── FLIGHT RULE TOGGLE ── */
-  .rule-toggle {
-    display: flex;
-    gap: 0;
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    width: fit-content;
-  }
-  .rule-btn {
-    padding: 10px 28px;
-    font-family: var(--mono);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: .08em;
-    cursor: pointer;
-    border: none;
-    background: none;
-    color: var(--text3);
-    transition: all .15s;
-  }
-  .rule-btn.active-91 { background: var(--amber-bg); color: var(--amber); }
-  .rule-btn.active-135 { background: var(--blue-bg); color: var(--accent); }
+  /* RESULTS */
+  .result-card{border-radius:var(--radius);border:1px solid;padding:14px 16px;margin-bottom:10px;}
+  .result-card.go{background:var(--green-bg);border-color:var(--green-border);}
+  .result-card.no-go{background:var(--red-bg);border-color:var(--red-border);}
+  .result-card.caution{background:var(--amber-bg);border-color:var(--amber-border);}
+  .result-card.info{background:var(--blue-bg);border-color:var(--blue-border);}
+  .result-card.neutral{background:var(--bg3);border-color:var(--border);}
+  .result-header{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+  .result-icon{font-size:16px;}
+  .result-title{font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:.04em;}
+  .result-card.go .result-title{color:var(--green);}
+  .result-card.no-go .result-title{color:var(--red);}
+  .result-card.caution .result-title{color:var(--amber);}
+  .result-card.info .result-title{color:var(--accent);}
+  .result-card.neutral .result-title{color:var(--text2);}
+  .result-body{font-size:13px;color:var(--text2);line-height:1.7;}
+  .result-body .ref{font-family:var(--mono);font-size:11px;color:var(--text3);}
 
-  /* ── AIRPORT CARD ── */
-  .airport-card {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 14px;
-    margin-bottom: 10px;
-  }
-  .airport-card-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
-  }
-  .airport-tag {
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 600;
-    padding: 3px 8px;
-    border-radius: 3px;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-  }
-  .tag-dep { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
-  .tag-dest { background: var(--blue-bg); color: var(--accent); border: 1px solid var(--blue-border); }
-  .tag-alt { background: #1a2e1a; color: var(--green); border: 1px solid var(--green-border); }
-  .tag-dalt { background: #2e1a2e; color: #b085d4; border: 1px solid #5e356e; }
-  .airport-icao {
-    font-family: var(--mono);
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text);
-  }
+  /* SUMMARY BAR */
+  .summary-bar{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
+  .summary-pill{flex:1;min-width:130px;padding:12px 14px;border-radius:var(--radius);border:1px solid;text-align:center;}
+  .summary-pill .pill-label{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;}
+  .summary-pill .pill-value{font-family:var(--mono);font-size:15px;font-weight:600;}
+  .pill-go{background:var(--green-bg);border-color:var(--green-border);color:var(--green);}
+  .pill-nogo{background:var(--red-bg);border-color:var(--red-border);color:var(--red);}
+  .pill-caution{background:var(--amber-bg);border-color:var(--amber-border);color:var(--amber);}
+  .pill-na{background:var(--bg3);border-color:var(--border);color:var(--text3);}
 
-  /* ── RESULT CARDS ── */
-  .result-card {
-    border-radius: var(--radius);
-    border: 1px solid;
-    padding: 14px 16px;
-    margin-bottom: 10px;
-  }
-  .result-card.go { background: var(--green-bg); border-color: var(--green-border); }
-  .result-card.no-go { background: var(--red-bg); border-color: var(--red-border); }
-  .result-card.caution { background: var(--amber-bg); border-color: var(--amber-border); }
-  .result-card.info { background: var(--blue-bg); border-color: var(--blue-border); }
-  .result-card.neutral { background: var(--bg3); border-color: var(--border); }
+  /* MISC */
+  .divider{height:1px;background:var(--border);margin:14px 0;}
+  .page-title{font-family:var(--mono);font-size:18px;font-weight:600;color:var(--text);margin-bottom:4px;letter-spacing:.04em;}
+  .page-sub{font-size:13px;color:var(--text3);margin-bottom:20px;}
+  .top-row{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap;}
+  .infobox{background:var(--blue-bg);border:1px solid var(--blue-border);border-radius:var(--radius);padding:10px 14px;font-size:12px;color:var(--text2);margin-bottom:12px;}
+  .infobox strong{color:var(--accent);font-family:var(--mono);}
 
-  .result-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 8px;
-  }
-  .result-icon { font-size: 16px; }
-  .result-title { font-family: var(--mono); font-size: 13px; font-weight: 600; letter-spacing: .04em; }
-  .result-card.go .result-title { color: var(--green); }
-  .result-card.no-go .result-title { color: var(--red); }
-  .result-card.caution .result-title { color: var(--amber); }
-  .result-card.info .result-title { color: var(--accent); }
-  .result-card.neutral .result-title { color: var(--text2); }
+  /* WX ROW */
+  .wx-row{display:grid;grid-template-columns:70px 1fr 90px 1fr 1fr 1fr;gap:8px;align-items:end;background:var(--bg4);border:1px solid var(--border);border-radius:var(--radius);padding:10px 12px;margin-bottom:8px;}
+  @media(max-width:700px){.wx-row{grid-template-columns:1fr 1fr;}}
+  .wx-row .wx-label{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text3);letter-spacing:.06em;text-transform:uppercase;align-self:center;}
 
-  .result-body { font-size: 13px; color: var(--text2); line-height: 1.7; }
-  .result-body ul { padding-left: 16px; }
-  .result-body li { margin-bottom: 3px; }
-  .result-body .ref { font-family: var(--mono); font-size: 11px; color: var(--text3); }
+  /* WIND ROW */
+  .wind-row{display:grid;grid-template-columns:70px 80px 80px 80px 1fr;gap:8px;align-items:end;background:var(--bg4);border:1px solid var(--border);border-radius:var(--radius);padding:10px 12px;margin-bottom:8px;}
+  @media(max-width:700px){.wind-row{grid-template-columns:1fr 1fr;}}
+  .wind-row .wx-label{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text3);letter-spacing:.06em;text-transform:uppercase;align-self:center;}
 
-  /* ── SUMMARY BAR ── */
-  .summary-bar {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-  }
-  .summary-pill {
-    flex: 1;
-    min-width: 140px;
-    padding: 12px 14px;
-    border-radius: var(--radius);
-    border: 1px solid;
-    text-align: center;
-  }
-  .summary-pill .pill-label {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-  .summary-pill .pill-value {
-    font-family: var(--mono);
-    font-size: 15px;
-    font-weight: 600;
-  }
-  .pill-go { background: var(--green-bg); border-color: var(--green-border); color: var(--green); }
-  .pill-nogo { background: var(--red-bg); border-color: var(--red-border); color: var(--red); }
-  .pill-caution { background: var(--amber-bg); border-color: var(--amber-border); color: var(--amber); }
-  .pill-na { background: var(--bg3); border-color: var(--border); color: var(--text3); }
+  /* APPROACH ROW */
+  .approach-row{display:grid;grid-template-columns:1fr 1fr 100px 100px;gap:8px;align-items:end;background:var(--bg4);border:1px solid var(--border);border-radius:var(--radius);padding:10px 12px;margin-bottom:8px;}
+  @media(max-width:700px){.approach-row{grid-template-columns:1fr 1fr;}}
 
-  /* ── DIVIDER ── */
-  .divider { height: 1px; background: var(--border); margin: 14px 0; }
+  /* INNER TABS */
+  .inner-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:16px;}
+  .inner-tab{padding:8px 18px;font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;background:none;border-top:none;border-left:none;border-right:none;transition:all .15s;}
+  .inner-tab:hover{color:var(--text2);}
+  .inner-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+  .inner-page{display:none;}
+  .inner-page.active{display:block;}
 
-  /* ── PAGE TITLE ── */
-  .page-title {
-    font-family: var(--mono);
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 4px;
-    letter-spacing: .04em;
-  }
-  .page-sub { font-size: 13px; color: var(--text3); margin-bottom: 20px; }
+  /* RULES TABLE */
+  .rules-table{width:100%;border-collapse:collapse;font-size:12px;}
+  .rules-table th{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);padding:6px 10px;border-bottom:1px solid var(--border);text-align:left;background:var(--bg3);}
+  .rules-table td{padding:8px 10px;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:top;}
+  .rules-table tr:last-child td{border-bottom:none;}
+  .rules-table .mono-cell{font-family:var(--mono);font-size:12px;color:var(--text);}
 
-  /* ── TOP ROW ACTIONS ── */
-  .top-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-  }
+  /* COL HEADER */
+  .col-header{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:8px;}
 
-  /* ── WEATHER MINI-ROW ── */
-  .wx-row {
-    display: grid;
-    grid-template-columns: 80px 1fr 1fr 1fr 1fr 1fr;
-    gap: 8px;
-    align-items: end;
-    margin-bottom: 8px;
-    background: var(--bg4);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 10px 12px;
-  }
-  @media(max-width:700px) { .wx-row { grid-template-columns: 1fr 1fr; } }
-  .wx-row .wx-label {
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--text3);
-    letter-spacing: .06em;
-    text-transform: uppercase;
-    padding-top: 4px;
-    align-self: center;
-  }
+  /* TOAST */
+  .toast{position:fixed;bottom:24px;right:24px;background:var(--bg3);border:1px solid var(--green-border);color:var(--green);padding:10px 18px;border-radius:var(--radius);font-family:var(--mono);font-size:12px;font-weight:500;z-index:999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;}
+  .toast.show{opacity:1;transform:translateY(0);}
 
-  /* ── APPROACH ROW ── */
-  .approach-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr 100px 100px;
-    gap: 8px;
-    align-items: end;
-    background: var(--bg4);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 10px 12px;
-    margin-bottom: 8px;
-  }
-  @media(max-width:700px) { .approach-row { grid-template-columns: 1fr 1fr; } }
+  /* PERSIST indicator */
+  .persist-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-right:6px;vertical-align:middle;}
 
-  /* ── COLLAPSIBLE ── */
-  .collapsible { overflow: hidden; transition: max-height 0.3s ease; }
-
-  /* ── TOAST ── */
-  .toast {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    background: var(--bg3);
-    border: 1px solid var(--green-border);
-    color: var(--green);
-    padding: 10px 18px;
-    border-radius: var(--radius);
-    font-family: var(--mono);
-    font-size: 12px;
-    font-weight: 500;
-    z-index: 999;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all .3s;
-  }
-  .toast.show { opacity: 1; transform: translateY(0); }
-
-  /* ── SCROLLBAR ── */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
-
-  /* ── MONOSPACE VALUES ── */
-  .mono { font-family: var(--mono); }
-
-  /* ── INFOBOX ── */
-  .infobox {
-    background: var(--blue-bg);
-    border: 1px solid var(--blue-border);
-    border-radius: var(--radius);
-    padding: 10px 14px;
-    font-size: 12px;
-    color: var(--text2);
-    margin-bottom: 12px;
-  }
-  .infobox strong { color: var(--accent); font-family: var(--mono); }
-
-  /* ── TABS WITHIN PAGE ── */
-  .inner-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
-  .inner-tab {
-    padding: 8px 18px;
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-    color: var(--text3);
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    background: none;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    transition: all .15s;
-  }
-  .inner-tab:hover { color: var(--text2); }
-  .inner-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
-  .inner-page { display: none; }
-  .inner-page.active { display: block; }
-
-  /* ── RULES TABLE ── */
-  .rules-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-  .rules-table th {
-    font-family: var(--mono);
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-    color: var(--text3);
-    padding: 6px 10px;
-    border-bottom: 1px solid var(--border);
-    text-align: left;
-    background: var(--bg3);
-  }
-  .rules-table td {
-    padding: 8px 10px;
-    border-bottom: 1px solid var(--border);
-    color: var(--text2);
-    vertical-align: top;
-  }
-  .rules-table tr:last-child td { border-bottom: none; }
-  .rules-table .mono-cell { font-family: var(--mono); font-size: 12px; color: var(--text); }
+  ::-webkit-scrollbar{width:6px;}
+  ::-webkit-scrollbar-track{background:var(--bg);}
+  ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px;}
 </style>
 </head>
 <body>
@@ -502,47 +193,36 @@
     <button class="nav-tab" onclick="showPage('reference')">Reference</button>
   </div>
   <div class="nav-right">
-    <div class="nav-rule-badge" id="nav-rule-badge">—</div>
+    <span id="persist-status" style="font-family:var(--mono);font-size:11px;color:var(--text3)"></span>
+    <div class="nav-rule-badge badge-none" id="nav-rule-badge">— Rule —</div>
   </div>
 </nav>
 
-<div id="toast" class="toast">Settings saved</div>
+<div id="toast" class="toast"></div>
 
-<!-- ════════════════════════════════════════════════
-     PAGE: SETUP
-════════════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════
+     SETUP PAGE
+═══════════════════════════════════════ -->
 <div id="page-setup" class="page active">
-  <div class="page-title">Aircraft & Crew Setup</div>
-  <div class="page-sub">Configure once — settings persist across sessions. All fields inform the alternate planning logic.</div>
+  <div class="page-title">Aircraft &amp; Crew Setup</div>
+  <div class="page-sub">Configure once — persists across sessions. All fields inform the alternate planning logic.</div>
 
-  <!-- DEFAULTS -->
+  <!-- UNITS -->
   <div class="section">
-    <div class="section-header open" onclick="toggleSection(this)">
-      <h3>Default Units & Display</h3>
-      <span class="chevron">▶</span>
-    </div>
+    <div class="section-header open" onclick="toggleSection(this)"><h3>Default Units</h3><span class="chevron">▶</span></div>
     <div class="section-body">
       <div class="grid-3">
-        <div class="field">
-          <label>Time Format</label>
-          <div class="radio-group" id="rg-time">
-            <div class="radio-btn active" onclick="radioSelect('rg-time',this,'Zulu')">Zulu</div>
-            <div class="radio-btn" onclick="radioSelect('rg-time',this,'Local')">Local</div>
-          </div>
-        </div>
-        <div class="field">
-          <label>Altitude</label>
-          <div class="radio-group" id="rg-alt-unit">
-            <div class="radio-btn active" onclick="radioSelect('rg-alt-unit',this,'Feet')">Feet</div>
-            <div class="radio-btn" onclick="radioSelect('rg-alt-unit',this,'Meters')">Meters</div>
-          </div>
-        </div>
-        <div class="field">
-          <label>Visibility</label>
+        <div class="field"><label>Visibility Input</label>
           <div class="radio-group" id="rg-vis-unit">
-            <div class="radio-btn active" onclick="radioSelect('rg-vis-unit',this,'SM')">SM</div>
-            <div class="radio-btn" onclick="radioSelect('rg-vis-unit',this,'RVR')">RVR (ft)</div>
-            <div class="radio-btn" onclick="radioSelect('rg-vis-unit',this,'Meters')">Meters</div>
+            <div class="radio-btn active" onclick="radioSelect('rg-vis-unit',this)">SM / Fractions</div>
+            <div class="radio-btn" onclick="radioSelect('rg-vis-unit',this)">RVR (ft)</div>
+            <div class="radio-btn" onclick="radioSelect('rg-vis-unit',this)">Meters</div>
+          </div>
+        </div>
+        <div class="field"><label>Time</label>
+          <div class="radio-group" id="rg-time">
+            <div class="radio-btn active" onclick="radioSelect('rg-time',this)">Zulu</div>
+            <div class="radio-btn" onclick="radioSelect('rg-time',this)">Local</div>
           </div>
         </div>
       </div>
@@ -551,21 +231,17 @@
 
   <!-- AIRCRAFT -->
   <div class="section">
-    <div class="section-header open" onclick="toggleSection(this)">
-      <h3>Aircraft</h3>
-      <span class="chevron">▶</span>
-    </div>
+    <div class="section-header open" onclick="toggleSection(this)"><h3>Aircraft</h3><span class="chevron">▶</span></div>
     <div class="section-body">
       <div class="grid-3">
-        <div class="field">
-          <label>Aircraft M/M/S</label>
+        <div class="field"><label>Aircraft M/M/S</label>
           <select id="s-aircraft" onchange="onAircraftChange()">
             <option value="">— Select —</option>
             <optgroup label="Bombardier">
               <option value="BD-100-1A10">BD-100-1A10 (CL-300)</option>
-              <option value="BD-700-1A10">BD-700-1A10 (G5000/G6000)</option>
-              <option value="BD-700-1A11">BD-700-1A11 (G5000)</option>
-              <option value="BD-700-2A12">BD-700-2A12 (G7000)</option>
+              <option value="BD-700-1A10">BD-700-1A10</option>
+              <option value="BD-700-1A11">BD-700-1A11</option>
+              <option value="BD-700-2A12">BD-700-2A12</option>
             </optgroup>
             <optgroup label="Beechcraft">
               <option value="BE-200-200">BE-200-200</option>
@@ -604,41 +280,34 @@
               <option value="GVIII-G700">GVIII-G700</option>
               <option value="GVIII-G800">GVIII-G800</option>
             </optgroup>
-            <optgroup label="Hawker">
+            <optgroup label="Hawker / Pilatus">
               <option value="HAWKER-900XP">HAWKER-900XP</option>
-            </optgroup>
-            <optgroup label="Pilatus">
               <option value="PC-12-47E">PC-12-47E</option>
               <option value="PC-24">PC-24</option>
             </optgroup>
           </select>
         </div>
-        <div class="field">
-          <label>Tail Number</label>
-          <input type="text" id="s-tail" placeholder="N12345" style="text-transform:uppercase">
+        <div class="field"><label>Tail Number</label>
+          <input type="text" id="s-tail" placeholder="N12345" oninput="this.value=this.value.toUpperCase()">
         </div>
-        <div class="field">
-          <label>Engine Count</label>
+        <div class="field"><label>Engine Count</label>
           <div class="radio-group" id="rg-engines">
-            <div class="radio-btn" onclick="radioSelect('rg-engines',this,'1')">1</div>
-            <div class="radio-btn active" onclick="radioSelect('rg-engines',this,'2')">2</div>
-            <div class="radio-btn" onclick="radioSelect('rg-engines',this,'3')">3</div>
-            <div class="radio-btn" onclick="radioSelect('rg-engines',this,'4')">4</div>
+            <div class="radio-btn" onclick="radioSelect('rg-engines',this)">1</div>
+            <div class="radio-btn active" onclick="radioSelect('rg-engines',this)">2</div>
+            <div class="radio-btn" onclick="radioSelect('rg-engines',this)">3</div>
+            <div class="radio-btn" onclick="radioSelect('rg-engines',this)">4</div>
           </div>
         </div>
       </div>
       <div class="divider"></div>
       <div class="grid-3">
-        <div class="field">
-          <label>Crosswind Limit (kt)</label>
+        <div class="field"><label>Max Crosswind Limit (kt) — AFM</label>
           <input type="number" id="s-xwind" placeholder="e.g. 25">
         </div>
-        <div class="field">
-          <label>Tailwind Limit (kt)</label>
+        <div class="field"><label>Max Tailwind Limit (kt) — AFM</label>
           <input type="number" id="s-tailwind" placeholder="e.g. 10">
         </div>
-        <div class="field">
-          <label>Navigation Database</label>
+        <div class="field"><label>Navigation Database</label>
           <select id="s-navdb">
             <option value="Collins">Collins (J6)</option>
             <option value="Jeppesen">Jeppesen</option>
@@ -652,46 +321,38 @@
 
   <!-- CREW -->
   <div class="section">
-    <div class="section-header open" onclick="toggleSection(this)">
-      <h3>Crew</h3>
-      <span class="chevron">▶</span>
-    </div>
+    <div class="section-header open" onclick="toggleSection(this)"><h3>Crew</h3><span class="chevron">▶</span></div>
     <div class="section-body">
       <div class="grid-3">
-        <div class="field">
-          <label>PIC Name</label>
+        <div class="field"><label>PIC Name</label>
           <input type="text" id="s-pic-name" placeholder="Last, First">
         </div>
-        <div class="field">
-          <label>PIC Status</label>
+        <div class="field"><label>PIC Status (C054)</label>
           <div class="radio-group" id="rg-pic-status">
-            <div class="radio-btn active" onclick="radioSelect('rg-pic-status',this,'Standard')">Standard</div>
-            <div class="radio-btn" onclick="radioSelect('rg-pic-status',this,'HighMin')">High Minimum</div>
+            <div class="radio-btn active" onclick="radioSelect('rg-pic-status',this)">Standard</div>
+            <div class="radio-btn" onclick="radioSelect('rg-pic-status',this)">High Minimum</div>
           </div>
           <div class="field-hint">High Min = has not met §135.225(e)</div>
         </div>
-        <div class="field">
-          <label>LLM Qualified (Lower Landing Min)?</label>
+        <div class="field"><label>LLM Qualified? (Lower Landing Min)</label>
           <div class="radio-group" id="rg-llm">
-            <div class="radio-btn active" onclick="radioSelect('rg-llm',this,'No')">No</div>
-            <div class="radio-btn" onclick="radioSelect('rg-llm',this,'Yes')">Yes</div>
+            <div class="radio-btn active" onclick="radioSelect('rg-llm',this)">No</div>
+            <div class="radio-btn" onclick="radioSelect('rg-llm',this)">Yes</div>
           </div>
-          <div class="field-hint">Turbojet CAT I to 1800 RVR</div>
+          <div class="field-hint">Turbojet CAT I to 1800 RVR (C052)</div>
         </div>
       </div>
       <div class="divider"></div>
       <div class="grid-2">
-        <div class="field">
-          <label>Use Conservative Visibility Buffer</label>
+        <div class="field"><label>Apply Company Visibility Buffer?</label>
           <div class="radio-group" id="rg-buffer">
-            <div class="radio-btn active" onclick="radioSelect('rg-buffer',this,'No')">No</div>
-            <div class="radio-btn" onclick="radioSelect('rg-buffer',this,'Yes')">Yes</div>
+            <div class="radio-btn active" onclick="radioSelect('rg-buffer',this)">No</div>
+            <div class="radio-btn" onclick="radioSelect('rg-buffer',this)">Yes</div>
           </div>
         </div>
-        <div class="field">
-          <label>Additive Visibility Margin (sm)</label>
+        <div class="field"><label>Buffer Margin (sm)</label>
           <input type="number" id="s-vis-margin" placeholder="0" step="0.25" min="0" max="2">
-          <div class="field-hint">Added to published minimums (company SOP)</div>
+          <div class="field-hint">Added to all published visibility minimums</div>
         </div>
       </div>
     </div>
@@ -699,103 +360,127 @@
 
   <!-- EQUIPMENT -->
   <div class="section">
-    <div class="section-header open" onclick="toggleSection(this)">
-      <h3>Equipment — Navigation & Approach</h3>
-      <span class="chevron">▶</span>
-    </div>
+    <div class="section-header open" onclick="toggleSection(this)"><h3>Equipment — Navigation &amp; Approach</h3><span class="chevron">▶</span></div>
     <div class="section-body">
       <div class="grid-2">
         <div>
-          <div style="font-family:var(--mono);font-size:11px;color:var(--text3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;">Flight Deck Equipment</div>
+          <div class="col-header">Flight Deck</div>
           <div class="check-group">
             <label class="check-row"><input type="checkbox" id="eq-fd"><span>FD — Flight Director</span></label>
             <label class="check-row"><input type="checkbox" id="eq-ap"><span>AP — Autopilot</span></label>
             <label class="check-row"><input type="checkbox" id="eq-hud"><span>HUD — Head-Up Display</span></label>
-            <label class="check-row"><input type="checkbox" id="eq-evs"><span>EVS — Enhanced Vision System</span></label>
+            <label class="check-row"><input type="checkbox" id="eq-evs"><span>EVS — Enhanced Vision System (C048)</span></label>
           </div>
         </div>
         <div>
-          <div style="font-family:var(--mono);font-size:11px;color:var(--text3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;">GPS / RNAV Equipment</div>
+          <div class="col-header">GPS / RNAV</div>
           <div class="check-group">
             <label class="check-row"><input type="checkbox" id="eq-gps-c129"><span>TSO-C129( ) or TSO-C196( ) GPS</span></label>
-            <label class="check-row"><input type="checkbox" id="eq-fde" style="margin-left:20px"><span>↳ FDE (Fault Detection &amp; Exclusion)</span></label>
-            <label class="check-row"><input type="checkbox" id="eq-baro-c129" style="margin-left:20px"><span>↳ Baro-VNAV with C129/C196</span></label>
+            <label class="check-row"><input type="checkbox" id="eq-fde" style="margin-left:18px"><span>↳ FDE (Fault Detection &amp; Exclusion)</span></label>
+            <label class="check-row"><input type="checkbox" id="eq-baro-c129" style="margin-left:18px"><span>↳ Baro-VNAV with C129/C196</span></label>
             <label class="check-row"><input type="checkbox" id="eq-waas"><span>TSO-C145( ) or TSO-C146( ) WAAS</span></label>
-            <label class="check-row"><input type="checkbox" id="eq-baro-waas" style="margin-left:20px"><span>↳ Baro-VNAV with WAAS</span></label>
+            <label class="check-row"><input type="checkbox" id="eq-baro-waas" style="margin-left:18px"><span>↳ Baro-VNAV with WAAS</span></label>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- OP SPEC AUTHORIZATIONS -->
+  <!-- OP SPECS -->
   <div class="section">
-    <div class="section-header open" onclick="toggleSection(this)">
-      <h3>Operations Specification Authorizations — Sunset Aviation LLC</h3>
-      <span class="chevron">▶</span>
-    </div>
+    <div class="section-header open" onclick="toggleSection(this)"><h3>Op Spec Authorizations — Cert No. 7SSA382M</h3><span class="chevron">▶</span></div>
     <div class="section-body">
-      <div class="infobox"><strong>Certificate No. 7SSA382M</strong> — Check only the op specs that are current and apply to this aircraft.</div>
-      <div class="grid-2">
+      <div class="infobox"><strong>Check only the op specs that are current and apply to this aircraft/flight.</strong></div>
+      <div class="grid-2" style="margin-bottom:16px">
         <div class="check-group">
-          <label class="check-row"><input type="checkbox" id="ops-c048"><span>C048 — EFVS Operations</span><small>(§91.176)</small></label>
+          <label class="check-row"><input type="checkbox" id="ops-c048"><span>C048 — EFVS Operations (§91.176)</span></label>
           <label class="check-row"><input type="checkbox" id="ops-c052" checked><span>C052 — Straight-in NPA, APV &amp; CAT I Precision</span></label>
-          <label class="check-row"><input type="checkbox" id="ops-c054"><span>C054 — High Minimums PIC Provisions</span></label>
-          <label class="check-row"><input type="checkbox" id="ops-c055" checked><span>C055 — Alternate Airport IFR Weather Minimums</span></label>
+          <label class="check-row"><input type="checkbox" id="ops-c054"><span>C054 — High Min PIC / Turbojet LLM</span></label>
+          <label class="check-row"><input type="checkbox" id="ops-c055" checked><span>C055 — Alternate Airport IFR Minimums</span></label>
         </div>
         <div class="check-group">
           <label class="check-row"><input type="checkbox" id="ops-c057" checked><span>C057 — IFR Takeoff Minimums</span></label>
           <label class="check-row"><input type="checkbox" id="ops-c073"><span>C073 — MDA as DA (VNAV)</span></label>
           <label class="check-row"><input type="checkbox" id="ops-c079"><span>C079 — Lower-Than-Standard Takeoff Minimums</span></label>
-          <label class="check-row"><input type="checkbox" id="ops-c384"><span>C384 — RNAV (RNP) Procedures with AR</span></label>
+          <label class="check-row"><input type="checkbox" id="ops-c384"><span>C384 — RNAV (RNP) with Authorization Required</span></label>
         </div>
       </div>
-      <div class="divider"></div>
-      <div style="font-family:var(--mono);font-size:11px;color:var(--text3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;">Approach Types Authorized (C052 Table 1)</div>
+
+      <!-- C052 TABLE 1 — exact three-column structure -->
+      <div class="col-header" style="margin-bottom:10px">C052 Table 1 — Authorized Instrument Approach Procedures</div>
       <div class="grid-3">
-        <div class="check-group">
-          <label class="check-row"><input type="checkbox" id="apt-ils" checked><span>ILS / ILS-DME</span></label>
-          <label class="check-row"><input type="checkbox" id="apt-lpv" checked><span>LPV (WAAS)</span></label>
-          <label class="check-row"><input type="checkbox" id="apt-lnav-vnav" checked><span>LNAV/VNAV (RNAV GPS)</span></label>
-          <label class="check-row"><input type="checkbox" id="apt-lnav" checked><span>LNAV / RNAV(GPS)</span></label>
+        <div>
+          <div style="font-size:11px;color:var(--accent);font-family:var(--mono);margin-bottom:6px;font-weight:600;">Column 1 — NPA (No Vertical Guidance)</div>
+          <div class="check-group">
+            <label class="check-row"><input type="checkbox" id="apt-gps" checked><span>GPS</span></label>
+            <label class="check-row"><input type="checkbox" id="apt-lda" checked><span>LDA</span></label>
+            <label class="check-row"><input type="checkbox" id="apt-lda-dme" checked><span>LDA/DME</span></label>
+            <label class="check-row"><input type="checkbox" id="apt-loc" checked><span>LOC</span></label>
+            <label class="check-row"><input type="checkbox" id="apt-loc-bc" checked><span>LOC BC</span></label>
+            <label class="check-row"><input type="checkbox" id="apt-loc-bc-dme" checked><span>LOC/BC/DME</span></label>
+            <label class="check-row"><input type="checkbox" id="apt-loc-dme" checked><span>LOC/DME</span></label>
+            <label class="check-row"><input type="checkbox" id="apt-ndb"><span>NDB</span></label>
+            <label class="check-row"><input type="checkbox" id="apt-ndb-dme"><span>NDB/DME</span></label>
+            <label class="check-row"><input type="checkbox" id="apt-rnav-gnss" checked><span>RNAV (GNSS)</span></label>
+            <label class="check-row"><input type="checkbox" id="apt-rnav-gps" checked><span>RNAV (GPS)</span></label>
+            <label class="check-row"><input type="checkbox" id="apt-rnav-vordme" checked><span>RNAV (VOR/DME)</span></label>
+            <label class="check-row"><input type="checkbox" id="apt-vor" checked><span>VOR</span></label>
+            <label class="check-row"><input type="checkbox" id="apt-vor-dme-loc" checked><span>VOR/DME/LOC</span></label>
+          </div>
         </div>
-        <div class="check-group">
-          <label class="check-row"><input type="checkbox" id="apt-vor" checked><span>VOR / VOR-DME</span></label>
-          <label class="check-row"><input type="checkbox" id="apt-ndb"><span>NDB / NDB-DME</span></label>
-          <label class="check-row"><input type="checkbox" id="apt-loc" checked><span>LOC / LOC-BC / LOC-DME</span></label>
-          <label class="check-row"><input type="checkbox" id="apt-lda"><span>LDA / LDA-DME</span></label>
+        <div>
+          <div style="font-size:11px;color:var(--accent);font-family:var(--mono);margin-bottom:6px;font-weight:600;">Column 2 — APV (Vertical Guidance)</div>
+          <div class="check-group">
+            <label class="check-row"><input type="checkbox" id="apt-lda-prm" checked><span>LDA PRM</span></label>
+            <label class="check-row"><input type="checkbox" id="apt-lda-prm-dme" checked><span>LDA PRM DME</span></label>
+            <label class="check-row"><input type="checkbox" id="apt-lda-gs" checked><span>LDA with glide slope</span></label>
+            <label class="check-row"><input type="checkbox" id="apt-loc-bc-gs" checked><span>LOC BC with glide slope</span></label>
+            <label class="check-row"><input type="checkbox" id="apt-rnav-gnss-apv" checked><span>RNAV (GNSS) — APV</span></label>
+            <label class="check-row"><input type="checkbox" id="apt-rnav-gps-apv" checked><span>RNAV (GPS) — APV</span></label>
+          </div>
+          <div style="font-size:11px;color:var(--accent);font-family:var(--mono);margin-bottom:6px;font-weight:600;margin-top:14px;">Column 3 — Precision (ILS &amp; GLS)</div>
+          <div class="check-group">
+            <label class="check-row"><input type="checkbox" id="apt-rnav-ils" checked><span>*RNAV/ILS</span></label>
+            <label class="check-row"><input type="checkbox" id="apt-ils" checked><span>ILS</span></label>
+            <label class="check-row"><input type="checkbox" id="apt-ils-dme" checked><span>ILS/DME</span></label>
+          </div>
         </div>
-        <div class="check-group">
-          <label class="check-row"><input type="checkbox" id="apt-rnpar"><span>RNAV (RNP) AR — via C384</span></label>
-          <label class="check-row" style="margin-top:10px"><input type="checkbox" id="apt-cat2"><span>Reduced CAT I (1800 RVR)</span><small>FD/AP/HUD req'd</small></label>
+        <div>
+          <div style="font-size:11px;color:var(--accent);font-family:var(--mono);margin-bottom:6px;font-weight:600;">Special Authorization</div>
+          <div class="check-group">
+            <label class="check-row"><input type="checkbox" id="apt-rnpar"><span>RNAV (RNP) AR — via C384 only</span></label>
+            <label class="check-row" style="margin-top:8px"><input type="checkbox" id="apt-cat2"><span>Reduced Precision CAT I (1800 RVR)</span><small>FD/AP/HUD req'd per C052</small></label>
+          </div>
+          <div class="infobox" style="margin-top:12px;font-size:11px;">
+            <strong>Note (C052):</strong> RNAV (GPS) approval extends to "RNAV (GNSS)" and "RNP" titled approaches at foreign airports (equipment equivalency check required). Does NOT extend to RNP AR without C384.
+          </div>
         </div>
       </div>
+
       <div class="divider"></div>
-      <div style="font-family:var(--mono);font-size:11px;color:var(--text3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;">Vertical Guidance Method (C073)</div>
-      <div class="radio-group" id="rg-vnav">
-        <div class="radio-btn active" onclick="radioSelect('rg-vnav',this,'None')">None</div>
-        <div class="radio-btn" onclick="radioSelect('rg-vnav',this,'Baro-VNAV')">Baro-VNAV</div>
-        <div class="radio-btn" onclick="radioSelect('rg-vnav',this,'WAAS-LPV')">WAAS (LPV)</div>
-        <div class="radio-btn" onclick="radioSelect('rg-vnav',this,'Both')">Both</div>
+      <div class="col-header">C073 — Vertical Navigation Method</div>
+      <div class="radio-group" id="rg-vnav" style="margin-top:8px">
+        <div class="radio-btn active" onclick="radioSelect('rg-vnav',this)">None</div>
+        <div class="radio-btn" onclick="radioSelect('rg-vnav',this)">Baro-VNAV</div>
+        <div class="radio-btn" onclick="radioSelect('rg-vnav',this)">WAAS (LPV)</div>
+        <div class="radio-btn" onclick="radioSelect('rg-vnav',this)">Both</div>
       </div>
     </div>
   </div>
 
-  <!-- SAVE -->
   <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:8px;">
     <button class="btn btn-secondary" onclick="resetSetup()">Reset Defaults</button>
     <button class="btn btn-primary" onclick="saveSetup()">Save Setup</button>
   </div>
 </div>
 
-<!-- ════════════════════════════════════════════════
-     PAGE: FLIGHT PLAN
-════════════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════
+     FLIGHT PLAN PAGE
+═══════════════════════════════════════ -->
 <div id="page-flight" class="page">
   <div class="page-title">Flight Plan Input</div>
-  <div class="page-sub">Enter weather and approach data for each airport. All fields drive the alternate planning logic.</div>
+  <div class="page-sub">Entries are saved automatically as you type — reopen the app to continue where you left off. Update only the weather fields for a new day on the same routing.</div>
 
-  <!-- RULE SELECTOR -->
   <div class="top-row">
     <div class="field" style="flex:0">
       <label>Flight Rule</label>
@@ -804,329 +489,417 @@
         <button class="rule-btn" id="rb-135" onclick="setRule('135')">Part 135</button>
       </div>
     </div>
-    <div class="field">
+    <div class="field" style="flex:1;max-width:360px">
       <label>Flight ID / Leg</label>
-      <input type="text" id="f-flightid" placeholder="e.g. SSA 101 / KDAL–KBOS" style="max-width:320px">
+      <input type="text" id="f-flightid" placeholder="e.g. SSA 101 / KDAL–KBOS">
     </div>
-    <button class="btn btn-secondary" style="margin-top:18px" onclick="clearFlight()">Clear Flight</button>
+    <button class="btn btn-secondary" style="margin-top:18px" onclick="clearWeatherOnly()">Clear Weather Only</button>
+    <button class="btn btn-danger btn-sm" style="margin-top:18px" onclick="clearFlight()">Clear All</button>
     <button class="btn btn-primary" style="margin-top:18px" onclick="runAnalysis()">▶ Analyze</button>
   </div>
 
-  <div id="rule-hint" class="infobox" style="margin-bottom:16px"></div>
+  <div id="rule-hint" class="infobox"></div>
 
-  <!-- DEPARTURE -->
+  <!-- ── DEPARTURE ── -->
   <div class="section">
-    <div class="section-header open" onclick="toggleSection(this)">
-      <h3>Departure Airport</h3>
-      <span class="chevron">▶</span>
-    </div>
+    <div class="section-header open" onclick="toggleSection(this)"><h3>Departure Airport</h3><span class="chevron">▶</span></div>
     <div class="section-body">
       <div class="grid-3" style="margin-bottom:12px">
-        <div class="field">
-          <label>Departure ICAO</label>
-          <input type="text" id="f-dep-icao" placeholder="KDAL" style="text-transform:uppercase;font-size:16px;font-weight:600">
+        <div class="field"><label>Departure ICAO</label>
+          <input type="text" id="f-dep-icao" placeholder="KDAL" oninput="this.value=this.value.toUpperCase()" style="font-size:16px;font-weight:600;">
         </div>
-        <div class="field">
-          <label>Airport Elevation (ft MSL)</label>
+        <div class="field"><label>Airport Elevation (ft MSL)</label>
           <input type="number" id="f-dep-elev" placeholder="487">
         </div>
-        <div class="field">
-          <label>Longest Runway (ft)</label>
-          <input type="number" id="f-dep-rwy" placeholder="9000">
+        <div class="field"><label>Longest Runway (ft)</label>
+          <input type="number" id="f-dep-rwy-len" placeholder="9000">
         </div>
       </div>
-      <div style="font-family:var(--mono);font-size:11px;color:var(--text3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;">Departure Weather</div>
-      <div class="wx-row">
-        <div class="wx-label">Ceiling</div>
-        <div class="field"><label>Height (ft AGL)</label><input type="number" id="f-dep-ceil" placeholder="—"></div>
+
+      <!-- Runway in use -->
+      <div class="col-header">Runway in Use</div>
+      <div class="grid-3" style="margin:8px 0 12px">
+        <div class="field"><label>Runway ID</label>
+          <input type="text" id="f-dep-rwy-id" placeholder="e.g. 18L" oninput="this.value=this.value.toUpperCase()" style="font-family:var(--mono)">
+        </div>
+        <div class="field"><label>Runway Magnetic Heading (°)</label>
+          <input type="number" id="f-dep-rwy-hdg" placeholder="e.g. 182" min="1" max="360">
+        </div>
+      </div>
+
+      <!-- Weather -->
+      <div class="col-header">Current Departure Weather</div>
+      <div class="wx-row" style="margin-top:8px">
+        <div class="wx-label">Sky</div>
+        <div class="field"><label>Ceiling (ft AGL)</label><input type="number" id="f-dep-ceil" placeholder="—"></div>
         <div class="field"><label>Coverage</label>
           <select id="f-dep-cov">
-            <option value="">—</option>
-            <option value="CLR">CLR</option>
-            <option value="FEW">FEW</option>
-            <option value="SCT">SCT</option>
-            <option value="BKN">BKN</option>
-            <option value="OVC">OVC</option>
+            <option value="">—</option><option>CLR</option><option>FEW</option><option>SCT</option><option>BKN</option><option>OVC</option>
           </select>
         </div>
-        <div class="field"><label>Visibility (sm)</label><input type="number" id="f-dep-vis" placeholder="10" step="0.25"></div>
-        <div class="field"><label>RVR (if avail)</label><input type="number" id="f-dep-rvr" placeholder="—" step="100"></div>
-        <div class="field"><label>Wind (kt / °)</label>
-          <div style="display:flex;gap:4px">
-            <input type="number" id="f-dep-wdir" placeholder="°" style="width:60px">
-            <input type="number" id="f-dep-wspd" placeholder="kt" style="width:60px">
-          </div>
+        <div class="field"><label>Visibility</label>
+          <input type="text" id="f-dep-vis" placeholder="e.g. 1/2 or 1.5" oninput="liveParseVis(this,'f-dep-vis-out')">
+          <div class="vis-parsed" id="f-dep-vis-out"></div>
         </div>
+        <div class="field"><label>TDZ RVR (ft)</label><input type="number" id="f-dep-rvr" placeholder="—" step="100"></div>
       </div>
-      <div style="font-family:var(--mono);font-size:11px;color:var(--text3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;">Published Takeoff Minimums</div>
-      <div class="grid-3">
-        <div class="field">
-          <label>Published T/O Visibility (sm or RVR)</label>
-          <input type="number" id="f-dep-to-vis" placeholder="If published; else standard applies" step="0.25">
+
+      <!-- Wind -->
+      <div class="col-header" style="margin-top:8px">Wind</div>
+      <div class="wind-row" style="margin-top:6px">
+        <div class="wx-label">Wind</div>
+        <div class="field"><label>Dir (°)</label><input type="number" id="f-dep-wdir" placeholder="—" min="1" max="360"></div>
+        <div class="field"><label>Speed (kt)</label><input type="number" id="f-dep-wspd" placeholder="—" min="0"></div>
+        <div class="field"><label>Gust (kt)</label><input type="number" id="f-dep-gust" placeholder="—" min="0" title="Gust speed kt"></div>
+        <div id="f-dep-wind-result" style="font-family:var(--mono);font-size:11px;color:var(--text3);align-self:center;padding-top:16px;"></div>
+      </div>
+
+      <!-- Takeoff minimums -->
+      <div class="col-header" style="margin-top:8px">Published Takeoff Minimums (if any)</div>
+      <div class="grid-3" style="margin-top:8px">
+        <div class="field"><label>Published T/O Minimum</label>
+          <input type="text" id="f-dep-to-vis" placeholder="e.g. 1/2 or RVR 1600" oninput="liveParseVis(this,'f-dep-to-vis-out')">
+          <div class="vis-parsed" id="f-dep-to-vis-out"></div>
         </div>
-        <div class="field">
-          <label>Published T/O Min Type</label>
+        <div class="field"><label>Published Min Type</label>
           <select id="f-dep-to-type">
             <option value="standard">Standard (not published)</option>
             <option value="sm">Statute Miles</option>
-            <option value="rvr">RVR</option>
+            <option value="rvr">RVR (ft)</option>
           </select>
         </div>
-        <div class="field">
-          <label>Runway TDZ RVR Available?</label>
+        <div class="field"><label>TDZ RVR Reporting Available?</label>
           <div class="radio-group" id="rg-dep-tdz">
-            <div class="radio-btn" onclick="radioSelect('rg-dep-tdz',this,'Yes')">Yes</div>
-            <div class="radio-btn active" onclick="radioSelect('rg-dep-tdz',this,'No')">No</div>
+            <div class="radio-btn" onclick="radioSelect('rg-dep-tdz',this)">Yes</div>
+            <div class="radio-btn active" onclick="radioSelect('rg-dep-tdz',this)">No</div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- DEPARTURE ALTERNATE -->
+  <!-- ── DEPARTURE ALTERNATE ── -->
   <div class="section">
-    <div class="section-header open" onclick="toggleSection(this)">
-      <h3>Departure Alternate (if required)</h3>
-      <span class="chevron">▶</span>
-    </div>
+    <div class="section-header open" onclick="toggleSection(this)"><h3>Departure Alternate (Part 135 / Company SOP)</h3><span class="chevron">▶</span></div>
     <div class="section-body">
-      <div class="infobox">A departure alternate is required under <strong>Part 135</strong> when departure weather is below CAT I landing minimums for the aircraft. Under <strong>Part 91</strong> there is no departure alternate requirement in 14 CFR, but company policy may apply.</div>
+      <div class="infobox">
+        <strong>Part 135 (§135.217):</strong> Required when departure weather is below CAT I landing minimums for the departure airport. Must be within 1 hr OEI flight time.<br>
+        <strong>Part 91:</strong> No regulatory requirement, but company SOP may apply.
+      </div>
       <div class="grid-3" style="margin-bottom:12px">
-        <div class="field">
-          <label>Dep. Alternate ICAO</label>
-          <input type="text" id="f-dalt-icao" placeholder="Optional" style="text-transform:uppercase;font-family:var(--mono);font-size:15px">
+        <div class="field"><label>Dep. Alternate ICAO</label>
+          <input type="text" id="f-dalt-icao" placeholder="Optional" oninput="this.value=this.value.toUpperCase()" style="font-family:var(--mono);font-size:15px;">
         </div>
-        <div class="field">
-          <label>Distance from Departure (nm)</label>
+        <div class="field"><label>Distance from Dep. (nm)</label>
           <input type="number" id="f-dalt-dist" placeholder="nm">
         </div>
-        <div class="field">
-          <label>Best Approach Type Available</label>
+        <div class="field"><label>Best Approach Available</label>
           <select id="f-dalt-apch">
             <option value="">—</option>
-            <option value="ILS">ILS / CAT I Precision</option>
-            <option value="LPV">LPV</option>
-            <option value="LNAV/VNAV">LNAV/VNAV</option>
-            <option value="LNAV">LNAV / NPA</option>
-            <option value="VOR">VOR</option>
+            <option value="ILS">ILS / ILS-DME</option>
+            <option value="RNAV-GPS-APV">RNAV (GPS) APV</option>
+            <option value="LNAV">RNAV (GPS) / LNAV</option>
+            <option value="VOR">VOR / VOR-DME</option>
+            <option value="LOC">LOC</option>
             <option value="NDB">NDB</option>
-            <option value="NONE">No Instrument Approach</option>
+            <option value="NONE">No IAP</option>
           </select>
         </div>
       </div>
-      <div class="wx-row">
-        <div class="wx-label">Wx</div>
+
+      <div class="col-header">Runway in Use at Dep. Alternate</div>
+      <div class="grid-2" style="margin:8px 0 10px">
+        <div class="field"><label>Runway ID</label>
+          <input type="text" id="f-dalt-rwy-id" placeholder="e.g. 27R" oninput="this.value=this.value.toUpperCase()" style="font-family:var(--mono)">
+        </div>
+        <div class="field"><label>Runway Magnetic Heading (°)</label>
+          <input type="number" id="f-dalt-rwy-hdg" placeholder="e.g. 275" min="1" max="360">
+        </div>
+      </div>
+
+      <div class="col-header">Dep. Alternate Forecast Weather</div>
+      <div class="wx-row" style="margin-top:8px">
+        <div class="wx-label">Sky</div>
         <div class="field"><label>Ceiling (ft AGL)</label><input type="number" id="f-dalt-ceil" placeholder="—"></div>
         <div class="field"><label>Coverage</label>
           <select id="f-dalt-cov">
             <option value="">—</option><option>CLR</option><option>FEW</option><option>SCT</option><option>BKN</option><option>OVC</option>
           </select>
         </div>
-        <div class="field"><label>Visibility (sm)</label><input type="number" id="f-dalt-vis" placeholder="—" step="0.25"></div>
+        <div class="field"><label>Visibility</label>
+          <input type="text" id="f-dalt-vis" placeholder="e.g. 3 or 1 1/2" oninput="liveParseVis(this,'f-dalt-vis-out')">
+          <div class="vis-parsed" id="f-dalt-vis-out"></div>
+        </div>
         <div class="field"><label>RVR (ft)</label><input type="number" id="f-dalt-rvr" placeholder="—" step="100"></div>
-        <div class="field"><label>Approach DA/MDA (ft)</label><input type="number" id="f-dalt-da" placeholder="—"></div>
+        <div class="field"><label>Approach DA/MDA (ft MSL)</label><input type="number" id="f-dalt-da" placeholder="—"></div>
+      </div>
+      <div class="wind-row" style="margin-top:8px">
+        <div class="wx-label">Wind</div>
+        <div class="field"><label>Dir (°)</label><input type="number" id="f-dalt-wdir" placeholder="—" min="1" max="360"></div>
+        <div class="field"><label>Speed (kt)</label><input type="number" id="f-dalt-wspd" placeholder="—"></div>
+        <div class="field"><label>Gust (kt)</label><input type="number" id="f-dalt-gust" placeholder="—"></div>
+        <div id="f-dalt-wind-result" style="font-family:var(--mono);font-size:11px;color:var(--text3);align-self:center;padding-top:16px;"></div>
       </div>
     </div>
   </div>
 
-  <!-- DESTINATION -->
+  <!-- ── DESTINATION ── -->
   <div class="section">
-    <div class="section-header open" onclick="toggleSection(this)">
-      <h3>Destination Airport</h3>
-      <span class="chevron">▶</span>
-    </div>
+    <div class="section-header open" onclick="toggleSection(this)"><h3>Destination Airport</h3><span class="chevron">▶</span></div>
     <div class="section-body">
       <div class="grid-3" style="margin-bottom:12px">
-        <div class="field">
-          <label>Destination ICAO</label>
-          <input type="text" id="f-dest-icao" placeholder="KBOS" style="text-transform:uppercase;font-size:16px;font-weight:600">
+        <div class="field"><label>Destination ICAO</label>
+          <input type="text" id="f-dest-icao" placeholder="KBOS" oninput="this.value=this.value.toUpperCase()" style="font-size:16px;font-weight:600;">
         </div>
-        <div class="field">
-          <label>Airport Elevation (ft MSL)</label>
+        <div class="field"><label>Airport Elevation (ft MSL)</label>
           <input type="number" id="f-dest-elev" placeholder="19">
         </div>
-        <div class="field">
-          <label>Longest Suitable Runway (ft)</label>
-          <input type="number" id="f-dest-rwy" placeholder="10000">
+        <div class="field"><label>Longest Suitable Runway (ft)</label>
+          <input type="number" id="f-dest-rwy-len" placeholder="10000">
         </div>
       </div>
 
-      <div style="font-family:var(--mono);font-size:11px;color:var(--text3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;">ETA Weather Forecast (at destination)</div>
-      <div class="wx-row">
-        <div class="wx-label">Forecast</div>
+      <div class="col-header">Runway in Use</div>
+      <div class="grid-2" style="margin:8px 0 12px">
+        <div class="field"><label>Runway ID</label>
+          <input type="text" id="f-dest-rwy-id" placeholder="e.g. 04R" oninput="this.value=this.value.toUpperCase()" style="font-family:var(--mono)">
+        </div>
+        <div class="field"><label>Runway Magnetic Heading (°)</label>
+          <input type="number" id="f-dest-rwy-hdg" placeholder="e.g. 042" min="1" max="360">
+        </div>
+      </div>
+
+      <div class="col-header">ETA Forecast Weather</div>
+      <div class="wx-row" style="margin-top:8px">
+        <div class="wx-label">Sky</div>
         <div class="field"><label>Ceiling (ft AGL)</label><input type="number" id="f-dest-ceil" placeholder="—"></div>
         <div class="field"><label>Coverage</label>
           <select id="f-dest-cov">
             <option value="">—</option><option>CLR</option><option>FEW</option><option>SCT</option><option>BKN</option><option>OVC</option>
           </select>
         </div>
-        <div class="field"><label>Visibility (sm)</label><input type="number" id="f-dest-vis" placeholder="10" step="0.25"></div>
-        <div class="field"><label>RVR (ft)</label><input type="number" id="f-dest-rvr" placeholder="—" step="100"></div>
-        <div class="field"><label>Wind (kt / °)</label>
-          <div style="display:flex;gap:4px">
-            <input type="number" id="f-dest-wdir" placeholder="°" style="width:60px">
-            <input type="number" id="f-dest-wspd" placeholder="kt" style="width:60px">
+        <div class="field"><label>Visibility</label>
+          <input type="text" id="f-dest-vis" placeholder="e.g. 2 1/4 or 2.25" oninput="liveParseVis(this,'f-dest-vis-out')">
+          <div class="vis-parsed" id="f-dest-vis-out"></div>
+        </div>
+        <div class="field"><label>TDZ RVR (ft)</label><input type="number" id="f-dest-rvr" placeholder="—" step="100"></div>
+      </div>
+      <div class="wind-row" style="margin-top:8px">
+        <div class="wx-label">Wind</div>
+        <div class="field"><label>Dir (°)</label><input type="number" id="f-dest-wdir" placeholder="—" min="1" max="360"></div>
+        <div class="field"><label>Speed (kt)</label><input type="number" id="f-dest-wspd" placeholder="—"></div>
+        <div class="field"><label>Gust (kt)</label><input type="number" id="f-dest-gust" placeholder="—"></div>
+        <div id="f-dest-wind-result" style="font-family:var(--mono);font-size:11px;color:var(--text3);align-self:center;padding-top:16px;"></div>
+      </div>
+
+      <div class="col-header" style="margin-top:12px">§135.223 Alternate Requirement Inputs</div>
+      <div class="infobox" style="margin-top:8px">
+        <strong>Part 135 ceiling threshold</strong> is computed from the destination approach, not a flat AGL value.<br>
+        <strong>§135.223(b)(1):</strong> Ceiling ≥ 1,500 ft above lowest circling MDA — <em>or</em><br>
+        <strong>§135.223(b)(2):</strong> If no circling authorized: ceiling ≥ 1,500 ft above lowest published minimum <em>or</em> 2,000 ft above airport elevation, whichever is <strong>higher</strong>.<br>
+        <strong>§135.223(b)(3):</strong> Visibility ≥ 3 sm <em>or</em> 2 sm more than lowest applicable vis minimum for the planned approach, whichever is <strong>greater</strong>.
+      </div>
+
+      <!-- Approach-relative ceiling inputs -->
+      <div class="grid-3" style="margin-top:10px">
+        <div class="field">
+          <label>Circling Approach Authorized at Destination?</label>
+          <div class="radio-group" id="rg-dest-circling">
+            <div class="radio-btn active" onclick="radioSelect('rg-dest-circling',this)">Yes</div>
+            <div class="radio-btn" onclick="radioSelect('rg-dest-circling',this)">No</div>
           </div>
+        </div>
+        <div class="field">
+          <label>Lowest Circling MDA (ft MSL) <span style="color:var(--accent)">§(b)(1)</span></label>
+          <input type="number" id="f-dest-circ-mda" placeholder="— if circling authorized">
+          <div class="field-hint">Used when circling IS authorized</div>
+        </div>
+        <div class="field">
+          <label>Lowest Published Minimum (ft MSL) <span style="color:var(--accent)">§(b)(2)</span></label>
+          <input type="number" id="f-dest-lowest-min" placeholder="— if NO circling">
+          <div class="field-hint">Used when circling is NOT authorized (with airport elev)</div>
         </div>
       </div>
 
-      <div style="font-family:var(--mono);font-size:11px;color:var(--text3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;margin-top:12px;">Best Instrument Approach Available</div>
-      <div class="approach-row">
-        <div class="field">
-          <label>Approach Type</label>
+      <!-- ±1 hr window -->
+      <div class="col-header" style="margin-top:14px">±1 Hour ETA Forecast Window</div>
+      <div class="grid-4" style="margin-top:8px">
+        <div class="field"><label>Ceiling ETA−1hr (ft AGL)</label><input type="number" id="f-dest-ceil-1hb" placeholder="—"></div>
+        <div class="field"><label>Vis ETA−1hr</label>
+          <input type="text" id="f-dest-vis-1hb" placeholder="—" oninput="liveParseVis(this,'f-dest-vis-1hb-out')">
+          <div class="vis-parsed" id="f-dest-vis-1hb-out"></div>
+        </div>
+        <div class="field"><label>Ceiling ETA+1hr (ft AGL)</label><input type="number" id="f-dest-ceil-1ha" placeholder="—"></div>
+        <div class="field"><label>Vis ETA+1hr</label>
+          <input type="text" id="f-dest-vis-1ha" placeholder="—" oninput="liveParseVis(this,'f-dest-vis-1ha-out')">
+          <div class="vis-parsed" id="f-dest-vis-1ha-out"></div>
+        </div>
+      </div>
+
+      <div class="col-header" style="margin-top:12px">Best Instrument Approach</div>
+      <div class="approach-row" style="margin-top:8px">
+        <div class="field"><label>Approach Type</label>
           <select id="f-dest-apch">
             <option value="">—</option>
-            <option value="ILS">ILS / GLS (CAT I Precision)</option>
-            <option value="LPV">LPV</option>
-            <option value="LNAV/VNAV">LNAV/VNAV</option>
-            <option value="LNAV">LNAV / RNAV(GPS)</option>
-            <option value="VOR">VOR / VOR-DME</option>
-            <option value="NDB">NDB</option>
-            <option value="LOC">LOC / LOC-BC</option>
-            <option value="LDA">LDA</option>
-            <option value="RNPAR">RNAV(RNP) AR</option>
-            <option value="VISUAL">Visual Only</option>
+            <optgroup label="Precision (ILS &amp; GLS)">
+              <option value="ILS">ILS</option>
+              <option value="ILS/DME">ILS/DME</option>
+              <option value="RNAV/ILS">*RNAV/ILS</option>
+            </optgroup>
+            <optgroup label="APV (Vertical Guidance)">
+              <option value="RNAV-GPS-APV">RNAV (GPS) — APV / LPV</option>
+              <option value="RNAV-GNSS-APV">RNAV (GNSS) — APV</option>
+              <option value="LDA-GS">LDA with Glide Slope</option>
+              <option value="LDA-PRM">LDA PRM</option>
+              <option value="LDA-PRM-DME">LDA PRM DME</option>
+              <option value="LOC-BC-GS">LOC BC with Glide Slope</option>
+            </optgroup>
+            <optgroup label="NPA (No Vertical Guidance)">
+              <option value="GPS">GPS</option>
+              <option value="RNAV-GPS">RNAV (GPS)</option>
+              <option value="RNAV-GNSS">RNAV (GNSS)</option>
+              <option value="RNAV-VORDME">RNAV (VOR/DME)</option>
+              <option value="VOR">VOR</option>
+              <option value="VOR/DME/LOC">VOR/DME/LOC</option>
+              <option value="LOC">LOC</option>
+              <option value="LOC-BC">LOC BC</option>
+              <option value="LOC/BC/DME">LOC/BC/DME</option>
+              <option value="LOC/DME">LOC/DME</option>
+              <option value="LDA">LDA</option>
+              <option value="LDA/DME">LDA/DME</option>
+              <option value="NDB">NDB</option>
+              <option value="NDB/DME">NDB/DME</option>
+            </optgroup>
+            <optgroup label="Special Auth">
+              <option value="RNPAR">RNAV (RNP) AR — C384</option>
+            </optgroup>
           </select>
         </div>
-        <div class="field">
-          <label>Published DA or MDA (ft MSL)</label>
+        <div class="field"><label>Published DA or MDA (ft MSL)</label>
           <input type="number" id="f-dest-da" placeholder="800">
         </div>
-        <div class="field">
-          <label>Published Vis (sm)</label>
-          <input type="number" id="f-dest-apch-vis" placeholder="1" step="0.25">
+        <div class="field"><label>Published Vis (sm)</label>
+          <input type="text" id="f-dest-apch-vis" placeholder="1" oninput="liveParseVis(this,'f-dest-apch-vis-out')">
+          <div class="vis-parsed" id="f-dest-apch-vis-out"></div>
         </div>
-        <div class="field">
-          <label>Published Vis (RVR ft)</label>
+        <div class="field"><label>Published Vis (RVR ft)</label>
           <input type="number" id="f-dest-apch-rvr" placeholder="5000" step="100">
         </div>
       </div>
-
-      <div style="font-family:var(--mono);font-size:11px;color:var(--text3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;margin-top:8px;">Part 91 One-Hour Rule Window (±1 hr of ETA)</div>
-      <div class="grid-3">
-        <div class="field">
-          <label>Ceiling at ETA-1hr (ft AGL)</label>
-          <input type="number" id="f-dest-ceil-1h" placeholder="—">
-        </div>
-        <div class="field">
-          <label>Visibility at ETA-1hr (sm)</label>
-          <input type="number" id="f-dest-vis-1h" placeholder="—" step="0.25">
-        </div>
-        <div class="field">
-          <label>Ceiling at ETA+1hr (ft AGL)</label>
-          <input type="number" id="f-dest-ceil1h" placeholder="—">
-        </div>
-      </div>
       <div class="grid-2" style="margin-top:8px">
-        <div class="field">
-          <label>Visibility at ETA+1hr (sm)</label>
-          <input type="number" id="f-dest-vis1h" placeholder="—" step="0.25">
-        </div>
-        <div class="field">
-          <label>Destination has Instrument Approach?</label>
+        <div class="field"><label>Destination has published IAP?</label>
           <div class="radio-group" id="rg-dest-iap">
-            <div class="radio-btn active" onclick="radioSelect('rg-dest-iap',this,'Yes')">Yes</div>
-            <div class="radio-btn" onclick="radioSelect('rg-dest-iap',this,'No')">No</div>
+            <div class="radio-btn active" onclick="radioSelect('rg-dest-iap',this)">Yes</div>
+            <div class="radio-btn" onclick="radioSelect('rg-dest-iap',this)">No</div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- DESTINATION ALTERNATE -->
+  <!-- ── DESTINATION ALTERNATE ── -->
   <div class="section">
-    <div class="section-header open" onclick="toggleSection(this)">
-      <h3>Destination Alternate Airport</h3>
-      <span class="chevron">▶</span>
-    </div>
+    <div class="section-header open" onclick="toggleSection(this)"><h3>Destination Alternate Airport</h3><span class="chevron">▶</span></div>
     <div class="section-body">
       <div class="grid-3" style="margin-bottom:12px">
-        <div class="field">
-          <label>Alternate ICAO</label>
-          <input type="text" id="f-alt-icao" placeholder="KBDL" style="text-transform:uppercase;font-family:var(--mono);font-size:15px">
+        <div class="field"><label>Alternate ICAO</label>
+          <input type="text" id="f-alt-icao" placeholder="KBDL" oninput="this.value=this.value.toUpperCase()" style="font-family:var(--mono);font-size:15px;">
         </div>
-        <div class="field">
-          <label>Number of Nav Facilities at Alternate</label>
+        <div class="field"><label>Nav Facilities at Alternate</label>
           <div class="radio-group" id="rg-alt-navfac">
-            <div class="radio-btn" onclick="radioSelect('rg-alt-navfac',this,'0')">0</div>
-            <div class="radio-btn" onclick="radioSelect('rg-alt-navfac',this,'1')">1</div>
-            <div class="radio-btn active" onclick="radioSelect('rg-alt-navfac',this,'2+')">2+</div>
+            <div class="radio-btn" onclick="radioSelect('rg-alt-navfac',this)">0</div>
+            <div class="radio-btn" onclick="radioSelect('rg-alt-navfac',this)">1</div>
+            <div class="radio-btn active" onclick="radioSelect('rg-alt-navfac',this)">2+</div>
           </div>
-          <div class="field-hint">Straight-in IAP facilities (C055 Table 1)</div>
+          <div class="field-hint">Straight-in IAP facilities — C055 Table 1</div>
         </div>
-        <div class="field">
-          <label>Alternate IAP prohibits alternate use?</label>
+        <div class="field"><label>IAP Prohibits Alternate Use?</label>
           <div class="radio-group" id="rg-alt-prohibit">
-            <div class="radio-btn active" onclick="radioSelect('rg-alt-prohibit',this,'No')">No</div>
-            <div class="radio-btn" onclick="radioSelect('rg-alt-prohibit',this,'Yes')">Yes</div>
+            <div class="radio-btn active" onclick="radioSelect('rg-alt-prohibit',this)">No</div>
+            <div class="radio-btn" onclick="radioSelect('rg-alt-prohibit',this)">Yes</div>
           </div>
         </div>
       </div>
 
-      <div style="font-family:var(--mono);font-size:11px;color:var(--text3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;">Alternate ETA Weather Forecast</div>
-      <div class="wx-row">
-        <div class="wx-label">Wx</div>
+      <div class="col-header">Runway in Use at Alternate</div>
+      <div class="grid-2" style="margin:8px 0 10px">
+        <div class="field"><label>Runway ID</label>
+          <input type="text" id="f-alt-rwy-id" placeholder="e.g. 15" oninput="this.value=this.value.toUpperCase()" style="font-family:var(--mono)">
+        </div>
+        <div class="field"><label>Runway Magnetic Heading (°)</label>
+          <input type="number" id="f-alt-rwy-hdg" placeholder="e.g. 152" min="1" max="360">
+        </div>
+      </div>
+
+      <div class="col-header">Alternate ETA Forecast Weather</div>
+      <div class="wx-row" style="margin-top:8px">
+        <div class="wx-label">Sky</div>
         <div class="field"><label>Ceiling (ft AGL)</label><input type="number" id="f-alt-ceil" placeholder="—"></div>
         <div class="field"><label>Coverage</label>
           <select id="f-alt-cov">
             <option value="">—</option><option>CLR</option><option>FEW</option><option>SCT</option><option>BKN</option><option>OVC</option>
           </select>
         </div>
-        <div class="field"><label>Visibility (sm)</label><input type="number" id="f-alt-vis" placeholder="—" step="0.25"></div>
-        <div class="field"><label>RVR (ft)</label><input type="number" id="f-alt-rvr" placeholder="—" step="100"></div>
-        <div class="field"><label>Wind (kt / °)</label>
-          <div style="display:flex;gap:4px">
-            <input type="number" id="f-alt-wdir" placeholder="°" style="width:60px">
-            <input type="number" id="f-alt-wspd" placeholder="kt" style="width:60px">
-          </div>
+        <div class="field"><label>Visibility</label>
+          <input type="text" id="f-alt-vis" placeholder="e.g. 3 or 2 1/2" oninput="liveParseVis(this,'f-alt-vis-out')">
+          <div class="vis-parsed" id="f-alt-vis-out"></div>
         </div>
+        <div class="field"><label>RVR (ft)</label><input type="number" id="f-alt-rvr" placeholder="—" step="100"></div>
+      </div>
+      <div class="wind-row" style="margin-top:8px">
+        <div class="wx-label">Wind</div>
+        <div class="field"><label>Dir (°)</label><input type="number" id="f-alt-wdir" placeholder="—" min="1" max="360"></div>
+        <div class="field"><label>Speed (kt)</label><input type="number" id="f-alt-wspd" placeholder="—"></div>
+        <div class="field"><label>Gust (kt)</label><input type="number" id="f-alt-gust" placeholder="—"></div>
+        <div id="f-alt-wind-result" style="font-family:var(--mono);font-size:11px;color:var(--text3);align-self:center;padding-top:16px;"></div>
       </div>
 
-      <div style="font-family:var(--mono);font-size:11px;color:var(--text3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;margin-top:12px;">Best Approach at Alternate</div>
-      <div class="approach-row">
-        <div class="field">
-          <label>Approach Type</label>
+      <div class="col-header" style="margin-top:12px">Best Approach at Alternate</div>
+      <div class="approach-row" style="margin-top:8px">
+        <div class="field"><label>Approach Type</label>
           <select id="f-alt-apch">
             <option value="">—</option>
-            <option value="ILS">ILS / GLS (CAT I Precision)</option>
-            <option value="LPV">LPV</option>
-            <option value="LNAV/VNAV">LNAV/VNAV</option>
-            <option value="LNAV">LNAV / RNAV(GPS)</option>
-            <option value="VOR">VOR / VOR-DME</option>
-            <option value="NDB">NDB</option>
-            <option value="LOC">LOC / LOC-BC</option>
-            <option value="LDA">LDA</option>
-            <option value="RNPAR">RNAV(RNP) AR</option>
+            <optgroup label="Precision">
+              <option value="ILS">ILS</option><option value="ILS/DME">ILS/DME</option>
+            </optgroup>
+            <optgroup label="APV">
+              <option value="RNAV-GPS-APV">RNAV (GPS) APV / LPV</option>
+              <option value="RNAV-GNSS-APV">RNAV (GNSS) APV</option>
+            </optgroup>
+            <optgroup label="NPA">
+              <option value="GPS">GPS</option>
+              <option value="RNAV-GPS">RNAV (GPS)</option>
+              <option value="RNAV-GNSS">RNAV (GNSS)</option>
+              <option value="VOR">VOR</option>
+              <option value="LOC">LOC</option>
+              <option value="NDB">NDB</option>
+            </optgroup>
           </select>
         </div>
-        <div class="field">
-          <label>Published DA or MDA (ft MSL)</label>
+        <div class="field"><label>Published DA or MDA (ft MSL)</label>
           <input type="number" id="f-alt-da" placeholder="900">
         </div>
-        <div class="field">
-          <label>Published Vis (sm)</label>
-          <input type="number" id="f-alt-apch-vis" placeholder="1" step="0.25">
+        <div class="field"><label>Published Vis (sm)</label>
+          <input type="text" id="f-alt-apch-vis" placeholder="1" oninput="liveParseVis(this,'f-alt-apch-vis-out')">
+          <div class="vis-parsed" id="f-alt-apch-vis-out"></div>
         </div>
-        <div class="field">
-          <label>Published Vis (RVR ft)</label>
+        <div class="field"><label>Published Vis (RVR ft)</label>
           <input type="number" id="f-alt-apch-rvr" placeholder="5000" step="100">
         </div>
       </div>
 
       <div class="grid-2" style="margin-top:8px">
-        <div class="field">
-          <label>GPS-based IAP at alternate? (C055 b8)</label>
+        <div class="field"><label>Planning GPS-Based IAP at Alternate? (C055 b8)</label>
           <div class="radio-group" id="rg-alt-gps">
-            <div class="radio-btn active" onclick="radioSelect('rg-alt-gps',this,'No')">No</div>
-            <div class="radio-btn" onclick="radioSelect('rg-alt-gps',this,'Yes')">Yes</div>
+            <div class="radio-btn active" onclick="radioSelect('rg-alt-gps',this)">No</div>
+            <div class="radio-btn" onclick="radioSelect('rg-alt-gps',this)">Yes</div>
           </div>
         </div>
-        <div class="field">
-          <label>Aircraft M/M/S in C055 Table 2?</label>
+        <div class="field"><label>Aircraft in C055 Table 2?</label>
           <div class="radio-group" id="rg-alt-table2">
-            <div class="radio-btn" onclick="radioSelect('rg-alt-table2',this,'Yes')">Yes</div>
-            <div class="radio-btn active" onclick="radioSelect('rg-alt-table2',this,'No')">No</div>
-            <div class="radio-btn" onclick="radioSelect('rg-alt-table2',this,'NA')">N/A</div>
+            <div class="radio-btn" onclick="radioSelect('rg-alt-table2',this)">Yes</div>
+            <div class="radio-btn active" onclick="radioSelect('rg-alt-table2',this)">No</div>
+            <div class="radio-btn" onclick="radioSelect('rg-alt-table2',this)">N/A</div>
           </div>
         </div>
       </div>
@@ -1134,127 +907,89 @@
   </div>
 
   <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:8px">
-    <button class="btn btn-secondary" onclick="clearFlight()">Clear</button>
+    <button class="btn btn-secondary" onclick="clearWeatherOnly()">Clear Weather Only</button>
     <button class="btn btn-primary" onclick="runAnalysis()">▶ Run Analysis</button>
   </div>
 </div>
 
-<!-- ════════════════════════════════════════════════
-     PAGE: RESULTS
-════════════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════
+     RESULTS PAGE
+═══════════════════════════════════════ -->
 <div id="page-results" class="page">
   <div class="page-title">Planning Analysis Results</div>
   <div class="page-sub" id="results-sub">Run analysis from the Flight Plan page to see results.</div>
-
   <div id="results-content">
-    <div style="color:var(--text3);font-family:var(--mono);font-size:13px;text-align:center;padding:60px 0">No analysis run yet. Go to Flight Plan → Run Analysis.</div>
+    <div style="color:var(--text3);font-family:var(--mono);font-size:13px;text-align:center;padding:60px 0">
+      No analysis run yet — go to Flight Plan → Run Analysis.
+    </div>
   </div>
 </div>
 
-<!-- ════════════════════════════════════════════════
-     PAGE: REFERENCE
-════════════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════
+     REFERENCE PAGE
+═══════════════════════════════════════ -->
 <div id="page-reference" class="page">
   <div class="page-title">Quick Reference</div>
   <div class="page-sub">Key rules from Sunset Aviation Op Specs and FAR — Certificate No. 7SSA382M</div>
-
   <div class="inner-tabs">
-    <button class="inner-tab active" onclick="showInner('ref-alternate')">Alternate Rules</button>
-    <button class="inner-tab" onclick="showInner('ref-takeoff')">Takeoff Minimums</button>
-    <button class="inner-tab" onclick="showInner('ref-approach')">Approach Minimums</button>
-    <button class="inner-tab" onclick="showInner('ref-c055table')">C055 Tables</button>
+    <button class="inner-tab active" onclick="showInner('ref-alt')">Alternate Rules</button>
+    <button class="inner-tab" onclick="showInner('ref-to')">Takeoff Mins</button>
+    <button class="inner-tab" onclick="showInner('ref-apch')">Approach Mins</button>
+    <button class="inner-tab" onclick="showInner('ref-c055')">C055 Tables</button>
+    <button class="inner-tab" onclick="showInner('ref-wind')">Wind Components</button>
   </div>
 
-  <div id="ref-alternate" class="inner-page active">
-    <div class="section">
-      <div class="section-header open" onclick="toggleSection(this)"><h3>Part 91 — Destination Alternate (§91.169)</h3><span class="chevron">▶</span></div>
+  <div id="ref-alt" class="inner-page active">
+    <div class="section"><div class="section-header open" onclick="toggleSection(this)"><h3>Part 91 — §91.169 (1-2-3 Rule)</h3><span class="chevron">▶</span></div>
       <div class="section-body">
-        <div class="result-card info"><div class="result-header"><span class="result-icon">ℹ</span><span class="result-title">1-2-3 Rule (§91.169(b))</span></div>
-          <div class="result-body">An alternate is required unless, for the period from <strong>1 hour before to 1 hour after ETA</strong>, the destination airport forecast weather is:<br><br>
-          • Ceiling ≥ <strong>2,000 ft AGL</strong>, AND<br>
-          • Visibility ≥ <strong>3 statute miles</strong><br><br>
-          If both conditions are met for the entire ±1hr window → <strong>No alternate required.</strong><br>
-          If either condition fails at any point in the window → <strong>Alternate required.</strong>
-          </div>
-        </div>
-        <div class="result-card neutral" style="margin-top:10px"><div class="result-header"><span class="result-icon">📋</span><span class="result-title">Airport Without IAP (§91.169(a)(2))</span></div>
-          <div class="result-body">If no IAP has been published for the destination, an alternate airport with an IAP must always be filed.</div>
-        </div>
-        <div class="result-card neutral" style="margin-top:10px"><div class="result-header"><span class="result-icon">📋</span><span class="result-title">Part 91 Alternate Minimums (§91.169(c))</span></div>
-          <div class="result-body">
-          <strong>Precision approach at alternate:</strong> 600 ft ceiling / 2 sm visibility<br>
-          <strong>Non-precision approach at alternate:</strong> 800 ft ceiling / 2 sm visibility<br>
-          <strong>No IAP at alternate:</strong> Ceiling and vis allowing descent from MEA, approach, and landing under basic VFR
-          </div>
+        <div class="result-card info"><div class="result-header"><span class="result-icon">ℹ</span><span class="result-title">Alternate Required Unless — 1-2-3 Rule</span></div>
+          <div class="result-body">For the period <strong>1 hour before to 1 hour after ETA</strong>, the destination forecast must show:<br>• Ceiling ≥ <strong>2,000 ft AGL</strong>, AND<br>• Visibility ≥ <strong>3 statute miles</strong><br><br>If either fails at any point → alternate required.<br><br><strong>Alternate minimums (§91.169(c)):</strong><br>• Precision approach at alternate: 600 ft / 2 sm<br>• Non-precision at alternate: 800 ft / 2 sm<br>• No IAP at alternate: ceiling/vis allowing VFR descent and landing</div>
         </div>
       </div>
     </div>
-
-    <div class="section">
-      <div class="section-header open" onclick="toggleSection(this)"><h3>Part 135 — Destination Alternate (§135.223)</h3><span class="chevron">▶</span></div>
+    <div class="section"><div class="section-header open" onclick="toggleSection(this)"><h3>Part 135 — §135.223 / §135.221 / C055</h3><span class="chevron">▶</span></div>
       <div class="section-body">
-        <div class="result-card info"><div class="result-header"><span class="result-icon">ℹ</span><span class="result-title">P135 Alternate Required When (§135.223(a))</span></div>
+        <div class="result-card info"><div class="result-header"><span class="result-icon">ℹ</span><span class="result-title">Alternate Required When (§135.223)</span></div>
           <div class="result-body">
-          An alternate is required unless the destination airport has:<br><br>
-          • A weather reporting facility, AND<br>
-          • For the period from <strong>1 hour before to 1 hour after ETA</strong>, the forecast ceiling is ≥ <strong>1,500 ft AGL</strong> AND visibility ≥ <strong>3 sm</strong><br><br>
-          Also required if the destination airport has no instrument approach procedure.
+          An alternate is required unless the destination has a Part 97 IAP <strong>and</strong> for the period ±1 hr of ETA:<br><br>
+          <strong>Ceiling threshold — §135.223(b)(1)/(2):</strong><br>
+          &nbsp;• If circling approach authorized: ceiling ≥ <strong>1,500 ft above lowest circling MDA</strong><br>
+          &nbsp;• If no circling authorized: ceiling ≥ higher of (<strong>1,500 ft above lowest published minimum</strong>) or (<strong>2,000 ft above airport elevation</strong>)<br><br>
+          <strong>Visibility threshold — §135.223(b)(3):</strong><br>
+          &nbsp;• Visibility ≥ higher of <strong>3 sm</strong> or (<strong>planned approach vis minimum + 2 sm</strong>)<br><br>
+          <span class="ref">Both thresholds must be met throughout the entire ±1 hr ETA window. Conditional TAF clauses (TEMPO, PROB) count if more restrictive.</span>
           </div>
         </div>
-        <div class="result-card neutral" style="margin-top:10px"><div class="result-header"><span class="result-icon">📋</span><span class="result-title">P135 Alternate Minimums (§135.221 + C055)</span></div>
-          <div class="result-body">
-          <strong>1 nav facility (NPA, CAT I, or circling):</strong> Approach MDA/DA(H) + 400 ft ceiling / + 1 sm visibility<br>
-          <strong>2+ nav facilities (different runways):</strong> Higher approach + 200 ft / + ½ sm<br>
-          <strong>GPS-based IAP:</strong> Subject to C055 b(8) requirements — aircraft in Table 2, C052 held, RAIM checked
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-header open" onclick="toggleSection(this)"><h3>Part 135 — Departure Alternate (§135.217)</h3><span class="chevron">▶</span></div>
-      <div class="section-body">
-        <div class="result-card info"><div class="result-header"><span class="result-icon">ℹ</span><span class="result-title">Departure Alternate Required When</span></div>
-          <div class="result-body">
-          Under §135.217, if the departure airport weather is below the <strong>CAT I landing minimums</strong> for the aircraft and approach at the departure airport, a departure alternate must be filed within <strong>1 hour flight time</strong> (in still air, normal cruising speed, one engine inoperative for multi-engine).<br><br>
-          The departure alternate must meet the alternate minimums of C055 at the estimated time of arrival at the alternate.
-          </div>
+        <div class="result-card neutral" style="margin-top:10px"><div class="result-header"><span class="result-title">Dep. Alternate — §135.217</span></div>
+          <div class="result-body">Required when departure weather is below CAT I landing minimums. Alternate must be within 1 hour OEI flight time and meet C055 Table 1 minimums at ETA.</div>
         </div>
       </div>
     </div>
   </div>
 
-  <div id="ref-takeoff" class="inner-page">
-    <div class="section">
-      <div class="section-header open" onclick="toggleSection(this)"><h3>C057 — Standard IFR Takeoff Minimums</h3><span class="chevron">▶</span></div>
+  <div id="ref-to" class="inner-page">
+    <div class="section"><div class="section-header open" onclick="toggleSection(this)"><h3>C057 — Standard IFR Takeoff Minimums</h3><span class="chevron">▶</span></div>
       <div class="section-body">
         <table class="rules-table">
-          <thead><tr><th>Aircraft Engines</th><th>Visibility</th><th>RVR</th><th>Notes</th></tr></thead>
+          <thead><tr><th>Engines</th><th>Visibility</th><th>RVR</th><th>Notes</th></tr></thead>
           <tbody>
-            <tr><td>≤ 2 engines</td><td class="mono-cell">1 sm</td><td class="mono-cell">RVR 5000</td><td>Standard minimums apply if no published min, or if published is lower</td></tr>
-            <tr><td>&gt; 2 engines</td><td class="mono-cell">½ sm</td><td class="mono-cell">RVR 2400</td><td>Standard minimums apply if no published min</td></tr>
-            <tr><td>Single-engine P135</td><td colspan="3">NOT authorized below standard minimums at any airport</td></tr>
+            <tr><td>≤ 2</td><td class="mono-cell">1 sm</td><td class="mono-cell">5000</td><td>Standard — applies if no published min, or published is lower</td></tr>
+            <tr><td>&gt; 2</td><td class="mono-cell">½ sm</td><td class="mono-cell">2400</td><td>Standard — applies if no published min</td></tr>
+            <tr><td>Single P135</td><td colspan="3">Never lower than standard at any airport</td></tr>
           </tbody>
         </table>
-        <div style="margin-top:12px" class="result-card neutral">
-          <div class="result-header"><span class="result-title">C057 Key Rules</span></div>
-          <div class="result-body">
-          • If published T/O minimum &gt; standard and no alternate procedure → must use published minimum<br>
-          • When at/below standard T/O minimum → authorized to use lowest CAT I IFR landing minimum at that airport<br>
-          • TDZ RVR report is controlling when available<br>
-          • C079: With HUD, authorized to RVR 500/TDZ-500/Mid-500/RO(150m) — requires RCLM + HIRL or CL lights
-          </div>
+        <div class="result-card caution" style="margin-top:12px"><div class="result-header"><span class="result-icon">⚠</span><span class="result-title">C079 — HUD Lower-Than-Standard</span></div>
+          <div class="result-body">Authorized: RVR 500 / TDZ 500 / Mid 500 / RO (150 m) — requires RCLM + HIRL or CL lights. Aircraft must be in C079 Table 2 with approved HUD system. Two-pilot crew required. PIC ≥ 100 hrs in type. <span class="ref">[C079]</span></div>
         </div>
       </div>
     </div>
   </div>
 
-  <div id="ref-approach" class="inner-page">
-    <div class="section">
-      <div class="section-header open" onclick="toggleSection(this)"><h3>C054 — High Minimum PIC RVR Equivalents</h3><span class="chevron">▶</span></div>
+  <div id="ref-apch" class="inner-page">
+    <div class="section"><div class="section-header open" onclick="toggleSection(this)"><h3>C054 — High Min PIC RVR Table</h3><span class="chevron">▶</span></div>
       <div class="section-body">
         <table class="rules-table">
-          <thead><tr><th>Published RVR</th><th>Required RVR (High-Min PIC)</th></tr></thead>
+          <thead><tr><th>Published RVR</th><th>High-Min PIC Required RVR</th></tr></thead>
           <tbody>
             <tr><td class="mono-cell">1800</td><td class="mono-cell">4500</td></tr>
             <tr><td class="mono-cell">2000</td><td class="mono-cell">4500</td></tr>
@@ -1264,163 +999,261 @@
             <tr><td class="mono-cell">5000</td><td class="mono-cell">6000</td></tr>
           </tbody>
         </table>
-        <div class="result-card caution" style="margin-top:12px">
-          <div class="result-header"><span class="result-icon">⚠</span><span class="result-title">Turbojet Restriction (C054 b)</span></div>
-          <div class="result-body">
-          A turbojet PIC must NOT conduct an IAP when destination visibility is reported &lt; ¾ sm or RVR 4000 unless the pilot is qualified for <strong>Lower Landing Minimums (LLM)</strong>. If destination visibility forecast &lt; ¾ sm or RVR 4000: runway field length must be pre-determined at ≥115% of required, and precision instrument runway markings or RCL lights must be operative.
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="section">
-      <div class="section-header open" onclick="toggleSection(this)"><h3>C052 — Reduced Precision CAT I (1800 RVR)</h3><span class="chevron">▶</span></div>
-      <div class="section-body">
-        <div class="result-card info">
-          <div class="result-header"><span class="result-title">Conditions for 1800 RVR</span></div>
-          <div class="result-body">
-          • FD, AP, or HUD approved for CAT I must be engaged to DA or IAM<br>
-          • If FD/AP/HUD malfunctions below FAF, execute missed approach<br>
-          • Flightcrew must demonstrate proficiency in ILS/GLS/RNAV(GPS) with LPV DA/HAT &lt; 250 ft on FD/AP/HUD<br>
-          • Part 97 SIAP must have 1800 RVR minimum<br>
-          • Runway must have no TDZ lights / RCL lights (with inoperative exception conditions per C052)
-          </div>
+        <div class="result-card caution" style="margin-top:10px"><div class="result-header"><span class="result-icon">⚠</span><span class="result-title">Turbojet LLM Restriction (C054 b)</span></div>
+          <div class="result-body">If destination visibility &lt; ¾ sm or RVR 4000 AND PIC is NOT LLM qualified: runway length must be ≥ 115% of required, precision instrument markings or RCL lights must be operative. <span class="ref">[C054 b(1)-(3)]</span></div>
         </div>
       </div>
     </div>
   </div>
 
-  <div id="ref-c055table" class="inner-page">
-    <div class="section">
-      <div class="section-header open" onclick="toggleSection(this)"><h3>C055 Table 1 — Alternate Airport IFR Weather Minimums</h3><span class="chevron">▶</span></div>
+  <div id="ref-c055" class="inner-page">
+    <div class="section"><div class="section-header open" onclick="toggleSection(this)"><h3>C055 Table 1 — Alternate Minimums</h3><span class="chevron">▶</span></div>
       <div class="section-body">
         <table class="rules-table">
-          <thead><tr><th>Approach Facility Config at Alternate</th><th>Ceiling Add to MDA/DA(H)</th><th>Visibility Add to Landing Min</th></tr></thead>
+          <thead><tr><th>Approach Facility Config at Alternate</th><th>Ceiling Add</th><th>Visibility Add</th></tr></thead>
           <tbody>
-            <tr><td>≥ 1 nav facility — NPA, CAT I, or circling</td><td class="mono-cell">+400 ft</td><td class="mono-cell">+1 sm (or +1600 m)</td></tr>
-            <tr><td>≥ 2 nav facilities — each with straight-in to different runways</td><td class="mono-cell">+200 ft to higher of two approaches</td><td class="mono-cell">+½ sm (or +800 m) to higher of two</td></tr>
-            <tr><td>Published IAP states alternate mins NOT authorized</td><td colspan="2" style="color:var(--red);font-family:var(--mono)">NOT AUTHORIZED</td></tr>
+            <tr><td>≥ 1 nav facility — NPA, CAT I, or circling</td><td class="mono-cell">+ 400 ft to MDA/DA(H)</td><td class="mono-cell">+ 1 sm (1600 m)</td></tr>
+            <tr><td>≥ 2 nav facilities — straight-in to different runways</td><td class="mono-cell">+ 200 ft to higher of two</td><td class="mono-cell">+ ½ sm (800 m) to higher of two</td></tr>
+            <tr><td>Published IAP states alternate NOT authorized</td><td colspan="2" style="color:var(--red);font-family:var(--mono)">NOT AUTHORIZED — cannot use</td></tr>
           </tbody>
         </table>
       </div>
     </div>
-    <div class="section">
-      <div class="section-header open" onclick="toggleSection(this)"><h3>C055 b(8) — GPS-Based IAP at Alternate Nav System Tiers</h3><span class="chevron">▶</span></div>
+    <div class="section"><div class="section-header open" onclick="toggleSection(this)"><h3>C055 b(8) — GPS IAP at Alternate: Nav System Tiers</h3><span class="chevron">▶</span></div>
       <div class="section-body">
         <table class="rules-table">
           <thead><tr><th>Sub</th><th>Nav System</th><th>Baro-VNAV</th><th>Authorized Minimums at Alternate</th></tr></thead>
           <tbody>
-            <tr><td class="mono-cell">(i)</td><td>TSO-C129/C196 with FDE</td><td style="color:var(--red)">No</td><td>LNAV (or circling) MDA(H) only</td></tr>
-            <tr><td class="mono-cell">(ii)</td><td>TSO-C129/C196 with FDE + Baro-VNAV</td><td style="color:var(--green)">Yes</td><td>LNAV MDA(H) or LNAV/VNAV DA(H) — RNP ≥ 0.30 if C384</td></tr>
-            <tr><td class="mono-cell">(iii)</td><td>TSO-C145/C146 (WAAS)</td><td style="color:var(--red)">No</td><td>GPS IAP at dest+alt; LNAV (circling) MDA(H) at alt</td></tr>
-            <tr><td class="mono-cell">(iv)</td><td>TSO-C145/C146 (WAAS) + Baro-VNAV</td><td style="color:var(--green)">Yes</td><td>LNAV MDA(H) or LNAV/VNAV DA(H) — RNP ≥ 0.30 if C384</td></tr>
+            <tr><td class="mono-cell">(i)</td><td>C129/C196 + FDE</td><td style="color:var(--red)">No</td><td>LNAV (or circling) MDA(H) only</td></tr>
+            <tr><td class="mono-cell">(ii)</td><td>C129/C196 + FDE + Baro-VNAV</td><td style="color:var(--green)">Yes</td><td>LNAV MDA(H) or LNAV/VNAV DA(H) — RNP ≥ 0.30 if C384</td></tr>
+            <tr><td class="mono-cell">(iii)</td><td>C145/C146 WAAS</td><td style="color:var(--red)">No</td><td>GPS IAP at dest + alt; LNAV (circling) MDA(H) at alternate</td></tr>
+            <tr><td class="mono-cell">(iv)</td><td>C145/C146 WAAS + Baro-VNAV</td><td style="color:var(--green)">Yes</td><td>LNAV MDA(H) or LNAV/VNAV DA(H) — RNP ≥ 0.30 if C384</td></tr>
           </tbody>
         </table>
-        <div class="infobox" style="margin-top:12px"><strong>ETOPS Note:</strong> GPS-based IAP NOT authorized at ETOPS designated alternate unless specifically approved by AFS-200. (C055 b(9))</div>
+        <div class="infobox" style="margin-top:10px"><strong>ETOPS (b(9)):</strong> GPS-based IAP NOT authorized at ETOPS designated alternate unless AFS-200 approved.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="ref-wind" class="inner-page">
+    <div class="section"><div class="section-header open" onclick="toggleSection(this)"><h3>Wind Component Calculator</h3><span class="chevron">▶</span></div>
+      <div class="section-body">
+        <div class="infobox">Enter wind and runway data to compute components. This is the same calculation used in the analysis.</div>
+        <div class="grid-3" style="margin-bottom:12px">
+          <div class="field"><label>Wind Direction (°)</label><input type="number" id="ref-wdir" placeholder="270" min="1" max="360" oninput="calcRefWind()"></div>
+          <div class="field"><label>Wind Speed (kt)</label><input type="number" id="ref-wspd" placeholder="15" min="0" oninput="calcRefWind()"></div>
+          <div class="field"><label>Gust Speed (kt)</label><input type="number" id="ref-gust" placeholder="—" min="0" oninput="calcRefWind()"></div>
+        </div>
+        <div class="grid-2" style="margin-bottom:12px">
+          <div class="field"><label>Runway Heading (°)</label><input type="number" id="ref-rhdg" placeholder="180" min="1" max="360" oninput="calcRefWind()"></div>
+        </div>
+        <div id="ref-wind-out" style="font-family:var(--mono);font-size:13px;color:var(--text2);background:var(--bg4);border:1px solid var(--border);border-radius:var(--radius);padding:14px;min-height:80px;"></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ════════════ JAVASCRIPT ════════════ -->
+<!-- ══════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════ -->
 <script>
-// ── State ────────────────────────────────────────────
-const S = {
-  rule: null,
-  setup: {},
-  flight: {}
-};
+// ─────────────────────────────────────────
+//  VISIBILITY PARSER
+//  Accepts: "1/2", "1 1/2", "3/4", "0.5", "1.5", "2 1/4", "10", "1/4"
+// ─────────────────────────────────────────
+function parseVis(raw) {
+  if (!raw || raw.trim() === '' || raw.trim() === '—') return null;
+  const s = raw.trim();
 
-// ── Page navigation ───────────────────────────────────
+  // Pure decimal or integer: "0.5", "1.5", "10"
+  if (/^\d+(\.\d+)?$/.test(s)) return parseFloat(s);
+
+  // Simple fraction: "1/2", "3/4", "1/4"
+  const simple = s.match(/^(\d+)\/(\d+)$/);
+  if (simple) {
+    const n = parseInt(simple[1]), d = parseInt(simple[2]);
+    if (d === 0) return null;
+    return n / d;
+  }
+
+  // Mixed number: "1 1/2", "2 3/4", "1 1/4"
+  const mixed = s.match(/^(\d+)\s+(\d+)\/(\d+)$/);
+  if (mixed) {
+    const whole = parseInt(mixed[1]), n = parseInt(mixed[2]), d = parseInt(mixed[3]);
+    if (d === 0) return null;
+    return whole + n / d;
+  }
+
+  return NaN; // unparseable
+}
+
+function visLabel(val) {
+  if (val === null) return '';
+  if (isNaN(val)) return 'Cannot parse';
+  // Format nicely: if it's a common fraction show fraction label
+  const fracs = [[0.125,'⅛'],[0.25,'¼'],[0.375,'⅜'],[0.5,'½'],[0.625,'⅝'],[0.75,'¾'],[0.875,'⅞']];
+  const whole = Math.floor(val);
+  const frac = val - whole;
+  const fr = fracs.find(f => Math.abs(f[0] - frac) < 0.001);
+  let label = fr ? (whole > 0 ? whole + ' ' + fr[1] : fr[1]) + ' sm' : val.toFixed(2) + ' sm';
+  return label + ' ≈ RVR ' + Math.round(val * 6076);
+}
+
+function liveParseVis(el, outId) {
+  const val = parseVis(el.value);
+  const out = document.getElementById(outId);
+  if (!out) return;
+  if (val === null) { out.textContent = ''; out.classList.remove('vis-error'); return; }
+  if (isNaN(val)) { out.textContent = 'Cannot parse — use decimal or fraction (e.g. 1/2, 1 1/4)'; out.classList.add('vis-error'); return; }
+  out.classList.remove('vis-error');
+  out.textContent = '= ' + visLabel(val);
+  scheduleSave();
+}
+
+// ─────────────────────────────────────────
+//  WIND COMPONENT MATH
+// ─────────────────────────────────────────
+function windComponents(windDir, windSpd, runwayHdg) {
+  // Angle between wind and runway (degrees)
+  let angle = windDir - runwayHdg;
+  // Normalize to -180..+180
+  while (angle > 180) angle -= 360;
+  while (angle < -180) angle += 360;
+  const rad = angle * Math.PI / 180;
+  const headwind = windSpd * Math.cos(rad);   // positive = headwind
+  const crosswind = Math.abs(windSpd * Math.sin(rad)); // always positive magnitude
+  return { headwind: Math.round(headwind * 10) / 10, crosswind: Math.round(crosswind * 10) / 10 };
+}
+
+function windSummary(wdir, wspd, gust, rwyHdg, rwyId, xwindLimit, twLimit) {
+  if (!wdir || !wspd || !rwyHdg) return null;
+  const effectiveSpd = gust || wspd;
+  const { headwind, crosswind } = windComponents(wdir, effectiveSpd, rwyHdg);
+  const isTailwind = headwind < 0;
+  const hw = Math.abs(headwind);
+
+  const lines = [];
+  const xwOk = xwindLimit ? crosswind <= xwindLimit : true;
+  const twOk = isTailwind ? (twLimit ? hw <= twLimit : true) : true;
+
+  lines.push(`RWY ${rwyId || rwyHdg+'°'}: ${wdir.toString().padStart(3,'0')}° @ ${wspd}${gust ? 'G' + gust : ''} kt`);
+  lines.push(`XW: ${crosswind} kt ${xwOk ? '✓' : '✗ EXCEEDS ' + xwindLimit + ' kt LIMIT'}`);
+  lines.push(`${isTailwind ? 'TW' : 'HW'}: ${hw} kt ${isTailwind && !twOk ? '✗ EXCEEDS ' + twLimit + ' kt LIMIT' : '✓'}`);
+  if (gust) lines.push(`(Using gust ${gust} kt per C055 b(3))`);
+
+  return { crosswind, headwind, isTailwind, xwOk, twOk, lines };
+}
+
+function calcRefWind() {
+  const wd = parseFloat(document.getElementById('ref-wdir').value);
+  const ws = parseFloat(document.getElementById('ref-wspd').value);
+  const g  = parseFloat(document.getElementById('ref-gust').value) || null;
+  const rh = parseFloat(document.getElementById('ref-rhdg').value);
+  const out = document.getElementById('ref-wind-out');
+  if (!wd || !ws || !rh) { out.textContent = 'Enter wind direction, speed, and runway heading.'; return; }
+  const eff = g || ws;
+  const { headwind, crosswind } = windComponents(wd, eff, rh);
+  const isTW = headwind < 0;
+  out.innerHTML = `
+    Wind: <strong>${wd.toString().padStart(3,'0')}° @ ${ws}${g ? 'G'+g : ''} kt</strong><br>
+    Headwind component: <strong>${Math.abs(headwind)} kt ${isTW ? '← TAILWIND' : 'headwind'}</strong><br>
+    Crosswind component: <strong>${crosswind} kt</strong><br>
+    ${g ? '<span style="color:var(--amber)">Gust speed used for component calculation per C055 b(3)</span>' : ''}
+  `;
+}
+
+// ─────────────────────────────────────────
+//  PAGE / SECTION NAVIGATION
+// ─────────────────────────────────────────
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
   document.getElementById('page-' + id).classList.add('active');
-  const tabs = document.querySelectorAll('.nav-tab');
   const map = {setup:0, flight:1, results:2, reference:3};
-  tabs[map[id]].classList.add('active');
+  document.querySelectorAll('.nav-tab')[map[id]].classList.add('active');
 }
-
 function showInner(id) {
   document.querySelectorAll('.inner-page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.inner-tab').forEach(t => t.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   event.target.classList.add('active');
 }
-
-// ── Section collapse ──────────────────────────────────
-function toggleSection(header) {
-  const body = header.nextElementSibling;
-  const isOpen = header.classList.contains('open');
-  header.classList.toggle('open', !isOpen);
-  body.classList.toggle('collapsed', isOpen);
+function toggleSection(hdr) {
+  const open = hdr.classList.contains('open');
+  hdr.classList.toggle('open', !open);
+  hdr.nextElementSibling.classList.toggle('collapsed', open);
 }
 
-// ── Radio buttons ─────────────────────────────────────
-function radioSelect(groupId, el, value) {
+// ─────────────────────────────────────────
+//  RADIO BUTTONS
+// ─────────────────────────────────────────
+function radioSelect(groupId, el) {
   document.querySelectorAll('#' + groupId + ' .radio-btn').forEach(b => b.classList.remove('active'));
   el.classList.add('active');
-  el.dataset.value = value;
-  if (groupId === 'rg-pic-status') updateHighMinWarning();
+  scheduleSave();
 }
-
 function getRadio(groupId) {
-  const active = document.querySelector('#' + groupId + ' .radio-btn.active');
-  return active ? (active.dataset.value || active.textContent.trim()) : null;
+  const a = document.querySelector('#' + groupId + ' .radio-btn.active');
+  return a ? a.textContent.trim() : null;
 }
-
-// ── Flight rule ───────────────────────────────────────
-function setRule(r) {
-  S.rule = r;
-  document.getElementById('rb-91').className = 'rule-btn' + (r === '91' ? ' active-91' : '');
-  document.getElementById('rb-135').className = 'rule-btn' + (r === '135' ? ' active-135' : '');
-  const badge = document.getElementById('nav-rule-badge');
-  badge.textContent = 'Part ' + r;
-  badge.className = 'nav-rule-badge ' + (r === '91' ? 'badge-91' : 'badge-135');
-  const hint = document.getElementById('rule-hint');
-  if (r === '91') {
-    hint.innerHTML = '<strong>Part 91:</strong> Destination alternate required if forecast ceiling &lt; 2,000 ft or visibility &lt; 3 sm within ±1 hr of ETA (§91.169 — the "1-2-3 rule"). No departure alternate requirement in FARs; company SOP may apply. Alternate minimums: precision 600/2, non-precision 800/2.';
-  } else {
-    hint.innerHTML = '<strong>Part 135:</strong> Destination alternate required if ±1 hr ETA forecast ceiling &lt; 1,500 ft or visibility &lt; 3 sm (§135.223). Departure alternate required if departure weather is below CAT I landing minimums for the departure airport (§135.217). Alternate minimums per C055 Table 1.';
-  }
-}
-
-// ── Aircraft change ───────────────────────────────────
-function onAircraftChange() {
-  const ac = document.getElementById('s-aircraft').value;
-  // Auto-detect engine count from known aircraft
-  const threeEngine = ['DASSAULT-FALCON 7X','DASSAULT-FALCON-900C','DASSAULT-FALCON-900EX EASy'];
-  const singleEngine = ['PC-12-47E'];
-  if (threeEngine.includes(ac)) radioSelectByValue('rg-engines', '3');
-  else if (singleEngine.includes(ac)) radioSelectByValue('rg-engines', '1');
-  else radioSelectByValue('rg-engines', '2');
-}
-
-function radioSelectByValue(groupId, val) {
+function setRadioByText(groupId, text) {
   document.querySelectorAll('#' + groupId + ' .radio-btn').forEach(b => {
-    const match = (b.dataset.value || b.textContent.trim()) === val;
-    b.classList.toggle('active', match);
+    b.classList.toggle('active', b.textContent.trim() === text);
   });
 }
 
-function updateHighMinWarning() {}
+// ─────────────────────────────────────────
+//  FLIGHT RULE
+// ─────────────────────────────────────────
+function setRule(r) {
+  document.getElementById('rb-91').className = 'rule-btn' + (r==='91' ? ' active-91' : '');
+  document.getElementById('rb-135').className = 'rule-btn' + (r==='135' ? ' active-135' : '');
+  const badge = document.getElementById('nav-rule-badge');
+  badge.textContent = 'Part ' + r;
+  badge.className = 'nav-rule-badge ' + (r==='91' ? 'badge-91' : 'badge-135');
+  const hint = document.getElementById('rule-hint');
+  if (r==='91') {
+    hint.innerHTML = '<strong>Part 91:</strong> Alternate required if forecast ceiling &lt; 2,000 ft or visibility &lt; 3 sm within ±1 hr ETA (§91.169 — 1-2-3 rule). No regulatory departure alternate. Alternate mins: precision 600/2, non-precision 800/2.';
+  } else {
+    hint.innerHTML = '<strong>Part 135:</strong> Alternate required if ±1 hr ETA ceiling &lt; 1,500 ft or visibility &lt; 3 sm (§135.223). Departure alternate required when departure weather below CAT I landing minimums (§135.217). Alternate mins per C055 Table 1.';
+  }
+  scheduleSave();
+}
 
-// ── Setup save/load ───────────────────────────────────
+// ─────────────────────────────────────────
+//  AIRCRAFT AUTO-FILL
+// ─────────────────────────────────────────
+function onAircraftChange() {
+  const ac = document.getElementById('s-aircraft').value;
+  const three = ['DASSAULT-FALCON 7X','DASSAULT-FALCON-900C','DASSAULT-FALCON-900EX EASy'];
+  const one   = ['PC-12-47E'];
+  const engText = three.includes(ac) ? '3' : one.includes(ac) ? '1' : '2';
+  setRadioByText('rg-engines', engText);
+  scheduleSave();
+}
+
+// ─────────────────────────────────────────
+//  SETUP SAVE / LOAD
+// ─────────────────────────────────────────
 function collectSetup() {
+  const aptIds = ['apt-gps','apt-lda','apt-lda-dme','apt-loc','apt-loc-bc','apt-loc-bc-dme','apt-loc-dme',
+    'apt-ndb','apt-ndb-dme','apt-rnav-gnss','apt-rnav-gps','apt-rnav-vordme','apt-vor','apt-vor-dme-loc',
+    'apt-lda-prm','apt-lda-prm-dme','apt-lda-gs','apt-loc-bc-gs','apt-rnav-gnss-apv','apt-rnav-gps-apv',
+    'apt-rnav-ils','apt-ils','apt-ils-dme','apt-rnpar','apt-cat2'];
+  const apt = {};
+  aptIds.forEach(id => { const el=document.getElementById(id); if(el) apt[id]=el.checked; });
+
   return {
-    timeFormat: getRadio('rg-time'),
-    altUnit: getRadio('rg-alt-unit'),
-    visUnit: getRadio('rg-vis-unit'),
+    visUnit: getRadio('rg-vis-unit'), time: getRadio('rg-time'),
     aircraft: document.getElementById('s-aircraft').value,
-    tail: document.getElementById('s-tail').value.toUpperCase(),
-    engines: parseInt(getRadio('rg-engines')) || 2,
-    xwind: parseFloat(document.getElementById('s-xwind').value) || null,
-    tailwind: parseFloat(document.getElementById('s-tailwind').value) || null,
+    tail: document.getElementById('s-tail').value,
+    engines: getRadio('rg-engines'),
+    xwind: document.getElementById('s-xwind').value,
+    tailwind: document.getElementById('s-tailwind').value,
     navdb: document.getElementById('s-navdb').value,
     picName: document.getElementById('s-pic-name').value,
-    picStatus: getRadio('rg-pic-status'),
-    llm: getRadio('rg-llm') === 'Yes',
-    buffer: getRadio('rg-buffer') === 'Yes',
-    visMargin: parseFloat(document.getElementById('s-vis-margin').value) || 0,
+    picStatus: getRadio('rg-pic-status'), llm: getRadio('rg-llm'),
+    buffer: getRadio('rg-buffer'), visMargin: document.getElementById('s-vis-margin').value,
     eq: {
       fd: document.getElementById('eq-fd').checked,
       ap: document.getElementById('eq-ap').checked,
@@ -1442,25 +1275,13 @@ function collectSetup() {
       c079: document.getElementById('ops-c079').checked,
       c384: document.getElementById('ops-c384').checked,
     },
-    apt: {
-      ils: document.getElementById('apt-ils').checked,
-      lpv: document.getElementById('apt-lpv').checked,
-      lnavVnav: document.getElementById('apt-lnav-vnav').checked,
-      lnav: document.getElementById('apt-lnav').checked,
-      vor: document.getElementById('apt-vor').checked,
-      ndb: document.getElementById('apt-ndb').checked,
-      loc: document.getElementById('apt-loc').checked,
-      lda: document.getElementById('apt-lda').checked,
-      rnpar: document.getElementById('apt-rnpar').checked,
-      cat2: document.getElementById('apt-cat2').checked,
-    },
+    apt,
     vnav: getRadio('rg-vnav'),
   };
 }
 
 function saveSetup() {
-  S.setup = collectSetup();
-  localStorage.setItem('altplan_setup', JSON.stringify(S.setup));
+  localStorage.setItem('altplan_setup', JSON.stringify(collectSetup()));
   showToast('Setup saved ✓');
 }
 
@@ -1469,684 +1290,764 @@ function loadSetup() {
   if (!raw) return;
   try {
     const d = JSON.parse(raw);
-    S.setup = d;
-    if (d.timeFormat) radioSelectByValue('rg-time', d.timeFormat);
-    if (d.altUnit) radioSelectByValue('rg-alt-unit', d.altUnit);
-    if (d.visUnit) radioSelectByValue('rg-vis-unit', d.visUnit);
+    if (d.visUnit) setRadioByText('rg-vis-unit', d.visUnit);
+    if (d.time) setRadioByText('rg-time', d.time);
     if (d.aircraft) document.getElementById('s-aircraft').value = d.aircraft;
     if (d.tail) document.getElementById('s-tail').value = d.tail;
-    if (d.engines) radioSelectByValue('rg-engines', String(d.engines));
+    if (d.engines) setRadioByText('rg-engines', d.engines);
     if (d.xwind) document.getElementById('s-xwind').value = d.xwind;
     if (d.tailwind) document.getElementById('s-tailwind').value = d.tailwind;
     if (d.navdb) document.getElementById('s-navdb').value = d.navdb;
     if (d.picName) document.getElementById('s-pic-name').value = d.picName;
-    if (d.picStatus) radioSelectByValue('rg-pic-status', d.picStatus);
-    if (d.llm !== undefined) radioSelectByValue('rg-llm', d.llm ? 'Yes' : 'No');
-    if (d.buffer !== undefined) radioSelectByValue('rg-buffer', d.buffer ? 'Yes' : 'No');
+    if (d.picStatus) setRadioByText('rg-pic-status', d.picStatus);
+    if (d.llm) setRadioByText('rg-llm', d.llm);
+    if (d.buffer) setRadioByText('rg-buffer', d.buffer);
     if (d.visMargin) document.getElementById('s-vis-margin').value = d.visMargin;
-    if (d.eq) {
-      Object.entries(d.eq).forEach(([k,v]) => {
-        const map = {fd:'eq-fd',ap:'eq-ap',hud:'eq-hud',evs:'eq-evs',gpsC129:'eq-gps-c129',fde:'eq-fde',baroC129:'eq-baro-c129',waas:'eq-waas',baroWaas:'eq-baro-waas'};
-        if (map[k]) document.getElementById(map[k]).checked = v;
-      });
-    }
-    if (d.ops) {
-      Object.entries(d.ops).forEach(([k,v]) => {
-        const el = document.getElementById('ops-' + k);
-        if (el) el.checked = v;
-      });
-    }
-    if (d.apt) {
-      const map2 = {ils:'apt-ils',lpv:'apt-lpv',lnavVnav:'apt-lnav-vnav',lnav:'apt-lnav',vor:'apt-vor',ndb:'apt-ndb',loc:'apt-loc',lda:'apt-lda',rnpar:'apt-rnpar',cat2:'apt-cat2'};
-      Object.entries(d.apt).forEach(([k,v]) => {
-        if (map2[k]) document.getElementById(map2[k]).checked = v;
-      });
-    }
-    if (d.vnav) radioSelectByValue('rg-vnav', d.vnav);
+    if (d.eq) Object.entries(d.eq).forEach(([k,v]) => {
+      const m = {fd:'eq-fd',ap:'eq-ap',hud:'eq-hud',evs:'eq-evs',gpsC129:'eq-gps-c129',
+                 fde:'eq-fde',baroC129:'eq-baro-c129',waas:'eq-waas',baroWaas:'eq-baro-waas'};
+      if (m[k]) document.getElementById(m[k]).checked = v;
+    });
+    if (d.ops) Object.entries(d.ops).forEach(([k,v]) => {
+      const el = document.getElementById('ops-' + k);
+      if (el) el.checked = v;
+    });
+    if (d.apt) Object.entries(d.apt).forEach(([k,v]) => {
+      const el = document.getElementById(k);
+      if (el) el.checked = v;
+    });
+    if (d.vnav) setRadioByText('rg-vnav', d.vnav);
   } catch(e) { console.warn('Setup load error', e); }
 }
 
 function resetSetup() {
+  if (!confirm('Reset all setup data to defaults?')) return;
   localStorage.removeItem('altplan_setup');
   location.reload();
 }
 
-// ── Flight clear ──────────────────────────────────────
-function clearFlight() {
-  const ids = ['f-flightid','f-dep-icao','f-dep-elev','f-dep-rwy','f-dep-ceil','f-dep-vis','f-dep-rvr','f-dep-wdir','f-dep-wspd','f-dep-to-vis',
-    'f-dalt-icao','f-dalt-dist','f-dalt-ceil','f-dalt-vis','f-dalt-rvr','f-dalt-da',
-    'f-dest-icao','f-dest-elev','f-dest-rwy','f-dest-ceil','f-dest-vis','f-dest-rvr','f-dest-wdir','f-dest-wspd','f-dest-da','f-dest-apch-vis','f-dest-apch-rvr',
-    'f-dest-ceil-1h','f-dest-vis-1h','f-dest-ceil1h','f-dest-vis1h',
-    'f-alt-icao','f-alt-ceil','f-alt-vis','f-alt-rvr','f-alt-wdir','f-alt-wspd','f-alt-da','f-alt-apch-vis','f-alt-apch-rvr','f-alt-dist'];
-  ids.forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
+// ─────────────────────────────────────────
+//  FLIGHT PLAN SAVE / LOAD / CLEAR
+// ─────────────────────────────────────────
+// All text/number inputs and selects in the flight plan
+const FLIGHT_IDS = [
+  'f-flightid',
+  'f-dep-icao','f-dep-elev','f-dep-rwy-len','f-dep-rwy-id','f-dep-rwy-hdg',
+  'f-dep-ceil','f-dep-cov','f-dep-vis','f-dep-rvr',
+  'f-dep-wdir','f-dep-wspd','f-dep-gust','f-dep-to-vis','f-dep-to-type',
+  'f-dalt-icao','f-dalt-dist','f-dalt-apch','f-dalt-rwy-id','f-dalt-rwy-hdg',
+  'f-dalt-ceil','f-dalt-cov','f-dalt-vis','f-dalt-rvr','f-dalt-da',
+  'f-dalt-wdir','f-dalt-wspd','f-dalt-gust',
+  'f-dest-icao','f-dest-elev','f-dest-rwy-len','f-dest-rwy-id','f-dest-rwy-hdg',
+  'f-dest-ceil','f-dest-cov','f-dest-vis','f-dest-rvr',
+  'f-dest-wdir','f-dest-wspd','f-dest-gust',
+  'f-dest-circ-mda','f-dest-lowest-min',
+  'f-dest-ceil-1hb','f-dest-vis-1hb','f-dest-ceil-1ha','f-dest-vis-1ha',
+  'f-dest-apch','f-dest-da','f-dest-apch-vis','f-dest-apch-rvr',
+  'f-alt-icao','f-alt-rwy-id','f-alt-rwy-hdg',
+  'f-alt-ceil','f-alt-cov','f-alt-vis','f-alt-rvr',
+  'f-alt-wdir','f-alt-wspd','f-alt-gust',
+  'f-alt-apch','f-alt-da','f-alt-apch-vis','f-alt-apch-rvr',
+];
+const FLIGHT_RADIOS = [
+  'rg-dep-tdz','rg-dest-iap','rg-dest-circling','rg-alt-navfac','rg-alt-prohibit','rg-alt-gps','rg-alt-table2'
+];
+// Weather-only fields (cleared by "Clear Weather Only")
+const WEATHER_IDS = [
+  'f-dep-ceil','f-dep-cov','f-dep-vis','f-dep-rvr','f-dep-wdir','f-dep-wspd','f-dep-gust',
+  'f-dalt-ceil','f-dalt-cov','f-dalt-vis','f-dalt-rvr','f-dalt-wdir','f-dalt-wspd','f-dalt-gust',
+  'f-dest-ceil','f-dest-cov','f-dest-vis','f-dest-rvr','f-dest-wdir','f-dest-wspd','f-dest-gust',
+  'f-dest-ceil-1hb','f-dest-vis-1hb','f-dest-ceil-1ha','f-dest-vis-1ha',
+  'f-alt-ceil','f-alt-cov','f-alt-vis','f-alt-rvr','f-alt-wdir','f-alt-wspd','f-alt-gust',
+];
+
+let saveTimer = null;
+function scheduleSave() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveFlight, 400);
 }
 
-// ── Collect flight data ───────────────────────────────
+function saveFlight() {
+  const data = { rule: document.getElementById('rb-135').classList.contains('active-135') ? '135' :
+                       document.getElementById('rb-91').classList.contains('active-91') ? '91' : null };
+  FLIGHT_IDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) data[id] = el.value;
+  });
+  FLIGHT_RADIOS.forEach(gid => { data['radio_' + gid] = getRadio(gid); });
+  localStorage.setItem('altplan_flight', JSON.stringify(data));
+  updatePersistStatus();
+}
+
+function loadFlight() {
+  const raw = localStorage.getItem('altplan_flight');
+  if (!raw) return;
+  try {
+    const d = JSON.parse(raw);
+    if (d.rule) setRule(d.rule);
+    FLIGHT_IDS.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && d[id] !== undefined) el.value = d[id];
+    });
+    FLIGHT_RADIOS.forEach(gid => {
+      if (d['radio_' + gid]) setRadioByText(gid, d['radio_' + gid]);
+    });
+    // Re-run live parse on vis fields after loading
+    const visPairs = [
+      ['f-dep-vis','f-dep-vis-out'],['f-dep-to-vis','f-dep-to-vis-out'],
+      ['f-dalt-vis','f-dalt-vis-out'],
+      ['f-dest-vis','f-dest-vis-out'],['f-dest-vis-1hb','f-dest-vis-1hb-out'],
+      ['f-dest-vis-1ha','f-dest-vis-1ha-out'],['f-dest-apch-vis','f-dest-apch-vis-out'],
+      ['f-alt-vis','f-alt-vis-out'],['f-alt-apch-vis','f-alt-apch-vis-out'],
+    ];
+    visPairs.forEach(([inId, outId]) => {
+      const el = document.getElementById(inId);
+      if (el && el.value) liveParseVis(el, outId);
+    });
+    updatePersistStatus();
+  } catch(e) { console.warn('Flight load error', e); }
+}
+
+function updatePersistStatus() {
+  const el = document.getElementById('persist-status');
+  const t = new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+  el.innerHTML = '<span class="persist-dot"></span>Saved ' + t;
+}
+
+function clearFlight() {
+  if (!confirm('Clear all flight plan data?')) return;
+  FLIGHT_IDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  // Clear vis parsed labels
+  document.querySelectorAll('.vis-parsed').forEach(e => e.textContent = '');
+  localStorage.removeItem('altplan_flight');
+  document.getElementById('persist-status').innerHTML = '';
+  showToast('Flight plan cleared');
+}
+
+function clearWeatherOnly() {
+  WEATHER_IDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  document.querySelectorAll('.vis-parsed').forEach(e => e.textContent = '');
+  scheduleSave();
+  showToast('Weather fields cleared — routing preserved');
+}
+
+// ─────────────────────────────────────────
+//  COLLECT FLIGHT DATA FOR ANALYSIS
+// ─────────────────────────────────────────
+function fv(id) { const el = document.getElementById(id); return el ? el.value : ''; }
+function fn(id) { const v = parseFloat(fv(id)); return isNaN(v) ? null : v; }
+function fvis(id) { const v = parseVis(fv(id)); return (v === null || isNaN(v)) ? null : v; }
+
 function collectFlight() {
+  const rule = document.getElementById('rb-135').classList.contains('active-135') ? '135' :
+               document.getElementById('rb-91').classList.contains('active-91')  ? '91'  : null;
   return {
-    rule: S.rule,
-    flightId: document.getElementById('f-flightid').value,
+    rule,
+    flightId: fv('f-flightid'),
     dep: {
-      icao: document.getElementById('f-dep-icao').value.toUpperCase(),
-      elev: parseFloat(document.getElementById('f-dep-elev').value) || 0,
-      rwy: parseFloat(document.getElementById('f-dep-rwy').value) || 0,
-      ceil: parseFloat(document.getElementById('f-dep-ceil').value) || null,
-      cov: document.getElementById('f-dep-cov').value,
-      vis: parseFloat(document.getElementById('f-dep-vis').value) || null,
-      rvr: parseFloat(document.getElementById('f-dep-rvr').value) || null,
-      wdir: parseFloat(document.getElementById('f-dep-wdir').value) || null,
-      wspd: parseFloat(document.getElementById('f-dep-wspd').value) || null,
-      toVis: parseFloat(document.getElementById('f-dep-to-vis').value) || null,
-      toType: document.getElementById('f-dep-to-type').value,
-      tdz: getRadio('rg-dep-tdz') === 'Yes',
+      icao:    fv('f-dep-icao'),
+      elev:    fn('f-dep-elev'),
+      rwyLen:  fn('f-dep-rwy-len'),
+      rwyId:   fv('f-dep-rwy-id'),
+      rwyHdg:  fn('f-dep-rwy-hdg'),
+      ceil:    fn('f-dep-ceil'),
+      cov:     fv('f-dep-cov'),
+      vis:     fvis('f-dep-vis'),
+      rvr:     fn('f-dep-rvr'),
+      wdir:    fn('f-dep-wdir'),
+      wspd:    fn('f-dep-wspd'),
+      gust:    fn('f-dep-gust'),
+      toVis:   fvis('f-dep-to-vis'),
+      toType:  fv('f-dep-to-type'),
+      tdz:     getRadio('rg-dep-tdz') === 'Yes',
     },
     dalt: {
-      icao: document.getElementById('f-dalt-icao').value.toUpperCase(),
-      dist: parseFloat(document.getElementById('f-dalt-dist').value) || null,
-      apch: document.getElementById('f-dalt-apch').value,
-      ceil: parseFloat(document.getElementById('f-dalt-ceil').value) || null,
-      cov: document.getElementById('f-dalt-cov').value,
-      vis: parseFloat(document.getElementById('f-dalt-vis').value) || null,
-      rvr: parseFloat(document.getElementById('f-dalt-rvr').value) || null,
-      da: parseFloat(document.getElementById('f-dalt-da').value) || null,
+      icao:   fv('f-dalt-icao'),
+      dist:   fn('f-dalt-dist'),
+      apch:   fv('f-dalt-apch'),
+      rwyId:  fv('f-dalt-rwy-id'),
+      rwyHdg: fn('f-dalt-rwy-hdg'),
+      ceil:   fn('f-dalt-ceil'),
+      cov:    fv('f-dalt-cov'),
+      vis:    fvis('f-dalt-vis'),
+      rvr:    fn('f-dalt-rvr'),
+      da:     fn('f-dalt-da'),
+      wdir:   fn('f-dalt-wdir'),
+      wspd:   fn('f-dalt-wspd'),
+      gust:   fn('f-dalt-gust'),
     },
     dest: {
-      icao: document.getElementById('f-dest-icao').value.toUpperCase(),
-      elev: parseFloat(document.getElementById('f-dest-elev').value) || 0,
-      rwy: parseFloat(document.getElementById('f-dest-rwy').value) || 0,
-      ceil: parseFloat(document.getElementById('f-dest-ceil').value) || null,
-      cov: document.getElementById('f-dest-cov').value,
-      vis: parseFloat(document.getElementById('f-dest-vis').value) || null,
-      rvr: parseFloat(document.getElementById('f-dest-rvr').value) || null,
-      wdir: parseFloat(document.getElementById('f-dest-wdir').value) || null,
-      wspd: parseFloat(document.getElementById('f-dest-wspd').value) || null,
-      apch: document.getElementById('f-dest-apch').value,
-      da: parseFloat(document.getElementById('f-dest-da').value) || null,
-      apchVis: parseFloat(document.getElementById('f-dest-apch-vis').value) || null,
-      apchRvr: parseFloat(document.getElementById('f-dest-apch-rvr').value) || null,
-      ceil1hBefore: parseFloat(document.getElementById('f-dest-ceil-1h').value) || null,
-      vis1hBefore: parseFloat(document.getElementById('f-dest-vis-1h').value) || null,
-      ceil1hAfter: parseFloat(document.getElementById('f-dest-ceil1h').value) || null,
-      vis1hAfter: parseFloat(document.getElementById('f-dest-vis1h').value) || null,
-      hasIap: getRadio('rg-dest-iap') === 'Yes',
+      icao:       fv('f-dest-icao'),
+      elev:       fn('f-dest-elev'),
+      rwyLen:     fn('f-dest-rwy-len'),
+      rwyId:      fv('f-dest-rwy-id'),
+      rwyHdg:     fn('f-dest-rwy-hdg'),
+      ceil:       fn('f-dest-ceil'),
+      cov:        fv('f-dest-cov'),
+      vis:        fvis('f-dest-vis'),
+      rvr:        fn('f-dest-rvr'),
+      wdir:       fn('f-dest-wdir'),
+      wspd:       fn('f-dest-wspd'),
+      gust:       fn('f-dest-gust'),
+      ceil1hb:    fn('f-dest-ceil-1hb'),
+      vis1hb:     fvis('f-dest-vis-1hb'),
+      ceil1ha:    fn('f-dest-ceil-1ha'),
+      vis1ha:     fvis('f-dest-vis-1ha'),
+      circlingAuth: getRadio('rg-dest-circling') !== 'No',  // true = circling authorized
+      circMda:    fn('f-dest-circ-mda'),    // lowest circling MDA (ft MSL) §135.223(b)(1)
+      lowestMin:  fn('f-dest-lowest-min'),  // lowest published min (ft MSL) §135.223(b)(2)
+      apch:       fv('f-dest-apch'),
+      da:         fn('f-dest-da'),
+      apchVis:    fvis('f-dest-apch-vis'),
+      apchRvr:    fn('f-dest-apch-rvr'),
+      hasIap:     getRadio('rg-dest-iap') === 'Yes',
     },
     alt: {
-      icao: document.getElementById('f-alt-icao').value.toUpperCase(),
-      navFac: getRadio('rg-alt-navfac'),
+      icao:     fv('f-alt-icao'),
+      navFac:   getRadio('rg-alt-navfac'),
       prohibit: getRadio('rg-alt-prohibit') === 'Yes',
-      ceil: parseFloat(document.getElementById('f-alt-ceil').value) || null,
-      cov: document.getElementById('f-alt-cov').value,
-      vis: parseFloat(document.getElementById('f-alt-vis').value) || null,
-      rvr: parseFloat(document.getElementById('f-alt-rvr').value) || null,
-      wdir: parseFloat(document.getElementById('f-alt-wdir').value) || null,
-      wspd: parseFloat(document.getElementById('f-alt-wspd').value) || null,
-      apch: document.getElementById('f-alt-apch').value,
-      da: parseFloat(document.getElementById('f-alt-da').value) || null,
-      apchVis: parseFloat(document.getElementById('f-alt-apch-vis').value) || null,
-      apchRvr: parseFloat(document.getElementById('f-alt-apch-rvr').value) || null,
-      gpsIap: getRadio('rg-alt-gps') === 'Yes',
+      rwyId:    fv('f-alt-rwy-id'),
+      rwyHdg:   fn('f-alt-rwy-hdg'),
+      ceil:     fn('f-alt-ceil'),
+      cov:      fv('f-alt-cov'),
+      vis:      fvis('f-alt-vis'),
+      rvr:      fn('f-alt-rvr'),
+      wdir:     fn('f-alt-wdir'),
+      wspd:     fn('f-alt-wspd'),
+      gust:     fn('f-alt-gust'),
+      apch:     fv('f-alt-apch'),
+      da:       fn('f-alt-da'),
+      apchVis:  fvis('f-alt-apch-vis'),
+      apchRvr:  fn('f-alt-apch-rvr'),
+      gpsIap:   getRadio('rg-alt-gps') === 'Yes',
       inTable2: getRadio('rg-alt-table2') === 'Yes',
     }
   };
 }
 
-// ── Core Analysis Logic ───────────────────────────────
+// ─────────────────────────────────────────
+//  WIND ANALYSIS — used by all airports
+// ─────────────────────────────────────────
+function analyzeWind(airport, label, setup) {
+  const { wdir, wspd, gust, rwyId, rwyHdg } = airport;
+  if (!wdir && !wspd) return []; // no wind entered — skip silently
+  if (!rwyHdg) {
+    return [{ type:'neutral', title: label + ' — Runway Heading Not Entered',
+      body: 'Wind entered but no runway heading — cannot compute crosswind or tailwind components. Enter the runway magnetic heading to get wind analysis.' }];
+  }
+  if (!wspd) return [];
 
-function smToRvr(sm) { return sm * 6076; } // rough: 1sm ≈ 6076ft
-function rvrToSm(rvr) { return rvr / 6076; }
+  const effectiveSpd = gust || wspd;
+  const { headwind, crosswind } = windComponents(wdir, effectiveSpd, rwyHdg);
+  const isTW = headwind < 0;
+  const hw = Math.abs(headwind);
 
-// Standard takeoff minimums per C057
-function stdToMins(engines) {
-  return engines > 2 ? { vis: 0.5, rvr: 2400 } : { vis: 1.0, rvr: 5000 };
+  const xwLimit = parseFloat(setup.xwind) || null;
+  const twLimit = parseFloat(setup.tailwind) || null;
+  const xwOk = xwLimit ? crosswind <= xwLimit : true;
+  const twOk = (!isTW) || (twLimit ? hw <= twLimit : true);
+
+  const status = (!xwOk || !twOk) ? 'no-go' : 'go';
+  const icon = status === 'go' ? '✓' : '✗';
+
+  let body = `RWY ${rwyId || rwyHdg + '°'} &nbsp;|&nbsp; Wind: <strong>${wdir.toString().padStart(3,'0')}° @ ${wspd}${gust ? 'G' + gust : ''} kt</strong>`;
+  if (gust) body += `<br><span style="color:var(--amber)">Gust ${gust} kt used for component calculation (C055 b(3) — wind incl. gusts must be within operating limits)</span>`;
+  body += `<br>Crosswind component: <strong>${crosswind} kt</strong>`;
+  if (xwLimit) body += ` — limit ${xwLimit} kt &nbsp;${xwOk ? '<span style="color:var(--green)">✓ Within limits</span>' : '<span style="color:var(--red)">✗ EXCEEDS AFM LIMIT</span>'}`;
+  else body += ' — <span style="color:var(--text3)">no limit configured in setup</span>';
+  body += `<br>${isTW ? 'Tailwind' : 'Headwind'} component: <strong>${hw} kt</strong>`;
+  if (isTW && twLimit) body += ` — limit ${twLimit} kt &nbsp;${twOk ? '<span style="color:var(--green)">✓ Within limits</span>' : '<span style="color:var(--red)">✗ EXCEEDS AFM LIMIT</span>'}`;
+
+  return [{ type: status, title: `${label} — Wind Components`, body }];
 }
 
-// Convert visibility to effective RVR for comparison
-function effectiveRvr(vis, rvr) {
-  if (rvr) return rvr;
-  if (vis) return vis * 6076;
-  return null;
-}
-
-// Determine if an approach type is a "precision" approach (for alt purposes)
-function isPrecision(apch) {
-  return ['ILS','GLS','LPV','LNAV/VNAV','RNPAR'].includes(apch);
-}
-
-// ── TAKEOFF ANALYSIS ─────────────────────────────────
+// ─────────────────────────────────────────
+//  TAKEOFF ANALYSIS
+// ─────────────────────────────────────────
 function analyzeTakeoff(f, setup) {
   const results = [];
   const dep = f.dep;
-  const engines = setup.engines || 2;
-  const std = stdToMins(engines);
+  const engines = parseInt(setup.engines) || 2;
+  if (!dep.icao) return [{ type:'neutral', title:'Departure not entered', body:'Enter departure airport data.' }];
 
-  // No data?
-  if (!dep.icao) {
-    return [{ type:'neutral', title:'Departure airport not entered', body:'Enter departure ICAO and weather to evaluate takeoff minimums.' }];
-  }
+  const stdVis = engines > 2 ? 0.5 : 1.0;
+  const stdRvr = engines > 2 ? 2400 : 5000;
 
-  // Determine controlling visibility
-  const depRvr = dep.rvr || (dep.vis ? dep.vis * 6076 : null);
-  const depVis = dep.vis;
-
-  // Effective takeoff minimum (published vs standard)
-  let reqVis = std.vis;
-  let reqRvr = std.rvr;
-  let toMinSource = 'Standard (C057)';
-
-  if (dep.toVis && dep.toType !== 'standard') {
-    const pubRvr = dep.toType === 'rvr' ? dep.toVis : dep.toVis * 6076;
-    if (pubRvr > std.rvr) {
-      // Published > standard and no alternate procedure → must use published
-      reqRvr = pubRvr;
-      reqVis = dep.toType === 'sm' ? dep.toVis : dep.toVis / 6076;
-      toMinSource = 'Published (> Standard, C057b)';
-    } else {
-      // At or below standard → may use lowest authorized CAT I landing min
-      toMinSource = 'At/below standard → CAT I landing minimum applies (C057c)';
+  const wxRvr = dep.rvr || (dep.vis !== null ? dep.vis * 6076 : null);
+  if (wxRvr === null) {
+    results.push({ type:'neutral', title:'Departure weather not entered', body:'Enter departure visibility or RVR.' });
+  } else {
+    let reqRvr = stdRvr, minSrc = `Standard C057 (${engines > 2 ? '>2 engines' : '≤2 engines'})`;
+    if (dep.toVis !== null && dep.toType !== 'standard') {
+      const pubRvr = dep.toType === 'rvr' ? dep.toVis : dep.toVis * 6076;
+      if (pubRvr > stdRvr) {
+        reqRvr = pubRvr;
+        minSrc = `Published (${dep.toType === 'rvr' ? 'RVR ' + pubRvr : dep.toVis + ' sm'}) — exceeds standard, C057b`;
+      } else {
+        minSrc = 'At/below standard → CAT I landing minimum applies (C057c)';
+      }
     }
-  }
 
-  // Single engine P135 never lower than standard
-  if (f.rule === '135' && engines === 1) {
-    if (depRvr && depRvr < std.rvr) {
-      results.push({ type:'no-go', title:'Single-Engine P135 — Below Standard Minimums', body:`Departure RVR ${depRvr} ft is below standard minimum of RVR ${std.rvr} ft. Single-engine P135 operations are NOT authorized lower than standard minimums at any airport. <span class="ref">[C057 NOTE]</span>` });
+    // Single-engine P135 hardstop
+    if (f.rule === '135' && engines === 1 && wxRvr < stdRvr) {
+      results.push({ type:'no-go', title:`Single-Engine P135 — Below Standard Minimums (${dep.icao})`,
+        body:`Departure RVR ${Math.round(wxRvr)} ft &lt; standard ${stdRvr} ft. Single-engine P135 NOT authorized below standard minimums at any airport. <span class="ref">[C057 NOTE]</span>` });
       return results;
     }
-  }
 
-  // C079 lower-than-standard with HUD
-  let hudAuth = false;
-  if (setup.ops.c079 && setup.eq.hud) {
-    // C079: authorized to RVR 500/TDZ/Mid/RO(150m)
-    const hudAcList = ['BD-100-1A10','BD-700-1A10','BD-700-2A12','DASSAULT-FALCON 7X','DASSAULT-FALCON-2000LX','G280','G-IV-450','G-V','G-V-SP','G-VI-G650ER','GVII-G500','GVII-G600','GVIII-G700','GVIII-G800'];
-    hudAuth = hudAcList.includes(setup.aircraft);
-  }
-
-  // Evaluate departure weather vs minimums
-  const wxRvr = effectiveRvr(depVis, dep.rvr);
-
-  if (wxRvr === null) {
-    results.push({ type:'neutral', title:'Departure weather not entered', body:'Enter departure ceiling and visibility to evaluate takeoff minimums.' });
-  } else {
-    let minRvr = reqRvr;
-    let minLabel = toMinSource;
-
-    // High-min PIC doesn't generally affect takeoff minimums in the same way as landing
-    // but C054 turbojet restriction applies to IAP at destination, not departure.
-
-    // Apply C079 if authorized
-    if (hudAuth && f.rule === '135') {
-      minRvr = 500;
-      minLabel = 'C079 HUD Lower-Than-Standard (500 RVR)';
+    // C079 HUD credit
+    const hudAcList = ['BD-100-1A10','BD-700-1A10','BD-700-2A12','DASSAULT-FALCON 7X',
+      'DASSAULT-FALCON-2000LX','G280','G-IV-450','G-V','G-V-SP','G-VI-G650ER',
+      'GVII-G500','GVII-G600','GVIII-G700','GVIII-G800'];
+    if (setup.ops.c079 && setup.eq.hud && hudAcList.includes(setup.aircraft)) {
+      reqRvr = 500; minSrc = 'C079 HUD Lower-Than-Standard (RVR 500)';
     }
 
-    if (wxRvr >= minRvr) {
-      results.push({
-        type: 'go',
-        title: `Takeoff Minimums Met — ${dep.icao}`,
-        body: `Current wx RVR equivalent: <strong>${Math.round(wxRvr)} ft</strong> ≥ required <strong>${Math.round(minRvr)} ft</strong><br>Minimum source: ${minLabel}<br><span class="ref">TDZ RVR is controlling when available (C057)</span>`
-      });
+    if (wxRvr >= reqRvr) {
+      results.push({ type:'go', title:`Takeoff Minimums Met — ${dep.icao}`,
+        body:`Departure RVR equivalent: <strong>${Math.round(wxRvr)} ft</strong> ≥ required <strong>${Math.round(reqRvr)} ft</strong><br>Minimum basis: ${minSrc}<br><span class="ref">TDZ RVR is controlling when available (C057)</span>` });
     } else {
-      let body = `Current wx RVR equivalent: <strong>${Math.round(wxRvr)} ft</strong> — below required <strong>${Math.round(minRvr)} ft</strong><br>Minimum source: ${minLabel}`;
-      if (!hudAuth && setup.ops.c079 && setup.eq.hud) {
-        body += '<br><span class="ref">C079 HUD authorization exists but aircraft not in Table 2 for this aircraft type</span>';
-      }
-      if (!setup.ops.c079 && setup.eq.hud) {
-        body += '<br><em>Note: C079 not authorized — HUD takeoff credit not available</em>';
-      }
-      results.push({ type:'no-go', title:`Takeoff Minimums NOT Met — ${dep.icao}`, body });
+      results.push({ type:'no-go', title:`Takeoff Minimums NOT Met — ${dep.icao}`,
+        body:`Departure RVR equivalent: <strong>${Math.round(wxRvr)} ft</strong> &lt; required <strong>${Math.round(reqRvr)} ft</strong><br>Minimum basis: ${minSrc}` });
     }
   }
 
-  // Ceiling note for C057 — no explicit ceiling requirement for takeoff
-  if (dep.ceil && dep.ceil < 200) {
-    results.push({ type:'caution', title:'Very Low Ceiling at Departure', body:'Ceiling below 200 ft AGL. Ensure runway environment visibility is sufficient and ODP/SID can be complied with.' });
-  }
-
+  // Wind at departure
+  results.push(...analyzeWind(dep, `Departure ${dep.icao || ''}`, setup));
   return results;
 }
 
-// ── DEPARTURE ALTERNATE ANALYSIS ─────────────────────
+// ─────────────────────────────────────────
+//  DEPARTURE ALTERNATE
+// ─────────────────────────────────────────
 function analyzeDepartureAlt(f, setup) {
   const results = [];
-  const dep = f.dep;
-  const dalt = f.dalt;
-
   if (f.rule === '91') {
-    results.push({ type:'neutral', title:'Part 91 — No Regulatory Departure Alternate Requirement', body:'14 CFR Part 91 does not require a departure alternate. Company SOP may impose a departure alternate policy when weather is below CAT I landing minimums. Verify company dispatch requirements.' });
+    results.push({ type:'neutral', title:'Part 91 — No Regulatory Departure Alternate Requirement',
+      body:'§91 does not require a departure alternate. Verify company SOP for policy when departure weather is below CAT I minimums.' });
+    return results;
+  }
+  const dep = f.dep;
+  const wxRvr = dep.rvr || (dep.vis !== null ? dep.vis * 6076 : null);
+  if (wxRvr === null) {
+    results.push({ type:'neutral', title:'Departure weather not entered', body:'Enter departure weather to evaluate departure alternate requirement.' });
     return results;
   }
 
-  // P135: Departure alternate required when departure weather is below CAT I landing minimums
-  // The "CAT I landing minimum" for the departure airport's best available approach
-  // We'll compare departure weather to standard CAT I minimums as proxy
-  const depRvr = effectiveRvr(dep.vis, dep.rvr);
-  const depCeil = dep.ceil;
-
-  // Standard CAT I ILS minimums are typically 200 ft / RVR 1800
-  // Without specific IAP data we use the general standard
-  const cat1Ceil = 200;
-  const cat1Rvr = 1800;
-
-  const belowCat1 = (depRvr !== null && depRvr < cat1Rvr) || (depCeil !== null && depCeil < cat1Ceil);
-
-  if (!dep.icao) {
-    results.push({ type:'neutral', title:'Departure airport not entered', body:'Enter departure data to evaluate departure alternate requirement.' });
-    return results;
-  }
-
+  // Below CAT I landing minimums = below 200 ft / RVR 1800 (standard CAT I reference)
+  const belowCat1 = wxRvr < 1800 || (dep.ceil !== null && dep.ceil < 200);
   if (belowCat1) {
-    results.push({
-      type: 'caution',
-      title: 'Departure Alternate Required — Part 135 (§135.217)',
-      body: `Departure weather ${depCeil !== null ? depCeil + ' ft ceiling / ' : ''}${depRvr !== null ? 'RVR ' + Math.round(depRvr) + ' ft' : ''} is below standard CAT I landing minimums (200 ft / RVR 1800). A departure alternate must be filed within 1 hour flight time at one engine inoperative cruise speed. <span class="ref">[§135.217]</span>`
-    });
+    results.push({ type:'caution', title:`Departure Alternate Required — §135.217`,
+      body:`Departure weather (${dep.ceil !== null ? dep.ceil + ' ft ceiling / ' : ''}RVR ≈ ${Math.round(wxRvr)} ft) is below CAT I landing minimums (200 ft / RVR 1800). A departure alternate within 1 hour OEI flight time must be filed. <span class="ref">[§135.217]</span>` });
 
-    // Now evaluate if the filed departure alternate is legal
-    if (!dalt.icao) {
-      results.push({ type:'no-go', title:'No Departure Alternate Filed', body:'A departure alternate is required but none has been entered. File an alternate within 1 hour OEI flight time.' });
+    if (!f.dalt.icao) {
+      results.push({ type:'no-go', title:'No Departure Alternate Filed',
+        body:'A departure alternate is required but none entered. File an alternate within 1 hour OEI flight time that meets C055 Table 1 minimums.' });
     } else {
-      // Check departure alternate meets C055 minimums
-      const daltResults = checkAlternateWeather(dalt, setup, 'Departure Alternate (' + dalt.icao + ')');
-      results.push(...daltResults);
+      results.push(...checkAltWeather(f.dalt, setup, 'Departure Alternate (' + f.dalt.icao + ')'));
+      results.push(...analyzeWind(f.dalt, 'Dep. Alternate ' + f.dalt.icao, setup));
     }
   } else {
-    results.push({
-      type: 'go',
-      title: 'No Departure Alternate Required — Part 135',
-      body: `Departure weather ${depCeil !== null ? depCeil + ' ft ceiling / ' : ''}${depRvr !== null ? 'RVR ' + Math.round(depRvr) + ' ft' : ''} is at or above CAT I landing minimums. No departure alternate required under §135.217.`
-    });
+    results.push({ type:'go', title:`No Departure Alternate Required — §135.217`,
+      body:`Departure weather (RVR ≈ ${Math.round(wxRvr)} ft) is at or above CAT I landing minimums. No departure alternate required.` });
   }
-
   return results;
 }
 
-// ── DESTINATION ALTERNATE REQUIRED? ──────────────────
+// ─────────────────────────────────────────
+//  DESTINATION ALTERNATE REQUIRED?
+// ─────────────────────────────────────────
 function analyzeAltRequired(f, setup) {
-  const results = [];
   const dest = f.dest;
+  if (!dest.icao) return [{ type:'neutral', title:'Destination not entered', body:'Enter destination airport.' }];
+  if (!dest.hasIap) return [{ type:'caution', title:'Alternate Required — No IAP at Destination',
+    body:`${dest.icao} has no published instrument approach. An alternate with an IAP must always be filed. <span class="ref">[§91.169(a)(2) / §135.223]</span>` }];
 
-  if (!dest.icao) {
-    return [{ type:'neutral', title:'Destination not entered', body:'Enter destination to evaluate alternate requirement.' }];
-  }
+  // ── Gather worst-case values across ETA, ETA−1hr, ETA+1hr ──
+  const ceils = [dest.ceil, dest.ceil1hb, dest.ceil1ha].filter(v => v !== null);
+  const viss  = [dest.vis,  dest.vis1hb,  dest.vis1ha ].filter(v => v !== null);
 
-  // No IAP at destination → always need alternate
-  if (!dest.hasIap) {
-    results.push({
-      type: 'caution',
-      title: 'Alternate Required — No IAP at Destination',
-      body: `${dest.icao} has no published instrument approach procedure. An alternate airport with an IAP must be filed regardless of weather. <span class="ref">[§91.169(a)(2) / §135.223]</span>`
-    });
-    return results;
-  }
+  if (!ceils.length && !viss.length) return [{ type:'neutral',
+    title:'No destination weather entered',
+    body:'Enter ETA forecast weather (and optionally the ±1 hr window) to determine alternate requirement.' }];
 
-  // Gather ±1hr window values
-  const ceilEta = dest.ceil;
-  const visEta = dest.vis;
-  const ceil1hB = dest.ceil1hBefore !== null ? dest.ceil1hBefore : ceilEta;
-  const vis1hB = dest.vis1hBefore !== null ? dest.vis1hBefore : visEta;
-  const ceil1hA = dest.ceil1hAfter !== null ? dest.ceil1hAfter : ceilEta;
-  const vis1hA = dest.vis1hAfter !== null ? dest.vis1hAfter : visEta;
+  const worstCeil = ceils.length ? Math.min(...ceils) : null;
+  const worstVis  = viss.length  ? Math.min(...viss)  : null;
 
-  // Use worst case across ±1hr
-  const worstCeil = Math.min(...[ceilEta, ceil1hB, ceil1hA].filter(v => v !== null));
-  const worstVis = Math.min(...[visEta, vis1hB, vis1hA].filter(v => v !== null));
-
+  // ── PART 91 — §91.169: flat 2,000 ft AGL / 3 sm ──
   if (f.rule === '91') {
-    // §91.169: 1-2-3 rule — 2000 ft / 3 sm
     const ceilReq = 2000;
-    const visReq = 3;
-
-    const ceilOk = worstCeil >= ceilReq;
-    const visOk = worstVis >= visReq;
+    const visReq  = 3;
+    const ceilOk  = worstCeil === null ? true : worstCeil >= ceilReq;
+    const visOk   = worstVis  === null ? true : worstVis  >= visReq;
 
     if (ceilOk && visOk) {
-      results.push({
-        type: 'go',
-        title: 'No Alternate Required — Part 91 (§91.169)',
-        body: `Worst-case forecast ceiling: <strong>${worstCeil} ft AGL</strong> ≥ 2,000 ft ✓<br>Worst-case forecast visibility: <strong>${worstVis} sm</strong> ≥ 3 sm ✓<br>The 1-2-3 rule is satisfied for the ±1 hr ETA window. No alternate required.`
-      });
+      return [{ type:'go', title:`No Alternate Required — Part 91 (§91.169)`,
+        body:`Worst-case ceiling: <strong>${worstCeil !== null ? worstCeil + ' ft AGL' : 'not entered'}</strong> ≥ 2,000 ft AGL ✓<br>
+              Worst-case visibility: <strong>${worstVis !== null ? worstVis + ' sm' : 'not entered'}</strong> ≥ 3 sm ✓<br>
+              <span class="ref">Part 91 uses flat thresholds: 2,000 ft AGL / 3 sm [§91.169(b)]</span>` }];
+    }
+    const fails = [];
+    if (!ceilOk) fails.push(`Ceiling <strong>${worstCeil} ft AGL</strong> &lt; 2,000 ft AGL`);
+    if (!visOk)  fails.push(`Visibility <strong>${worstVis} sm</strong> &lt; 3 sm`);
+    return [{ type:'caution', title:`Alternate Required — Part 91 (§91.169)`,
+      body:`Failing: ${fails.join(' &nbsp;/&nbsp; ')}<br>
+            <span class="ref">Part 91 uses flat thresholds: 2,000 ft AGL / 3 sm [§91.169(b)]</span>` }];
+  }
+
+  // ── PART 135 — §135.223: approach-relative thresholds ──
+
+  // ── CEILING THRESHOLD COMPUTATION ──
+  // §135.223(b)(1): circling authorized → 1,500 ft above lowest circling MDA
+  // §135.223(b)(2): no circling → higher of (1,500 ft above lowest published min) or (2,000 ft above airport elev)
+  let ceilThresh = null;
+  let ceilBasis  = '';
+  let ceilInputMissing = false;
+
+  if (dest.circlingAuth) {
+    // §135.223(b)(1)
+    if (dest.circMda !== null) {
+      // circling MDA is MSL; we need to compare against forecast ceiling which is AGL.
+      // Convert: circMda_AGL = circMda_MSL − airport_elev
+      const elev = dest.elev || 0;
+      const circMdaAgl = dest.circMda - elev;
+      ceilThresh = circMdaAgl + 1500;
+      ceilBasis = `Lowest circling MDA ${dest.circMda} ft MSL (${circMdaAgl} ft AGL at elev ${elev} ft) + 1,500 ft = <strong>${ceilThresh} ft AGL</strong> required [§135.223(b)(1)]`;
     } else {
-      const fails = [];
-      if (!ceilOk) fails.push(`Ceiling <strong>${worstCeil} ft</strong> &lt; 2,000 ft`);
-      if (!visOk) fails.push(`Visibility <strong>${worstVis} sm</strong> &lt; 3 sm`);
-      results.push({
-        type: 'caution',
-        title: 'Alternate Required — Part 91 1-2-3 Rule Not Met',
-        body: `Failing condition(s): ${fails.join(', ')}<br>An alternate airport must be filed (§91.169). <span class="ref">Alternate minimums: precision 600/2, non-precision 800/2.</span>`
-      });
+      ceilInputMissing = true;
+      ceilBasis = 'Circling authorized — enter the lowest circling MDA to compute the §135.223(b)(1) ceiling threshold.';
     }
   } else {
-    // §135.223: 1500 ft / 3 sm
-    const ceilReq = 1500;
-    const visReq = 3;
-
-    const ceilOk = ceilEta !== null ? worstCeil >= ceilReq : true;
-    const visOk = visEta !== null ? worstVis >= visReq : true;
-    const hasWx = ceilEta !== null || visEta !== null;
-
-    if (!hasWx) {
-      results.push({ type:'neutral', title:'No destination weather entered', body:'Enter ETA forecast weather to determine if a Part 135 alternate is required.' });
-    } else if (ceilOk && visOk) {
-      results.push({
-        type: 'go',
-        title: 'No Alternate Required — Part 135 (§135.223)',
-        body: `Worst-case ETA forecast ceiling: <strong>${worstCeil} ft AGL</strong> ≥ 1,500 ft ✓<br>Worst-case ETA forecast visibility: <strong>${worstVis} sm</strong> ≥ 3 sm ✓<br>No destination alternate required.`
-      });
+    // §135.223(b)(2): no circling approach authorized
+    const elev = dest.elev || 0;
+    let opt1 = null, opt2 = null;
+    if (dest.lowestMin !== null) {
+      const lowestMinAgl = dest.lowestMin - elev;
+      opt1 = lowestMinAgl + 1500;
+    }
+    opt2 = elev > 0 ? 2000 : null; // 2,000 ft above airport elevation expressed as AGL = 2,000 ft
+    // §135.223(b)(2) says "whichever is higher"
+    if (opt1 !== null && opt2 !== null) {
+      ceilThresh = Math.max(opt1, opt2);
+      const winner = opt1 >= opt2
+        ? `Option A: lowest published min + 1,500 ft = ${opt1} ft AGL`
+        : `Option B: 2,000 ft above airport elevation = ${opt2} ft AGL`;
+      ceilBasis = `No circling authorized. Higher of:<br>
+        &nbsp;&nbsp;A: Lowest published min ${dest.lowestMin} ft MSL (${dest.lowestMin - elev} ft AGL) + 1,500 ft = ${opt1} ft AGL<br>
+        &nbsp;&nbsp;B: Airport elevation ${elev} ft + 2,000 ft = ${opt2} ft AGL<br>
+        → <strong>${winner}</strong> controls → Required ceiling: <strong>${ceilThresh} ft AGL</strong> [§135.223(b)(2)]`;
+    } else if (opt2 !== null) {
+      ceilThresh = opt2;
+      ceilBasis = `No circling authorized. Airport elevation ${elev} ft + 2,000 ft = <strong>${opt2} ft AGL</strong> required [§135.223(b)(2)]. Enter lowest published minimum for full comparison.`;
     } else {
-      const fails = [];
-      if (!ceilOk) fails.push(`Ceiling <strong>${worstCeil} ft</strong> &lt; 1,500 ft`);
-      if (!visOk) fails.push(`Visibility <strong>${worstVis} sm</strong> &lt; 3 sm`);
-      results.push({
-        type: 'caution',
-        title: 'Alternate Required — Part 135 (§135.223)',
-        body: `Failing condition(s): ${fails.join(', ')}<br>A destination alternate must be filed. Alternate must meet C055 Table 1 minimums at ETA. <span class="ref">[§135.223]</span>`
-      });
+      ceilInputMissing = true;
+      ceilBasis = 'No circling authorized — enter airport elevation and/or lowest published minimum to compute the §135.223(b)(2) ceiling threshold.';
     }
   }
+
+  // ── VISIBILITY THRESHOLD COMPUTATION ──
+  // §135.223(b)(3): higher of 3 sm OR (planned approach vis minimum + 2 sm)
+  const plannedApchVis = dest.apchVis || null;
+  let visThresh = 3; // baseline
+  let visBasis  = '';
+
+  if (plannedApchVis !== null) {
+    const apchPlustwo = plannedApchVis + 2;
+    visThresh = Math.max(3, apchPlustwo);
+    if (apchPlustwo > 3) {
+      visBasis = `Higher of 3 sm or (planned approach vis ${plannedApchVis} sm + 2 sm = ${apchPlustwo} sm) → <strong>${visThresh} sm</strong> required [§135.223(b)(3)]`;
+    } else {
+      visBasis = `Higher of 3 sm or (planned approach vis ${plannedApchVis} sm + 2 sm = ${apchPlustwo} sm) → flat <strong>3 sm</strong> controls [§135.223(b)(3)]`;
+    }
+  } else {
+    visBasis = `Planned approach vis not entered — using flat <strong>3 sm</strong> minimum. Enter planned approach visibility for full §135.223(b)(3) calculation.`;
+  }
+
+  // ── EVALUATE ──
+  const results = [];
+
+  // Ceiling
+  if (ceilInputMissing) {
+    results.push({ type:'caution', title:`${dest.icao} — Cannot Compute Ceiling Threshold (§135.223)`,
+      body: ceilBasis });
+  } else {
+    const ceilOk = worstCeil === null ? null : worstCeil >= ceilThresh;
+    if (ceilOk === null) {
+      results.push({ type:'neutral', title:`${dest.icao} — Ceiling Not Entered`,
+        body:`Required ceiling threshold: <strong>${ceilThresh} ft AGL</strong><br>${ceilBasis}` });
+    } else if (ceilOk) {
+      results.push({ type:'go', title:`${dest.icao} — Ceiling Above §135.223 Threshold`,
+        body:`Worst-case forecast ceiling: <strong>${worstCeil} ft AGL</strong> ≥ required <strong>${ceilThresh} ft AGL</strong> ✓<br>${ceilBasis}` });
+    } else {
+      results.push({ type:'caution', title:`Alternate Required — Ceiling Below §135.223 Threshold at ${dest.icao}`,
+        body:`Worst-case forecast ceiling: <strong>${worstCeil} ft AGL</strong> &lt; required <strong>${ceilThresh} ft AGL</strong><br>${ceilBasis}` });
+    }
+  }
+
+  // Visibility
+  const visOk = worstVis === null ? null : worstVis >= visThresh;
+  if (visOk === null) {
+    results.push({ type:'neutral', title:`${dest.icao} — Visibility Not Entered`,
+      body:`Required visibility threshold: <strong>${visThresh} sm</strong><br>${visBasis}` });
+  } else if (visOk) {
+    results.push({ type:'go', title:`${dest.icao} — Visibility Above §135.223 Threshold`,
+      body:`Worst-case forecast visibility: <strong>${worstVis} sm</strong> ≥ required <strong>${visThresh} sm</strong> ✓<br>${visBasis}` });
+  } else {
+    results.push({ type:'caution', title:`Alternate Required — Visibility Below §135.223 Threshold at ${dest.icao}`,
+      body:`Worst-case forecast visibility: <strong>${worstVis} sm</strong> &lt; required <strong>${visThresh} sm</strong><br>${visBasis}` });
+  }
+
+  // Overall go/no-go summary if both are evaluated
+  const anyAltRequired = results.some(r => r.type === 'caution' && r.title.includes('Alternate Required'));
+  const allGo = results.every(r => r.type === 'go');
+
+  if (allGo) {
+    results.unshift({ type:'go', title:`No Alternate Required — Part 135 (§135.223)`,
+      body:`Both ceiling and visibility are forecast at or above the §135.223 approach-relative thresholds for the full ±1 hr ETA window.` });
+  } else if (anyAltRequired) {
+    results.unshift({ type:'caution', title:`Destination Alternate Required — Part 135 (§135.223)`,
+      body:`One or more §135.223 thresholds are not met within the ±1 hr ETA window. A destination alternate must be filed meeting C055 Table 1 minimums at the alternate ETA.` });
+  }
+
   return results;
 }
 
-// ── IS THE ALTERNATE LEGAL? ───────────────────────────
-function checkAlternateWeather(alt, setup, label) {
+// ─────────────────────────────────────────
+//  IS THE ALTERNATE LEGAL?  (C055)
+// ─────────────────────────────────────────
+function checkAltWeather(alt, setup, label) {
+  label = label || ('Alternate (' + (alt.icao || '?') + ')');
+  if (!alt.icao) return [{ type:'neutral', title:'No alternate entered', body:'Enter an alternate airport to verify legality.' }];
+  if (alt.prohibit) return [{ type:'no-go', title:`${label} — IAP Prohibits Alternate Use`,
+    body:'Published IAP specifically states alternate minimums are NOT authorized. This airport cannot be used as an IFR alternate. <span class="ref">[C055 b(2)]</span>' }];
+
   const results = [];
-  label = label || ('Alternate (' + alt.icao + ')');
 
-  if (!alt.icao) {
-    results.push({ type:'neutral', title:'No alternate entered', body:'Enter an alternate airport to verify legality.' });
-    return results;
+  // GPS IAP check (C055 b8)
+  if (alt.gpsIap) {
+    if (!setup.ops.c052) {
+      results.push({ type:'no-go', title:`${label} — GPS IAP Requires C052`, body:'C052 must be held before GPS-based IAP authorized at alternate. <span class="ref">[C055 b(8)(a)]</span>' });
+    } else if (!alt.inTable2) {
+      results.push({ type:'no-go', title:`${label} — Aircraft Not in C055 Table 2`,
+        body:'Aircraft M/M/S is not listed in C055 Table 2. GPS-based IAP at alternate NOT authorized. <span class="ref">[C055 b(8)(e)]</span>' });
+    } else {
+      const eq = setup.eq;
+      let tier = null;
+      if (eq.waas && eq.baroWaas) tier = 'iv';
+      else if (eq.waas) tier = 'iii';
+      else if (eq.gpsC129 && eq.fde && eq.baroC129) tier = 'ii';
+      else if (eq.gpsC129 && eq.fde) tier = 'i';
+
+      if (!tier) {
+        results.push({ type:'no-go', title:`${label} — GPS Equipment Insufficient`,
+          body:'GPS nav system does not meet minimum tier requirements (TSO-C129/C196 + FDE at minimum). <span class="ref">[C055 b(8)(b)(i)]</span>' });
+      } else {
+        const tierDesc = {
+          i:   'TSO-C129/C196 + FDE → LNAV (or circling) MDA(H) only at alternate',
+          ii:  'TSO-C129/C196 + FDE + Baro-VNAV → LNAV MDA(H) or LNAV/VNAV DA(H). RNP ≥ 0.30 if C384.',
+          iii: 'TSO-C145/C146 WAAS → GPS IAP at dest + alt; LNAV (or circling) MDA(H) at alternate',
+          iv:  'TSO-C145/C146 WAAS + Baro-VNAV → LNAV MDA(H) or LNAV/VNAV DA(H). RNP ≥ 0.30 if C384.',
+        };
+        results.push({ type:'info', title:`${label} — GPS IAP Tier ${tier.toUpperCase()} Authorized`,
+          body: tierDesc[tier] + `<br><span class="ref">[C055 b(8)(e)(${tier})]</span>` });
+      }
+    }
   }
 
-  // Prohibition check
-  if (alt.prohibit) {
-    results.push({ type:'no-go', title:`${label} — Alternate Not Authorized`, body:'The published IAP for this airport specifically prohibits use as an alternate. This airport cannot be used. <span class="ref">[C055 b(2)]</span>' });
-    return results;
-  }
-
-  // No weather entered?
+  // Weather vs C055 Table 1 minimums
   if (alt.vis === null && alt.ceil === null) {
     results.push({ type:'neutral', title:`${label} — No weather entered`, body:'Enter forecast weather at the alternate to verify minimums.' });
     return results;
   }
-
-  // No approach?
-  if (!alt.apch || alt.apch === '') {
-    results.push({ type:'neutral', title:`${label} — No approach type selected`, body:'Select the best available approach to compute alternate minimums.' });
+  if (!alt.apch) {
+    results.push({ type:'neutral', title:`${label} — No approach type selected`, body:'Select the best available approach to compute required alternate minimums.' });
+    return results;
+  }
+  if (alt.da === null) {
+    results.push({ type:'neutral', title:`${label} — No DA/MDA entered`, body:'Enter published approach DA or MDA to compute required alternate minimums.' });
     return results;
   }
 
-  // Determine C055 ceiling and visibility additives based on nav facilities
-  let ceilAdd, visAdd, navNote;
   const navFac = alt.navFac || '1';
-
-  if (navFac === '2+') {
-    ceilAdd = 200;
-    visAdd = 0.5;
-    navNote = '2+ nav facilities (C055 Table 1 row 2): MDA/DA(H) + 200 ft / + ½ sm';
-  } else if (navFac === '1') {
-    ceilAdd = 400;
-    visAdd = 1.0;
-    navNote = '1 nav facility (C055 Table 1 row 1): MDA/DA(H) + 400 ft / + 1 sm';
+  let ceilAdd, visAdd, navNote;
+  if (navFac === '0' || navFac === 'No IAP') {
+    results.push({ type:'no-go', title:`${label} — No IAP / Nav Facility`, body:'No instrument approach available. Cannot serve as IFR alternate.' });
+    return results;
+  } else if (navFac === '2+') {
+    ceilAdd = 200; visAdd = 0.5;
+    navNote = 'C055 Table 1 (2+ nav facilities): DA/MDA + 200 ft / + ½ sm';
   } else {
-    results.push({ type:'no-go', title:`${label} — No Instrument Approach Available`, body:'No nav facility at alternate. Cannot be used as IFR alternate under P135 rules.' });
-    return results;
+    ceilAdd = 400; visAdd = 1.0;
+    navNote = 'C055 Table 1 (1 nav facility): DA/MDA + 400 ft / + 1 sm';
   }
 
-  // GPS-based IAP check
-  if (alt.gpsIap) {
-    const c055 = setup.ops.c055;
-    const c052 = setup.ops.c052;
-    const inTable2 = alt.inTable2;
-    const gpsC129 = setup.eq.gpsC129;
-    const fde = setup.eq.fde;
-    const waas = setup.eq.waas;
-    const baroC129 = setup.eq.baroC129;
-    const baroWaas = setup.eq.baroWaas;
-
-    if (!c055) {
-      results.push({ type:'no-go', title:`${label} — GPS IAP Not Authorized (No C055)`, body:'C055 not authorized for this certificate. GPS-based IAP at alternate cannot be used.' });
-    } else if (!c052) {
-      results.push({ type:'no-go', title:`${label} — GPS IAP Requires C052`, body:'C052 must be held before GPS-based IAP is authorized at an alternate. <span class="ref">[C055 b(8)(a)]</span>' });
-    } else if (!inTable2) {
-      results.push({ type:'no-go', title:`${label} — Aircraft Not in C055 Table 2`, body:'The aircraft M/M/S is not listed in C055 Table 2. GPS-based IAP at alternate is NOT authorized. <span class="ref">[C055 b(8)(e)]</span>' });
-    } else {
-      // Determine authorized minimums tier
-      let tier, tierNote;
-      if (waas && baroWaas) {
-        tier = 'iv'; tierNote = 'TSO-C145/C146 + Baro-VNAV → LNAV or LNAV/VNAV DA(H) authorized at alternate';
-      } else if (waas) {
-        tier = 'iii'; tierNote = 'TSO-C145/C146 → LNAV (or circling) MDA(H) at alternate';
-      } else if (gpsC129 && fde && baroC129) {
-        tier = 'ii'; tierNote = 'TSO-C129/C196 + FDE + Baro-VNAV → LNAV or LNAV/VNAV DA(H) authorized';
-      } else if (gpsC129 && fde) {
-        tier = 'i'; tierNote = 'TSO-C129/C196 + FDE → LNAV (or circling) MDA(H) only at alternate';
-      } else {
-        results.push({ type:'no-go', title:`${label} — GPS Equipment Insufficient for Alternate`, body:'GPS equipment does not meet minimum requirements for GPS-based IAP at alternate. FDE required at minimum with TSO-C129/C196. <span class="ref">[C055 b(8)(b)(i)]</span>' });
-        return results;
-      }
-      results.push({ type:'info', title:`${label} — GPS IAP Tier: ${tier.toUpperCase()}`, body: tierNote + '<br><span class="ref">[C055 b(8)(e)(' + tier + ')]</span>' });
-    }
-  }
-
-  // Compute required alternate minimums
-  const da = alt.da;
-  if (da === null) {
-    results.push({ type:'neutral', title:`${label} — No approach DA/MDA entered`, body:'Enter published approach DA or MDA to compute required alternate minimums.' });
-    return results;
-  }
-
-  const reqCeil = da + ceilAdd;
-  const reqVis = (alt.apchVis || 1) + visAdd;
-
-  // Check actual weather vs required
-  const actCeil = alt.ceil;
-  const actVis = alt.vis;
+  const reqCeil = alt.da + ceilAdd;
+  const pubVis  = alt.apchVis || 1.0;
+  const reqVis  = pubVis + visAdd;
+  const margin  = (setup.buffer === 'Yes' && parseFloat(setup.visMargin)) ? parseFloat(setup.visMargin) : 0;
+  const reqVisBuffered = reqVis + margin;
 
   const issues = [];
-  if (actCeil !== null && actCeil < reqCeil) {
-    issues.push(`Ceiling <strong>${actCeil} ft</strong> below required <strong>${reqCeil} ft</strong> (DA/MDA ${da} ft + ${ceilAdd} ft additive)`);
-  }
-  if (actVis !== null && actVis < reqVis) {
-    issues.push(`Visibility <strong>${actVis} sm</strong> below required <strong>${reqVis.toFixed(1)} sm</strong> (published ${alt.apchVis || 1} sm + ${visAdd} sm additive)`);
-  }
+  if (alt.ceil !== null && alt.ceil < reqCeil)
+    issues.push(`Ceiling <strong>${alt.ceil} ft AGL</strong> &lt; required <strong>${reqCeil} ft</strong> (${alt.da} ft DA/MDA + ${ceilAdd} ft additive)`);
+  if (alt.vis !== null && alt.vis < reqVis)
+    issues.push(`Visibility <strong>${alt.vis} sm</strong> &lt; required <strong>${reqVis.toFixed(2)} sm</strong> (published ${pubVis} sm + ${visAdd} sm additive)`);
+  if (margin > 0 && alt.vis !== null && alt.vis >= reqVis && alt.vis < reqVisBuffered)
+    issues.push(`Company SOP buffer: visibility <strong>${alt.vis} sm</strong> &lt; buffered requirement <strong>${reqVisBuffered.toFixed(2)} sm</strong> (+${margin} sm margin)`);
 
-  // Wind check
-  if (alt.wspd && setup.xwind) {
-    // Simplified: flag if wind speed exceeds crosswind limit (no direction computation here)
-    if (alt.wspd > setup.xwind) {
-      issues.push(`Wind speed ${alt.wspd} kt may exceed crosswind limit of ${setup.xwind} kt — verify runway alignment`);
-    }
-  }
+  const status = issues.length === 0 ? 'go' : 'no-go';
+  const body = issues.length === 0
+    ? `Ceiling: <strong>${alt.ceil !== null ? alt.ceil + ' ft AGL' : 'not entered'}</strong> ≥ ${reqCeil} ft ✓ &nbsp;|&nbsp; Visibility: <strong>${alt.vis !== null ? alt.vis + ' sm' : 'not entered'}</strong> ≥ ${reqVis.toFixed(2)} sm ✓<br><span class="ref">${navNote}</span>`
+    : issues.map(i => '• ' + i).join('<br>') + `<br><span class="ref">${navNote}</span>`;
 
-  // Company buffer
-  if (setup.buffer && setup.visMargin > 0) {
-    const buffReqVis = reqVis + setup.visMargin;
-    if (actVis !== null && actVis < buffReqVis) {
-      issues.push(`Company SOP buffer: visibility <strong>${actVis} sm</strong> below buffered requirement of <strong>${buffReqVis.toFixed(1)} sm</strong> (+${setup.visMargin} sm margin)`);
-    }
-  }
-
-  if (issues.length === 0) {
-    results.push({
-      type: 'go',
-      title: `${label} — Legal Alternate ✓`,
-      body: `Required ceiling: <strong>${reqCeil} ft AGL</strong> (${da} ft DA/MDA + ${ceilAdd} ft) → Forecast: <strong>${actCeil !== null ? actCeil + ' ft' : 'not entered'}</strong> ✓<br>Required visibility: <strong>${reqVis.toFixed(1)} sm</strong> (published ${alt.apchVis || 1} sm + ${visAdd} sm) → Forecast: <strong>${actVis !== null ? actVis + ' sm' : 'not entered'}</strong> ✓<br><span class="ref">${navNote}</span>`
-    });
-  } else {
-    results.push({
-      type: 'no-go',
-      title: `${label} — Alternate Minimums NOT Met`,
-      body: issues.map(i => '• ' + i).join('<br>') + `<br><span class="ref">${navNote}</span>`
-    });
-  }
-
+  results.push({ type: status, title: `${label} — Alternate Minimums ${status === 'go' ? 'Met ✓' : 'NOT Met ✗'}`, body });
   return results;
 }
 
-// ── DESTINATION APPROACH LEGALITY ────────────────────
+// ─────────────────────────────────────────
+//  DESTINATION APPROACH CHECK
+// ─────────────────────────────────────────
 function analyzeDestination(f, setup) {
   const results = [];
   const dest = f.dest;
+  if (!dest.icao || !dest.apch || !dest.da) return results;
 
-  if (!dest.icao || !dest.apch) return results;
+  let effVis = dest.apchVis || 1.0;
+  const notes = [];
 
-  // Check approach is authorized
-  const apchAuthMap = {
-    'ILS': setup.apt.ils, 'LPV': setup.apt.lpv, 'LNAV/VNAV': setup.apt.lnavVnav,
-    'LNAV': setup.apt.lnav, 'VOR': setup.apt.vor, 'NDB': setup.apt.ndb,
-    'LOC': setup.apt.loc, 'LDA': setup.apt.lda, 'RNPAR': setup.apt.rnpar
-  };
-
-  const authApch = apchAuthMap[dest.apch];
-  if (authApch === false) {
-    results.push({ type:'no-go', title:`${dest.apch} approach not authorized`, body:`C052 authorization does not include ${dest.apch} approach procedures. Select an authorized approach type.` });
-    return results;
-  }
-
-  if (!dest.da || !dest.vis) return results;
-
-  // Determine effective minimum
-  let effectiveMDA = dest.da;
-  let effectiveVis = dest.apchVis || dest.vis;
-  let minNotes = [];
-
-  // High minimum PIC (C054)
-  if (setup.picStatus === 'HighMin' && setup.ops.c054) {
-    // C054 Table 1 — RVR equivalents
+  // High-min PIC (C054)
+  if (setup.picStatus === 'High Minimum' && setup.ops.c054 && dest.apchRvr) {
     const hmMap = [[1800,4500],[2000,4500],[2400,5000],[3000,5000],[4000,6000],[5000,6000]];
-    const apchRvr = dest.apchRvr;
-    if (apchRvr) {
-      const hmEntry = hmMap.find(e => apchRvr <= e[0]);
-      if (hmEntry) {
-        const hmRvr = hmEntry[1];
-        const hmVis = hmRvr / 6076;
-        if (hmVis > effectiveVis) {
-          effectiveVis = hmVis;
-          minNotes.push(`High-Min PIC (C054): RVR ${apchRvr} → requires RVR ${hmRvr} (${hmVis.toFixed(2)} sm)`);
-        }
-      }
+    const entry = hmMap.find(e => dest.apchRvr <= e[0]);
+    if (entry) {
+      const hmVis = entry[1] / 6076;
+      if (hmVis > effVis) { effVis = hmVis; notes.push(`High-Min PIC (C054): published RVR ${dest.apchRvr} → required RVR ${entry[1]} (${hmVis.toFixed(2)} sm)`); }
     }
   }
 
-  // Turbojet LLM restriction (C054b)
-  if (setup.ops.c054 && !setup.llm) {
-    const destRvr = effectiveRvr(dest.vis, dest.rvr);
-    if (destRvr && destRvr < 4000) {
-      results.push({ type:'caution', title:`Destination Visibility Below ¾ sm / RVR 4000 — LLM Restriction (C054)`, body:'PIC is not LLM qualified. Visibility conditions forecast at destination are below ¾ sm or RVR 4000. Operations are restricted: runway length must be ≥115% of required, and precision instrument markings or RCL must be operative. <span class="ref">[C054 b(1)-(3)]</span>' });
-    }
+  // Turbojet LLM restriction
+  const destRvr = dest.rvr || (dest.vis !== null ? dest.vis * 6076 : null);
+  if (setup.ops.c054 && setup.llm !== 'Yes' && destRvr !== null && destRvr < 4000) {
+    results.push({ type:'caution', title:`Destination ${dest.icao} — LLM Restriction (C054 b)`,
+      body:'Destination visibility below ¾ sm / RVR 4000 and PIC is NOT LLM qualified. Runway field length must be ≥ 115% of required. Precision instrument markings or RCL lights must be operative. <span class="ref">[C054 b(1)-(3)]</span>' });
   }
 
   // Company buffer
-  if (setup.buffer && setup.visMargin > 0) {
-    effectiveVis += setup.visMargin;
-    minNotes.push(`Company buffer: +${setup.visMargin} sm visibility margin applied`);
+  const margin = (setup.buffer === 'Yes' && parseFloat(setup.visMargin)) ? parseFloat(setup.visMargin) : 0;
+  if (margin > 0) { effVis += margin; notes.push(`Company buffer +${margin} sm applied`); }
+
+  if (dest.vis !== null) {
+    if (dest.vis < effVis) {
+      results.push({ type:'no-go', title:`Destination ${dest.icao} — Below Effective Minimums`,
+        body:`Forecast visibility <strong>${dest.vis} sm</strong> &lt; effective minimum <strong>${effVis.toFixed(2)} sm</strong><br>${notes.map(n=>'• '+n).join('<br>')}` });
+    } else {
+      results.push({ type:'go', title:`Destination ${dest.icao} — Above Minimums`,
+        body:`Forecast visibility <strong>${dest.vis} sm</strong> ≥ effective minimum <strong>${effVis.toFixed(2)} sm</strong><br>Approach: ${dest.apch} | DA/MDA: ${dest.da} ft${notes.length ? '<br>' + notes.map(n=>'• '+n).join('<br>') : ''}` });
+    }
   }
-
-  // Compare ETA weather to minimums
-  const destVis = dest.vis;
-  const destCeil = dest.ceil;
-
-  const visOk = destVis !== null ? destVis >= effectiveVis : null;
-  const issues = [];
-
-  if (visOk === false) issues.push(`Visibility <strong>${destVis} sm</strong> below effective minimum <strong>${effectiveVis.toFixed(2)} sm</strong>`);
-  if (destCeil !== null && effectiveMDA && destCeil < (effectiveMDA - (dest.elev || 0))) {
-    // ceiling below MDA (rough check — DA is MSL, ceiling is AGL; approximate)
-    // Only flag if ceiling is obviously very low
-  }
-
-  if (issues.length > 0 || minNotes.length > 0) {
-    results.push({
-      type: issues.length > 0 ? 'no-go' : 'caution',
-      title: `Destination ${dest.icao} — ${issues.length > 0 ? 'Below Minimums' : 'Elevated Minimums Apply'}`,
-      body: [...issues, ...minNotes].map(n => '• ' + n).join('<br>')
-    });
-  } else if (destVis !== null) {
-    results.push({
-      type: 'go',
-      title: `Destination ${dest.icao} — Above Minimums`,
-      body: `Forecast visibility <strong>${destVis} sm</strong> ≥ effective minimum <strong>${effectiveVis.toFixed(2)} sm</strong> ✓<br>Approach: ${dest.apch} | DA/MDA: ${dest.da} ft`
-    });
-  }
-
   return results;
 }
 
-// ── MAIN ANALYSIS ─────────────────────────────────────
+// ─────────────────────────────────────────
+//  MAIN ANALYSIS
+// ─────────────────────────────────────────
 function runAnalysis() {
   const setup = collectSetup();
-  S.setup = setup;
   const f = collectFlight();
 
   if (!f.rule) {
-    alert('Please select Part 91 or Part 135 on the Flight Plan page before running analysis.');
-    showPage('flight');
-    return;
+    alert('Please select Part 91 or Part 135 before running analysis.');
+    showPage('flight'); return;
   }
 
-  const toResults = analyzeTakeoff(f, setup);
-  const depAltResults = analyzeDepartureAlt(f, setup);
-  const altReqResults = analyzeAltRequired(f, setup);
-  const destResults = analyzeDestination(f, setup);
-  const altLegalResults = checkAlternateWeather(f.alt, setup, 'Destination Alternate (' + (f.alt.icao || '?') + ')');
+  saveFlight(); // persist current state
 
-  // Summary pills
-  const toStatus = toResults.some(r => r.type === 'no-go') ? 'nogo' : toResults.some(r => r.type === 'caution') ? 'caution' : 'go';
-  const depAltStatus = depAltResults.some(r => r.type === 'no-go') ? 'nogo' : depAltResults.some(r => r.type === 'caution') ? 'caution' : depAltResults.some(r=>r.type==='go') ? 'go' : 'na';
-  const altReqStatus = altReqResults.some(r => r.type === 'no-go') ? 'nogo' : altReqResults.some(r => r.type === 'caution') ? 'caution' : altReqResults.some(r=>r.type==='go') ? 'go' : 'na';
-  const altLegalStatus = altLegalResults.some(r => r.type === 'no-go') ? 'nogo' : altLegalResults.some(r => r.type === 'go') ? 'go' : altLegalResults.some(r=>r.type==='caution') ? 'caution' : 'na';
+  const toR    = analyzeTakeoff(f, setup);
+  const depAR  = analyzeDepartureAlt(f, setup);
+  const altReq = analyzeAltRequired(f, setup);
+  const destR  = analyzeDestination(f, setup);
+  const altLeg = f.alt.icao ? checkAltWeather(f.alt, setup, 'Dest. Alternate (' + f.alt.icao + ')') : [];
+  const altWnd = f.alt.icao ? analyzeWind(f.alt, 'Dest. Alternate ' + f.alt.icao, setup) : [];
+  const destWnd = analyzeWind(f.dest, 'Destination ' + (f.dest.icao||''), setup);
 
-  function pillLabel(s) { return {go:'GO',nogo:'NO-GO',caution:'CAUTION',na:'N/A'}[s] || s; }
+  function worst(arr) {
+    if (arr.some(r=>r.type==='no-go'))   return 'nogo';
+    if (arr.some(r=>r.type==='caution')) return 'caution';
+    if (arr.some(r=>r.type==='go'))      return 'go';
+    return 'na';
+  }
+  const pillLabel = s => ({go:'GO',nogo:'NO-GO',caution:'CAUTION',na:'N/A'}[s]||s);
 
-  const pillHtml = `
-    <div class="summary-bar">
-      <div class="summary-pill pill-${toStatus}"><div class="pill-label">Takeoff Mins</div><div class="pill-value">${pillLabel(toStatus)}</div></div>
-      <div class="summary-pill pill-${depAltStatus}"><div class="pill-label">Dep. Alternate</div><div class="pill-value">${pillLabel(depAltStatus)}</div></div>
-      <div class="summary-pill pill-${altReqStatus}"><div class="pill-label">Dest. Alt Required</div><div class="pill-value">${pillLabel(altReqStatus)}</div></div>
-      <div class="summary-pill pill-${altLegalStatus}"><div class="pill-label">Dest. Alt Legal</div><div class="pill-value">${pillLabel(altLegalStatus)}</div></div>
-    </div>`;
+  const pills = `<div class="summary-bar">
+    <div class="summary-pill pill-${worst(toR)}"><div class="pill-label">Takeoff Mins</div><div class="pill-value">${pillLabel(worst(toR))}</div></div>
+    <div class="summary-pill pill-${worst(depAR)}"><div class="pill-label">Dep. Alternate</div><div class="pill-value">${pillLabel(worst(depAR))}</div></div>
+    <div class="summary-pill pill-${worst(altReq)}"><div class="pill-label">Dest. Alt Required</div><div class="pill-value">${pillLabel(worst(altReq))}</div></div>
+    <div class="summary-pill pill-${worst([...altLeg,...altWnd])}"><div class="pill-label">Dest. Alt Legal</div><div class="pill-value">${pillLabel(worst([...altLeg,...altWnd]))}</div></div>
+    <div class="summary-pill pill-${worst(destWnd)}"><div class="pill-label">Dest. Wind</div><div class="pill-value">${pillLabel(worst(destWnd))}</div></div>
+  </div>`;
 
-  function renderSection(title, tag, items) {
-    if (!items.length) return '';
-    const cards = items.map(r => `
-      <div class="result-card ${r.type}">
-        <div class="result-header">
-          <span class="result-icon">${{go:'✓',caution:'⚠','no-go':'✗',info:'ℹ',neutral:'—'}[r.type]||'—'}</span>
-          <span class="result-title">${r.title}</span>
-        </div>
-        <div class="result-body">${r.body}</div>
-      </div>`).join('');
-    return `<div style="margin-bottom:20px"><div class="airport-card-header" style="margin-bottom:8px"><span class="airport-tag ${tag}">${title}</span></div>${cards}</div>`;
+  const icons = {go:'✓',caution:'⚠','no-go':'✗',info:'ℹ',neutral:'—'};
+  function cards(arr) {
+    return arr.map(r => `<div class="result-card ${r.type}">
+      <div class="result-header"><span class="result-icon">${icons[r.type]||'—'}</span><span class="result-title">${r.title}</span></div>
+      <div class="result-body">${r.body}</div></div>`).join('');
+  }
+  function section(title, tag, arr) {
+    if (!arr.length) return '';
+    return `<div style="margin-bottom:20px">
+      <div class="airport-card-header"><span class="airport-tag ${tag}">${title}</span></div>
+      ${cards(arr)}</div>`;
   }
 
-  const html = pillHtml +
-    renderSection('Takeoff Minimums — ' + (f.dep.icao||'DEP'), 'tag-dep', toResults) +
-    renderSection('Departure Alternate', 'tag-dalt', depAltResults) +
-    renderSection('Destination — ' + (f.dest.icao||'DEST'), 'tag-dest', [...destResults, ...altReqResults]) +
-    renderSection('Destination Alternate — ' + (f.alt.icao||'ALT'), 'tag-alt', altLegalResults);
+  document.getElementById('results-content').innerHTML =
+    pills +
+    section('Takeoff — ' + (f.dep.icao||'DEP'), 'tag-dep', toR) +
+    section('Departure Alternate', 'tag-dalt', depAR) +
+    section('Destination — ' + (f.dest.icao||'DEST'), 'tag-dest', [...destR, ...destWnd, ...altReq]) +
+    section('Destination Alternate — ' + (f.alt.icao||'ALT'), 'tag-alt', [...altLeg, ...altWnd]);
 
-  document.getElementById('results-content').innerHTML = html;
-
-  const flightId = f.flightId || (f.dep.icao + '–' + f.dest.icao);
-  document.getElementById('results-sub').textContent =
-    `Part ${f.rule} · ${flightId} · ${new Date().toLocaleTimeString()} · ${setup.aircraft || 'Aircraft not set'} · ${setup.tail || ''}`;
-
+  const hdr = `Part ${f.rule} · ${f.flightId || (f.dep.icao+'–'+f.dest.icao)} · ${new Date().toLocaleTimeString()} · ${setup.aircraft||'—'} ${setup.tail||''}`;
+  document.getElementById('results-sub').textContent = hdr;
   showPage('results');
   showToast('Analysis complete');
 }
 
-// ── Toast ──────────────────────────────────────────────
+// ─────────────────────────────────────────
+//  TOAST
+// ─────────────────────────────────────────
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
+  t.textContent = msg; t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2500);
 }
 
-// ── Init ───────────────────────────────────────────────
+// ─────────────────────────────────────────
+//  AUTO-SAVE ON ANY INPUT CHANGE
+// ─────────────────────────────────────────
+function attachAutoSave() {
+  document.querySelectorAll('#page-flight input, #page-flight select').forEach(el => {
+    el.addEventListener('input',  scheduleSave);
+    el.addEventListener('change', scheduleSave);
+  });
+}
+
+// ─────────────────────────────────────────
+//  INIT
+// ─────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   loadSetup();
-  setRule('135'); // default to 135
+  loadFlight();
+  attachAutoSave();
+
+  // If no rule was saved, default to 135
+  const savedFlight = localStorage.getItem('altplan_flight');
+  if (!savedFlight) setRule('135');
 });
 </script>
 </body>
